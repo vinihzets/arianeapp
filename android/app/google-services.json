@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "236280198203",
+    "project_id": "arianeapp-9faa5",
+    "storage_bucket": "arianeapp-9faa5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:236280198203:android:7bd06adebb75423723d81e",
+        "android_client_info": {
+          "package_name": "com.example.ariane_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "236280198203-2lfdl3io3pfnk5p7lq4khd7odtfpfcao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_wtMZbVhnyqzQdSg3QV2QmVplswsejjg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "236280198203-2lfdl3io3pfnk5p7lq4khd7odtfpfcao.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
