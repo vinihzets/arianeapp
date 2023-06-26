@@ -1,0 +1,99 @@
+import 'package:ariane_app/core/services/auth_service.dart';
+import 'package:ariane_app/core/services/database_service.dart';
+import 'package:ariane_app/core/utils/const_routes.dart';
+import 'package:ariane_app/features/clients/data/datasources/client_datasources.dart';
+import 'package:ariane_app/features/clients/data/datasources/remote/client_datasources_remote_impl.dart';
+import 'package:ariane_app/features/clients/data/mappers/client_mapper.dart';
+import 'package:ariane_app/features/clients/data/repositories/client_repository_impl.dart';
+import 'package:ariane_app/features/clients/domain/repositories/client_repository.dart';
+import 'package:ariane_app/features/clients/domain/usecases/create_client_usecase_impl.dart';
+import 'package:ariane_app/features/clients/domain/usecases/delete_client_usecase_impl.dart';
+import 'package:ariane_app/features/clients/domain/usecases/read_client_usecase_impl.dart';
+import 'package:ariane_app/features/clients/domain/usecases/update_client_usecase_impl.dart';
+import 'package:ariane_app/features/clients/presentation/bloc/client_bloc.dart';
+import 'package:ariane_app/features/home/data/datasources/home_datasources.dart';
+import 'package:ariane_app/features/home/data/datasources/remote/home_datasources_remote_impl.dart';
+import 'package:ariane_app/features/home/data/repositories/home_repository_impl.dart';
+import 'package:ariane_app/features/home/domain/repositories/home_repository.dart';
+import 'package:ariane_app/features/home/domain/usecases/sign_out_usecase_impl.dart';
+import 'package:ariane_app/features/home/presentation/bloc/home_bloc.dart';
+import 'package:ariane_app/features/login/data/datasources/login_datasources.dart';
+import 'package:ariane_app/features/login/data/datasources/remote/login_datasources_remote_impl.dart';
+import 'package:ariane_app/features/login/data/repositories/login_repository_impl.dart';
+import 'package:ariane_app/features/login/domain/repositories/login_repository.dart';
+import 'package:ariane_app/features/login/domain/usecases/sign_in_usecase_impl.dart';
+import 'package:ariane_app/features/login/presentation/bloc/login_bloc.dart';
+import 'package:ariane_app/features/register/data/datasources/register_datasources.dart';
+import 'package:ariane_app/features/register/data/datasources/remote/register_datasources_remote_impl.dart';
+import 'package:ariane_app/features/register/data/repositories/register_repository_impl.dart';
+import 'package:ariane_app/features/register/domain/repositories/register_repository.dart';
+import 'package:ariane_app/features/register/domain/usecases/sign_up_usecase_impl.dart';
+import 'package:ariane_app/features/register/presentation/bloc/register_bloc.dart';
+import 'package:ariane_app/features/splash/presentation/bloc/splash_bloc.dart';
+import 'package:ariane_app/features/type_perfurations/type_perfurations.dart';
+import 'package:get_it/get_it.dart';
+
+class Injector {
+  static build() {
+    GetIt getIt = GetIt.instance;
+
+    //CORE
+    getIt.registerLazySingleton(() => ConstRoutes());
+    getIt.registerLazySingleton(() => AuthService());
+    getIt.registerLazySingleton(() => DatabaseService());
+
+    // Mappers
+    getIt.registerLazySingleton(() => ClientMapper());
+    getIt.registerLazySingleton(() => TypePerfurationMapper());
+
+    // DATASOURCES
+
+
+getIt.registerLazySingleton<TypePerfurationDataSources>(
+    () => TypePerfurationDataSourcesRemoteImpl(getIt(), getIt())
+);
+    getIt.registerLazySingleton<ClientDataSources>(
+        () => ClientDataSourcesRemoteImpl(getIt(), getIt()));
+    getIt.registerLazySingleton<HomeDataSources>(
+        () => HomeDataSourcesRemoteImpl(getIt()));
+    getIt.registerLazySingleton<RegisterDataSources>(
+        () => RegisterDataSourcesRemoteImpl(getIt(), getIt()));
+    getIt.registerLazySingleton<LoginDataSources>(
+        () => LoginDataSourcesRemoteImpl(getIt(), getIt()));
+
+    //REPOSITORIES
+
+    getIt.registerLazySingleton<TypePerfurationRepository>(() => TypePerfurationRepositoryImpl(getIt()));
+    getIt.registerLazySingleton<ClientRepository>(
+        () => ClientRepositoryImpl(getIt()));
+    getIt.registerLazySingleton<HomeRepository>(
+        () => HomeRepositoryImpl(getIt()));
+    getIt.registerLazySingleton<RegisterRepository>(
+        () => RegisterRepositoryImpl(getIt()));
+    getIt.registerLazySingleton<LoginRepository>(
+        () => LoginRepositoryImpl(getIt()));
+
+    // USECASES
+
+    getIt.registerLazySingleton(() => UpdateTypePerfurationsUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(() => DeleteTypePerfurationUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(() => ReadTypePerfurationsUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(() => CreateTypePerfurationUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(() => UpdateClientUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(() => DeleteClientUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(() => ReadClientUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(() => CreateClientUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(() => SignOutUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(() => SignUpUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(() => SignInUseCaseImpl(getIt()));
+
+    //BLOC
+
+    getIt.registerFactory(() => TypePerfurationsBloc(getIt(), getIt(), getIt(), getIt()));
+    getIt.registerFactory(() => ClientBloc(getIt(), getIt(), getIt(), getIt()));
+    getIt.registerFactory(() => HomeBloc(getIt(), getIt()));
+    getIt.registerFactory(() => RegisterBloc(getIt()));
+    getIt.registerFactory(() => LoginBloc(getIt(), getIt()));
+    getIt.registerFactory(() => SplashBloc(getIt(), getIt()));
+  }
+}
