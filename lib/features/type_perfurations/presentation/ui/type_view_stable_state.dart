@@ -14,10 +14,12 @@ class TypePerfurationViewStableState extends StatefulWidget {
       {required this.state, required this.bloc, super.key});
 
   @override
-  State<TypePerfurationViewStableState> createState() => _TypePerfurationViewStableStateState();
+  State<TypePerfurationViewStableState> createState() =>
+      _TypePerfurationViewStableStateState();
 }
 
-class _TypePerfurationViewStableStateState extends State<TypePerfurationViewStableState> {
+class _TypePerfurationViewStableStateState
+    extends State<TypePerfurationViewStableState> {
   @override
   Widget build(BuildContext context) {
     List<TypePerfurationEntity> listTypePerfurations = widget.state.data;
@@ -25,9 +27,9 @@ class _TypePerfurationViewStableStateState extends State<TypePerfurationViewStab
     return ListView.builder(
       itemCount: listTypePerfurations.length,
       itemBuilder: (context, index) {
-        final TypePerfuration = listTypePerfurations[index];
+        final typePerfuration = listTypePerfurations[index];
         return ListTile(
-            leading: Text(TypePerfuration.namePerfuration),
+            leading: Text(typePerfuration.namePerfuration),
             trailing: PopupMenuButton<TypePerfurationMenuAction>(
               itemBuilder: (_) => [
                 const PopupMenuItem<TypePerfurationMenuAction>(
@@ -43,11 +45,13 @@ class _TypePerfurationViewStableStateState extends State<TypePerfurationViewStab
                 switch (action) {
                   case TypePerfurationMenuAction.delete:
                     widget.bloc.dispatchEvent(
-                        TypePerfurationEventDeleteTypePerfuration(context, TypePerfuration));
+                        TypePerfurationEventDeleteTypePerfuration(
+                            context, typePerfuration));
                     break;
                   case TypePerfurationMenuAction.update:
                     widget.bloc.dispatchEvent(
-                        TypePerfurationEventUpdateTypePerfuration(context, TypePerfuration));
+                        TypePerfurationEventUpdateTypePerfuration(
+                            context, typePerfuration));
                     break;
                 }
               },

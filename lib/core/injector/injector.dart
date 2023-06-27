@@ -23,6 +23,7 @@ import 'package:ariane_app/features/login/data/repositories/login_repository_imp
 import 'package:ariane_app/features/login/domain/repositories/login_repository.dart';
 import 'package:ariane_app/features/login/domain/usecases/sign_in_usecase_impl.dart';
 import 'package:ariane_app/features/login/presentation/bloc/login_bloc.dart';
+import 'package:ariane_app/features/periods/periods.dart';
 import 'package:ariane_app/features/register/data/datasources/register_datasources.dart';
 import 'package:ariane_app/features/register/data/datasources/remote/register_datasources_remote_impl.dart';
 import 'package:ariane_app/features/register/data/repositories/register_repository_impl.dart';
@@ -45,10 +46,11 @@ class Injector {
     // Mappers
     getIt.registerLazySingleton(() => ClientMapper());
     getIt.registerLazySingleton(() => TypePerfurationMapper());
+    getIt.registerLazySingleton(() => PeriodMapper());
 
     // DATASOURCES
 
-
+  getIt.registerLazySingleton<PeriodDataSources>(() => PeriodDataSourcesRemoteImpl(getIt(), getIt()));
 getIt.registerLazySingleton<TypePerfurationDataSources>(
     () => TypePerfurationDataSourcesRemoteImpl(getIt(), getIt())
 );
@@ -63,6 +65,7 @@ getIt.registerLazySingleton<TypePerfurationDataSources>(
 
     //REPOSITORIES
 
+    getIt.registerLazySingleton<PeriodRepository>(() => PeriodRepositoryImpl(getIt()));
     getIt.registerLazySingleton<TypePerfurationRepository>(() => TypePerfurationRepositoryImpl(getIt()));
     getIt.registerLazySingleton<ClientRepository>(
         () => ClientRepositoryImpl(getIt()));
@@ -75,6 +78,10 @@ getIt.registerLazySingleton<TypePerfurationDataSources>(
 
     // USECASES
 
+    getIt.registerLazySingleton(() => CreatePeriodUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(() => UpdatePeriodUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(() => DeletePeriodUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(() => ReadPeriodUseCaseImpl(getIt()));
     getIt.registerLazySingleton(() => UpdateTypePerfurationsUseCaseImpl(getIt()));
     getIt.registerLazySingleton(() => DeleteTypePerfurationUseCaseImpl(getIt()));
     getIt.registerLazySingleton(() => ReadTypePerfurationsUseCaseImpl(getIt()));
@@ -89,6 +96,7 @@ getIt.registerLazySingleton<TypePerfurationDataSources>(
 
     //BLOC
 
+    getIt.registerFactory(() => PeriodsBloc(getIt(), getIt(), getIt(), getIt()));
     getIt.registerFactory(() => TypePerfurationsBloc(getIt(), getIt(), getIt(), getIt()));
     getIt.registerFactory(() => ClientBloc(getIt(), getIt(), getIt(), getIt()));
     getIt.registerFactory(() => HomeBloc(getIt(), getIt()));

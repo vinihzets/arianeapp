@@ -37,7 +37,6 @@ class CreateClientParams {
   });
 }
 
-
 class DeleteClientParams {
   final String id;
   DeleteClientParams({
@@ -60,26 +59,58 @@ class UpdateClientParams {
   });
 }
 
+class CreateTypePerfurationParams {
+  final String namePerfuration;
+  final String id;
 
-class CreateTypePerfurationParams{
-    final String namePerfuration;
-    final String id;
-
-    CreateTypePerfurationParams({
-required this.namePerfuration, required this.id
-    });
+  CreateTypePerfurationParams(
+      {required this.namePerfuration, required this.id});
 }
 
-class DeleteTypePerfurationParams{
+class DeleteTypePerfurationParams {
   final String id;
 
   DeleteTypePerfurationParams({required this.id});
 }
 
-class UpdateTypePerfurationParams{
+class UpdateTypePerfurationParams {
   final String namePerfuration;
   final String id;
 
-  UpdateTypePerfurationParams({required this.namePerfuration, required this.id});
+  UpdateTypePerfurationParams(
+      {required this.namePerfuration, required this.id});
+}
 
+class CreatePeriodParams {
+  final String name;
+  final int? dayCounter;
+  final int? monthCounter;
+  final int? yearCounter;
+  final String message;
+
+  CreatePeriodParams({
+    required this.name,
+    required this.dayCounter,
+    required this.monthCounter,
+    required this.yearCounter,
+    required this.message,
+  });
+}
+
+class DeletePeriodParams {
+  final String id;
+
+  DeletePeriodParams({required this.id});
+}
+
+class UpdatePeriodParams {
+  final String name;
+  final String message;
+  final String id;
+  final int? dayCounter;
+  final int? monthCounter;
+  final int? yearCounter;
+
+  UpdatePeriodParams(this.dayCounter, this.monthCounter, this.yearCounter,
+      {required this.name, required this.message, required this.id});
 }

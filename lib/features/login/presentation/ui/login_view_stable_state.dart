@@ -1,9 +1,6 @@
 import 'package:ariane_app/features/login/presentation/bloc/login_bloc.dart';
 import 'package:ariane_app/features/login/presentation/bloc/login_event.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-
-import '../../../../core/utils/const_routes.dart';
 
 class LoginViewStableData extends StatefulWidget {
   final LoginBloc bloc;

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:ariane_app/core/architecture/bloc.dart';
 import 'package:ariane_app/core/architecture/bloc_event.dart';
 import 'package:ariane_app/core/architecture/bloc_state.dart';

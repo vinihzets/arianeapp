@@ -8,3 +8,4 @@ export 'ui/client_view_empty_state.dart';
 export 'ui/client_view_error_state.dart';
 export 'ui/client_view_loading_state.dart';
 export 'ui/client_view_stable_state.dart';
+export 'widgets/show_custom_client_details.dart';

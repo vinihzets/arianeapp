@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../domain/entities/client_entity.dart';
 
@@ -16,6 +17,8 @@ class _CreateUpdateClientDialogState extends State<CreateUpdateClientDialog> {
   late TextEditingController lastNameController;
   late TextEditingController numberController;
   late TextEditingController birthdayController;
+  late MaskTextInputFormatter maskNumberFormatter;
+  late MaskTextInputFormatter maskBirthdayFormatter;
 
   @override
   void initState() {
@@ -24,7 +27,13 @@ class _CreateUpdateClientDialogState extends State<CreateUpdateClientDialog> {
     numberController = TextEditingController(
       text: widget.client?.number.toString(),
     );
+    maskNumberFormatter = MaskTextInputFormatter(
+      mask: '(##) #####-####'
+    );
+    
+    maskBirthdayFormatter = MaskTextInputFormatter(mask: '##/##/####', initialText: '03/05/1998');
     birthdayController = TextEditingController(text: widget.client?.birthday);
+
 
     super.initState();
   }
@@ -41,6 +50,7 @@ class _CreateUpdateClientDialogState extends State<CreateUpdateClientDialog> {
 
   @override
   Widget build(BuildContext context) {
+       
     return Dialog(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
@@ -69,6 +79,9 @@ class _CreateUpdateClientDialogState extends State<CreateUpdateClientDialog> {
             SizedBox(
               width: 220,
               child: TextField(
+                inputFormatters: [
+                  maskNumberFormatter
+                ],
                 controller: numberController,
                 decoration: const InputDecoration(labelText: 'Numero'),
               ),
@@ -76,6 +89,7 @@ class _CreateUpdateClientDialogState extends State<CreateUpdateClientDialog> {
             SizedBox(
               width: 220,
               child: TextField(
+                inputFormatters: [maskBirthdayFormatter],
                 controller: birthdayController,
                 decoration:
                     const InputDecoration(labelText: 'Data de Nascimento'),
@@ -85,13 +99,17 @@ class _CreateUpdateClientDialogState extends State<CreateUpdateClientDialog> {
               height: 3,
             ),
             ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(ClientEntity(
+              onPressed: (){
+                final unMaskedNumber = maskNumberFormatter.unmaskText(numberController.text);
+                final unMaskedBirthday = maskBirthdayFormatter.unmaskText(birthdayController.text);
+
+                Navigator.of(context).pop(ClientEntity(
                 id: widget.client?.id ?? '',
                 firstName: firstNameController.text,
                 lastName: lastNameController.text,
-                number: int.parse(numberController.text),
-                birthday: birthdayController.text,
-              )),
+                number: int.parse(unMaskedNumber),
+                birthday: unMaskedBirthday,
+              ));},
               child: Text(
                 widget.client == null ? 'Criar' : 'Atualizar',
               ),

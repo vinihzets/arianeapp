@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:ariane_app/core/architecture/usecase.dart';
 import 'package:ariane_app/core/services/database_service.dart';
 import 'package:ariane_app/features/clients/data/datasources/client_datasources.dart';

@@ -1,5 +1,4 @@
 import 'package:ariane_app/core/architecture/usecase.dart';
-import 'package:ariane_app/features/clients/data/mappers/client_mapper.dart';
 import 'package:ariane_app/features/clients/domain/entities/client_entity.dart';
 
 abstract class ClientDataSources {
