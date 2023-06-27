@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../../core/architecture/bloc_state.dart';
@@ -25,14 +24,15 @@ class _PeriodsViewStableStateState extends State<PeriodsViewStableState> {
   Widget build(BuildContext context) {
     List<PeriodEntity> listPeriods = widget.state.data;
 
-    
-
     return ListView.builder(
       itemCount: listPeriods.length,
       itemBuilder: (context, index) {
         final periods = listPeriods[index];
         return ListTile(
-            leading: Text('${periods.name}', style: const TextStyle(fontSize: 18),),
+            leading: Text(
+              periods.name,
+              style: const TextStyle(fontSize: 18),
+            ),
             trailing: PopupMenuButton<PeriodsMenuAction>(
               itemBuilder: (_) => [
                 const PopupMenuItem<PeriodsMenuAction>(
@@ -42,7 +42,8 @@ class _PeriodsViewStableStateState extends State<PeriodsViewStableState> {
                 const PopupMenuItem<PeriodsMenuAction>(
                   value: PeriodsMenuAction.update,
                   child: Text('Atualizar'),
-                ),const PopupMenuItem<PeriodsMenuAction>(
+                ),
+                const PopupMenuItem<PeriodsMenuAction>(
                   value: PeriodsMenuAction.read,
                   child: Text('Visualizar'),
                 ),
@@ -57,14 +58,15 @@ class _PeriodsViewStableStateState extends State<PeriodsViewStableState> {
                     widget.bloc.dispatchEvent(
                         PeriodEventUpdatePeriod(context, periods));
                     break;
-                    case PeriodsMenuAction.read:
-        showDialog(context: context, builder: (context) => ShowCustomPeriodsDetails(entity: periods));
+                  case PeriodsMenuAction.read:
+                    showDialog(
+                        context: context,
+                        builder: (context) =>
+                            ShowCustomPeriodsDetails(entity: periods));
                 }
               },
             ));
       },
     );
   }
-
- 
 }

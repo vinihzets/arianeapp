@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import '../../domain/entities/period_entity.dart';
 import '../widgets/counter_widget.dart';
 

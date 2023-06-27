@@ -1,4 +1,3 @@
-import 'package:ariane_app/features/clients/clients.dart';
 import 'package:ariane_app/features/periods/domain/entities/period_entity.dart';
 import 'package:flutter/material.dart';
 

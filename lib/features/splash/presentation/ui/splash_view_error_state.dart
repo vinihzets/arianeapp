@@ -2,9 +2,6 @@ import 'package:ariane_app/core/architecture/bloc_state.dart';
 import 'package:ariane_app/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:ariane_app/features/splash/presentation/bloc/splash_event.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:flutter/widgets.dart';
 
 class SplashViewErrorState extends StatelessWidget {
   final BlocState state;

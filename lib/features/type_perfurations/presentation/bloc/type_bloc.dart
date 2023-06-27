@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:ariane_app/core/core.dart';
 import 'package:flutter/material.dart';
 import '../../type_perfurations.dart';
@@ -48,7 +46,9 @@ class TypePerfurationsBloc extends Bloc {
 
     dispatchState(BlocLoadingState());
 
-    final request = await createTypePerfurationUseCaseImpl(CreateTypePerfurationParams(namePerfuration: entity.namePerfuration, id: entity.id));
+    final request = await createTypePerfurationUseCaseImpl(
+        CreateTypePerfurationParams(
+            namePerfuration: entity.namePerfuration, id: entity.id));
 
     request.fold((f) => {showFailure(context, f.message)}, (c) {
       listTypePerfurations.add(c);
@@ -65,22 +65,22 @@ class TypePerfurationsBloc extends Bloc {
       dispatchState(BlocErrorState());
     },
         (r) => {
-              
               if (r.isNotEmpty)
                 {
                   listTypePerfurations.addAll(r),
                   dispatchState(BlocStableState(data: listTypePerfurations))
-                
                 }
               else
-                {dispatchState(BlocEmptyState()),
+                {
+                  dispatchState(BlocEmptyState()),
                 }
             });
   }
 
-  _handleDeleteTypePerfuration(BuildContext context, TypePerfurationEntity entity) async {
-    final request =
-        await deleteTypePerfurationUseCaseImpl.call(DeleteTypePerfurationParams(id: entity.id));
+  _handleDeleteTypePerfuration(
+      BuildContext context, TypePerfurationEntity entity) async {
+    final request = await deleteTypePerfurationUseCaseImpl
+        .call(DeleteTypePerfurationParams(id: entity.id));
 
     request.fold((left) => showFailure(context, left.message), (right) {
       listTypePerfurations.remove(entity);
@@ -93,7 +93,8 @@ class TypePerfurationsBloc extends Bloc {
     });
   }
 
-  _handleUpdateTypePerfuration(BuildContext context, TypePerfurationEntity typeperf) async {
+  _handleUpdateTypePerfuration(
+      BuildContext context, TypePerfurationEntity typeperf) async {
     final TypePerfurationEntity? entity = await showCustomDialog(
       context,
       CreateUpdateTypePerfurationDialog(typePerfuration: typeperf),
@@ -105,7 +106,9 @@ class TypePerfurationsBloc extends Bloc {
 
     dispatchState(BlocLoadingState());
 
-    final request = await updateTypePerfurationsUseCaseImpl(UpdateTypePerfurationParams(namePerfuration: entity.namePerfuration, id: entity.id));
+    final request = await updateTypePerfurationsUseCaseImpl(
+        UpdateTypePerfurationParams(
+            namePerfuration: entity.namePerfuration, id: entity.id));
 
     request.fold((f) => {showFailure(context, f.message)}, (c) {
       final index = listTypePerfurations.indexOf(typeperf);

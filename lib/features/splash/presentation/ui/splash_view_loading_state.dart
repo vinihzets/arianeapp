@@ -8,7 +8,6 @@ class SplashViewLoadingState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('teste');
     return const Center(child: CircularProgressIndicator());
   }
 }

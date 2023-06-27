@@ -4,35 +4,31 @@ import '../../domain/entities/type_entity.dart';
 
 class CreateUpdateTypePerfurationDialog extends StatefulWidget {
   final TypePerfurationEntity? typePerfuration;
-  const CreateUpdateTypePerfurationDialog({required this.typePerfuration, super.key, TypePerfurationEntity? TypePerfuration});
+  const CreateUpdateTypePerfurationDialog({
+    required this.typePerfuration,
+    super.key,
+  });
 
   @override
   State<CreateUpdateTypePerfurationDialog> createState() =>
       _CreateUpdateTypePerfurationDialogState();
 }
 
-class _CreateUpdateTypePerfurationDialogState extends State<CreateUpdateTypePerfurationDialog> {
+class _CreateUpdateTypePerfurationDialogState
+    extends State<CreateUpdateTypePerfurationDialog> {
   late TextEditingController namePerfurationController;
-  // late TextEditingController lastNameController;
 
   @override
   void initState() {
-    namePerfurationController = TextEditingController(text: widget.typePerfuration?.namePerfuration);
-    // lastNameController = TextEditingController(text: widget.typePerfuration?.lastName);
-    // numberController = TextEditingController(
-      // text: widget.typePerfuration?.number.toString(),
-    // );
-    // birthdayController = TextEditingController(text: widget.typePerfuration?.birthday);
+    namePerfurationController =
+        TextEditingController(text: widget.typePerfuration?.namePerfuration);
 
     super.initState();
   }
 
   @override
   void dispose() {
-   namePerfurationController.dispose();
-    // lastNameController.dispose();
-    // numberController.dispose();
-    // birthdayController.dispose();
+    namePerfurationController.dispose();
 
     super.dispose();
   }
@@ -45,7 +41,9 @@ class _CreateUpdateTypePerfurationDialogState extends State<CreateUpdateTypePerf
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(widget.typePerfuration == null ? 'Novo typePerfuratione' : 'Atualizar typePerfuratione'),
+            Text(widget.typePerfuration == null
+                ? 'Novo typePerfuratione'
+                : 'Atualizar typePerfuratione'),
             const SizedBox(height: 6),
             SizedBox(
               width: 220,
@@ -86,7 +84,6 @@ class _CreateUpdateTypePerfurationDialogState extends State<CreateUpdateTypePerf
               onPressed: () => Navigator.of(context).pop(TypePerfurationEntity(
                 id: widget.typePerfuration?.id ?? '',
                 namePerfuration: namePerfurationController.text,
-              
               )),
               child: Text(
                 widget.typePerfuration == null ? 'Criar' : 'Atualizar',

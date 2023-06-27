@@ -6,7 +6,6 @@ import 'package:ariane_app/core/utils/string_translator.dart';
 import 'package:ariane_app/features/register/domain/usecases/sign_up_usecase_impl.dart';
 import 'package:ariane_app/features/register/presentation/bloc/register_event.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class RegisterBloc extends Bloc {
   SignUpUseCaseImpl signUpUseCaseImpl;
