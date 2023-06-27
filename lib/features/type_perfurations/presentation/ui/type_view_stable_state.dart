@@ -1,4 +1,5 @@
 import 'package:ariane_app/core/architecture/bloc_state.dart';
+import 'package:ariane_app/features/type_perfurations/presentation/dialogs/create_update_type_perfuration_dialog_stable_state.dart';
 import 'package:flutter/material.dart';
 import '../../type_perfurations.dart';
 

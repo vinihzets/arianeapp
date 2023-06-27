@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:ariane_app/features/periods/periods.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../../../../core/core.dart';
@@ -15,7 +18,6 @@ class _TypePerfurationViewState extends State<TypePerfurationView> {
 
   @override
   void initState() {
-    
     bloc = GetIt.I.get();
 
     bloc.dispatchEvent(TypePerfurationEventReadTypePerfuration());
@@ -33,10 +35,12 @@ class _TypePerfurationViewState extends State<TypePerfurationView> {
           state: state,
         ),
         onLoading: (state) => TypePerfurationViewLoadingState(state: state),
-        onStable: (state) => TypePerfurationViewStableState(state: state, bloc: bloc),
+        onStable: (state) =>
+            TypePerfurationViewStableState(state: state, bloc: bloc),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => bloc.dispatchEvent(TypePerfurationEventCreateTypePerfuration(context)),
+        onPressed: () => bloc
+            .dispatchEvent(TypePerfurationEventCreateTypePerfuration(context)),
         label: const Text('Novo Tipo de Perfuração'),
         icon: const Icon(Icons.person_add_alt_outlined),
       ),

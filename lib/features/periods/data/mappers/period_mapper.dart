@@ -9,6 +9,7 @@ class PeriodMapper implements EntityMapper<PeriodEntity> {
       map['day'],
       map['month'],
       map['year'],
+      map['selected'],
       name: map['name'],
       message: map['message'],
       id: map['id'],
@@ -21,6 +22,7 @@ class PeriodMapper implements EntityMapper<PeriodEntity> {
       'id': entity.id,
       'name': entity.name,
       'message': entity.message,
+      'selected': false,
     };
   }
 }
