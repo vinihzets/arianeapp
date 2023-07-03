@@ -11,3 +11,5 @@ export 'injector/injector.dart';
 export 'services/services.dart';
 
 export 'utils/utils.dart';
+
+export 'global/entities/period_entity.dart';

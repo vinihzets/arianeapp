@@ -1,7 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:ariane_app/features/type_perfurations/type_perfurations.dart';
 import 'package:dartz/dartz.dart';
 
 import 'package:ariane_app/core/failure/failure.dart';
+
+import '../global/entities/period_entity.dart';
 
 abstract class UseCase<Input, Output> {
   Future<Either<Failure, Output>> call(Input params);
@@ -60,11 +63,12 @@ class UpdateClientParams {
 }
 
 class CreateTypePerfurationParams {
-  final String namePerfuration;
+  final String name;
   final String id;
+  final List<PeriodEntity> periods;
 
   CreateTypePerfurationParams(
-      {required this.namePerfuration, required this.id});
+      {required this.name, required this.id, required this.periods});
 }
 
 class DeleteTypePerfurationParams {
@@ -74,11 +78,11 @@ class DeleteTypePerfurationParams {
 }
 
 class UpdateTypePerfurationParams {
-  final String namePerfuration;
+  final String name;
   final String id;
 
   UpdateTypePerfurationParams(
-      {required this.namePerfuration, required this.id});
+      {required this.name, required this.id});
 }
 
 class CreatePeriodParams {
@@ -114,3 +118,27 @@ class UpdatePeriodParams {
   UpdatePeriodParams(this.dayCounter, this.monthCounter, this.yearCounter,
       {required this.name, required this.message, required this.id});
 }
+
+class CreatePerfurationParams {
+  final String name;
+  final String id;
+  final List<TypePerfurationEntity> listTypePerfuration;
+
+  CreatePerfurationParams(
+      {required this.name, required this.id, required this.listTypePerfuration});
+}
+
+class DeletePerfurationParams {
+  final String id;
+
+  DeletePerfurationParams({required this.id});
+}
+
+class UpdatePerfurationParams {
+  final String name;
+  final String id;
+
+  UpdatePerfurationParams({required this.name, required this.id});
+}
+
+class ReadPerfurationParams {}

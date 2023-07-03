@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:ariane_app/core/architecture/bloc_state.dart';
 import 'package:ariane_app/features/type_perfurations/presentation/dialogs/create_update_type_perfuration_dialog_stable_state.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +32,7 @@ class _TypePerfurationViewStableStateState
       itemBuilder: (context, index) {
         final typePerfuration = listTypePerfurations[index];
         return ListTile(
-            leading: Text(typePerfuration.namePerfuration),
+            leading: Text(typePerfuration.name),
             trailing: PopupMenuButton<TypePerfurationMenuAction>(
               itemBuilder: (_) => [
                 const PopupMenuItem<TypePerfurationMenuAction>(

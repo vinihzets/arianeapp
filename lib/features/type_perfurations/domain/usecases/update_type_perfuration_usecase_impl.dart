@@ -3,7 +3,7 @@ import 'package:ariane_app/core/failure/failure.dart';
 import 'package:ariane_app/features/type_perfurations/domain/repositories/type_perfuration_repository.dart';
 import 'package:dartz/dartz.dart';
 
-import '../entities/type_entity.dart';
+import '../../../../core/global/entities/type_perfuration_entity.dart';
 
 class UpdateTypePerfurationsUseCaseImpl
     implements UseCase<UpdateTypePerfurationParams, TypePerfurationEntity> {

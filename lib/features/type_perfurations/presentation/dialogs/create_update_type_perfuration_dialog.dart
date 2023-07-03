@@ -2,11 +2,13 @@ import 'dart:developer';
 
 import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/features/periods/periods.dart';
+import 'package:ariane_app/features/type_perfurations/presentation/bloc/type_bloc.dart';
+import 'package:ariane_app/features/type_perfurations/presentation/bloc/type_event.dart';
 import 'package:ariane_app/features/type_perfurations/presentation/dialogs/create_update_type_perfuration_dialog_stable_state.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../domain/entities/type_entity.dart';
+import '../../../../core/global/entities/type_perfuration_entity.dart';
 
 class CreateUpdateTypePerfurationDialog extends StatefulWidget {
   final TypePerfurationEntity? typePerfuration;
@@ -23,17 +25,15 @@ class CreateUpdateTypePerfurationDialog extends StatefulWidget {
 class _CreateUpdateTypePerfurationDialogState
     extends State<CreateUpdateTypePerfurationDialog> {
   late TextEditingController namePerfurationController;
-  late PeriodsBloc bloc;
+  late TypePerfurationsBloc bloc;
 
   @override
   void initState() {
     namePerfurationController =
-        TextEditingController(text: widget.typePerfuration?.namePerfuration);
-
+        TextEditingController(text: widget.typePerfuration?.name);
     bloc = GetIt.I.get();
 
-    bloc.dispatchEvent(PeriodEventReadPeriod());
-
+    bloc.dispatchEvent(TypePerfurationReadPeriods());
     super.initState();
   }
 

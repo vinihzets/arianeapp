@@ -1,3 +1,4 @@
+import 'package:ariane_app/features/perfuration/perfurations.dart';
 import 'package:ariane_app/features/type_perfurations/type_perfurations.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -52,8 +53,8 @@ class _HomeViewState extends State<HomeView> {
               icon: Icon(Icons.home),
               label: 'Tipos Perfurações',
             ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person_2_outlined), label: 'Periodos'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person_2_outlined), label: 'Perfuração'),
           ]),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
@@ -64,10 +65,9 @@ class _HomeViewState extends State<HomeView> {
           });
         },
         children: const [
-          ClientView(), 
-        TypePerfurationView(),
-        PeriodView(),
-
+          ClientView(),
+          TypePerfurationView(),
+          PerfurationView(),
         ],
       ),
     );

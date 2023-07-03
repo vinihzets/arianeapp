@@ -1,4 +1,4 @@
-export 'entities/type_entity.dart';
+export '../../../core/global/entities/type_perfuration_entity.dart';
 
 export 'repositories/type_perfuration_repository.dart';
 

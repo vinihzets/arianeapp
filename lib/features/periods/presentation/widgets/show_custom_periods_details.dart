@@ -1,4 +1,4 @@
-import 'package:ariane_app/features/periods/domain/entities/period_entity.dart';
+import 'package:ariane_app/core/global/entities/period_entity.dart';
 import 'package:flutter/material.dart';
 
 class ShowCustomPeriodsDetails extends StatelessWidget {

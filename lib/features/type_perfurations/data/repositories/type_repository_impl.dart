@@ -1,5 +1,6 @@
 import 'package:ariane_app/core/architecture/usecase.dart';
 import 'package:ariane_app/core/failure/failure.dart';
+import 'package:ariane_app/core/global/entities/period_entity.dart';
 import 'package:ariane_app/features/type_perfurations/type_perfurations.dart';
 import 'package:dartz/dartz.dart';
 
@@ -43,6 +44,15 @@ class TypePerfurationRepositoryImpl implements TypePerfurationRepository {
       UpdateTypePerfurationParams params) async {
     try {
       return Right(await dataSources.updateTypePerfuration(params));
+    } on Exception catch (e) {
+      return Left(RemoteFailure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<PeriodEntity>>> readPeriods() async {
+    try {
+      return Right(await dataSources.readPeriods());
     } on Exception catch (e) {
       return Left(RemoteFailure(message: e.toString()));
     }

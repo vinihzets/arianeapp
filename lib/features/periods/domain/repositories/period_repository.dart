@@ -2,7 +2,7 @@ import 'package:ariane_app/core/architecture/usecase.dart';
 import 'package:ariane_app/core/failure/failure.dart';
 import 'package:dartz/dartz.dart';
 
-import '../entities/period_entity.dart';
+import '../../../../core/global/entities/period_entity.dart';
 
 abstract class PeriodRepository {
   Future<Either<Failure, PeriodEntity>> createPeriod(CreatePeriodParams params);

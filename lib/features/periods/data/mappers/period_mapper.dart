@@ -1,15 +1,14 @@
 import 'package:ariane_app/core/architecture/mapper.dart';
 
-import '../../domain/entities/period_entity.dart';
+import '../../../../core/global/entities/period_entity.dart';
 
 class PeriodMapper implements EntityMapper<PeriodEntity> {
   @override
   PeriodEntity fromMap(Map<String, dynamic> map) {
     return PeriodEntity(
-      map['day'],
-      map['month'],
-      map['year'],
-      map['selected'],
+      dayCounter: map['dayCounter'],
+      monthCounter: map['monthCounter'],
+      yearCounter: map['yearCounter'],
       name: map['name'],
       message: map['message'],
       id: map['id'],
@@ -22,7 +21,9 @@ class PeriodMapper implements EntityMapper<PeriodEntity> {
       'id': entity.id,
       'name': entity.name,
       'message': entity.message,
-      'selected': false,
+      'dayCounter': entity.dayCounter,
+      'monthCounter': entity.monthCounter,
+      'yearCounter': entity.yearCounter,
     };
   }
 }

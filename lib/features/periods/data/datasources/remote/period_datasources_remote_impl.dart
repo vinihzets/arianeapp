@@ -17,16 +17,14 @@ class PeriodDataSourcesRemoteImpl implements PeriodDataSources {
       'month': params.monthCounter,
       'year': params.yearCounter,
       'id': doc.id,
-      'selected': false,
       'name': params.name,
       'message': params.message,
     });
 
     return PeriodEntity(
-      params.dayCounter,
-      params.monthCounter,
-      params.yearCounter,
-      false,
+      dayCounter: params.dayCounter,
+      monthCounter: params.monthCounter,
+      yearCounter: params.yearCounter,
       name: params.name,
       message: params.message,
       id: doc.id,
@@ -57,16 +55,14 @@ class PeriodDataSourcesRemoteImpl implements PeriodDataSources {
       'day': params.dayCounter,
       'month': params.monthCounter,
       'year': params.yearCounter,
-      'selected': false,
       'name': params.name,
       'message': params.message,
     });
 
     return PeriodEntity(
-      params.dayCounter,
-      params.monthCounter,
-      params.yearCounter,
-      false,
+      dayCounter: params.dayCounter,
+      monthCounter: params.monthCounter,
+      yearCounter: params.yearCounter,
       name: params.name,
       message: params.message,
       id: params.id,

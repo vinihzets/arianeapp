@@ -1,4 +1,4 @@
-export 'entities/period_entity.dart';
+export '../../../core/global/entities/period_entity.dart';
 
 export 'repositories/period_repository.dart';
 

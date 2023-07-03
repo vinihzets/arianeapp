@@ -1,12 +1,25 @@
+import 'dart:developer';
+
 import 'package:ariane_app/core/core.dart';
+import 'package:ariane_app/features/periods/domain/domain.dart';
+import 'package:ariane_app/features/type_perfurations/domain/usecases/read_periods_usecase_impl.dart';
 import 'package:flutter/material.dart';
 import '../../type_perfurations.dart';
+
+class TypePerfurationStableData {
+  List<TypePerfurationEntity> listPerfurations;
+  List<PeriodEntity> listPeriods;
+
+  TypePerfurationStableData(
+      {required this.listPerfurations, required this.listPeriods});
+}
 
 class TypePerfurationsBloc extends Bloc {
   final CreateTypePerfurationUseCaseImpl createTypePerfurationUseCaseImpl;
   final ReadTypePerfurationsUseCaseImpl readTypePerfurationsUseCaseImpl;
   final DeleteTypePerfurationUseCaseImpl deleteTypePerfurationUseCaseImpl;
   final UpdateTypePerfurationsUseCaseImpl updateTypePerfurationsUseCaseImpl;
+  final ReadPeriodsUseCaseImpl readPeriodsUseCaseImpl;
 
   late final List<TypePerfurationEntity> listTypePerfurations;
 
@@ -15,6 +28,7 @@ class TypePerfurationsBloc extends Bloc {
     this.readTypePerfurationsUseCaseImpl,
     this.deleteTypePerfurationUseCaseImpl,
     this.updateTypePerfurationsUseCaseImpl,
+    this.readPeriodsUseCaseImpl,
   ) {
     listTypePerfurations = [];
   }
@@ -29,6 +43,8 @@ class TypePerfurationsBloc extends Bloc {
       _handleDeleteTypePerfuration(event.context, event.entity);
     } else if (event is TypePerfurationEventUpdateTypePerfuration) {
       _handleUpdateTypePerfuration(event.context, event.entity);
+    } else if (event is TypePerfurationReadPeriods) {
+      _handleReadPeriods();
     }
   }
 
@@ -48,7 +64,9 @@ class TypePerfurationsBloc extends Bloc {
 
     final request = await createTypePerfurationUseCaseImpl(
         CreateTypePerfurationParams(
-            namePerfuration: entity.namePerfuration, id: entity.id));
+            name: entity.name,
+            id: entity.id,
+            periods: entity.listPeriods));
 
     request.fold((f) => {showFailure(context, f.message)}, (c) {
       listTypePerfurations.add(c);
@@ -108,13 +126,21 @@ class TypePerfurationsBloc extends Bloc {
 
     final request = await updateTypePerfurationsUseCaseImpl(
         UpdateTypePerfurationParams(
-            namePerfuration: entity.namePerfuration, id: entity.id));
+            name: entity.name, id: entity.id));
 
     request.fold((f) => {showFailure(context, f.message)}, (c) {
       final index = listTypePerfurations.indexOf(typeperf);
       listTypePerfurations.remove(typeperf);
       listTypePerfurations.insert(index, c);
       dispatchState(BlocStableState(data: listTypePerfurations));
+    });
+  }
+
+  _handleReadPeriods() async {
+    final request = await readPeriodsUseCaseImpl(NoParams());
+
+    request.fold((l) {}, (r) {
+      dispatchState(BlocStableState(data: r));
     });
   }
 }

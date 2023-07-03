@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/entities/period_entity.dart';
+import '../../../../core/global/entities/period_entity.dart';
 import '../widgets/counter_widget.dart';
 
 class CreateUpdatePeriodDialog extends StatefulWidget {
@@ -14,12 +14,16 @@ class CreateUpdatePeriodDialog extends StatefulWidget {
 class _CreateUpdatePeriodDialogState extends State<CreateUpdatePeriodDialog> {
   late TextEditingController nameController;
   late TextEditingController messageController;
-  int dayCounter = 1;
-  int monthCounter = 0;
-  int yearCounter = 0;
+  late int dayCounter;
+  late int monthCounter;
+  late int yearCounter;
 
   @override
   void initState() {
+    dayCounter = widget.period?.dayCounter ?? 1;
+    monthCounter = widget.period?.monthCounter ?? 0;
+    yearCounter = widget.period?.yearCounter ?? 0;
+
     nameController = TextEditingController(text: widget.period?.name);
     messageController = TextEditingController(text: widget.period?.message);
 
@@ -96,13 +100,12 @@ class _CreateUpdatePeriodDialogState extends State<CreateUpdatePeriodDialog> {
           ElevatedButton(
             onPressed: () {
               Navigator.of(context).pop(PeriodEntity(
-                dayCounter,
-                monthCounter,
-                yearCounter,
-                false,
-                id: widget.period?.id ?? '',
                 name: nameController.text,
                 message: messageController.text,
+                id: widget.period?.id ?? '',
+                dayCounter: dayCounter,
+                monthCounter: monthCounter,
+                yearCounter: yearCounter,
               ));
             },
             child: Text(

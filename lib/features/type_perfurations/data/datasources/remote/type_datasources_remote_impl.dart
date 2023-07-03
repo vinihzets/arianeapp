@@ -1,28 +1,34 @@
+import 'dart:developer';
+
 import 'package:ariane_app/core/architecture/usecase.dart';
 import 'package:ariane_app/core/services/database_service.dart';
+import 'package:ariane_app/features/periods/data/data.dart';
+import 'package:ariane_app/core/global/entities/period_entity.dart';
 import '../../../type_perfurations.dart';
 
-
-
-class TypePerfurationDataSourcesRemoteImpl implements TypePerfurationDataSources {
+class TypePerfurationDataSourcesRemoteImpl
+    implements TypePerfurationDataSources {
   DatabaseService databaseService;
   TypePerfurationMapper mapper;
+  PeriodMapper periodMapper;
 
-  TypePerfurationDataSourcesRemoteImpl(this.databaseService, this.mapper);
+  TypePerfurationDataSourcesRemoteImpl(
+      this.databaseService, this.mapper, this.periodMapper);
 
   @override
-  Future<TypePerfurationEntity> createTypePerfuration(CreateTypePerfurationParams params) async {
+  Future<TypePerfurationEntity> createTypePerfuration(
+      CreateTypePerfurationParams params) async {
     final doc = databaseService.typePerfurations.doc();
-
     await doc.set({
       'id': doc.id,
-      'namePerfuration': params.namePerfuration,
+      'name': params.name,
+      'periods': params.periods.map((e) => periodMapper.toMap(e)).toList(),
     });
 
     return TypePerfurationEntity(
-      namePerfuration: params.namePerfuration,
-      id: doc.id,
-    );
+        name: params.name,
+        id: doc.id,
+        listPeriods: params.periods);
   }
 
   @override
@@ -32,7 +38,7 @@ class TypePerfurationDataSourcesRemoteImpl implements TypePerfurationDataSources
     final List<TypePerfurationEntity> listPerfurations = perfurations.docs
         .map(
           (e) => mapper.fromMap(e.data()),
-        ) 
+        )
         .toList();
 
     return listPerfurations;
@@ -44,13 +50,22 @@ class TypePerfurationDataSourcesRemoteImpl implements TypePerfurationDataSources
   }
 
   @override
-  Future<TypePerfurationEntity> updateTypePerfuration(UpdateTypePerfurationParams params) async {
+  Future<TypePerfurationEntity> updateTypePerfuration(
+      UpdateTypePerfurationParams params) async {
     await databaseService.typePerfurations.doc(params.id).update({
-      'perfurationName': params.namePerfuration,
+      'name': params.name,
     });
 
     return TypePerfurationEntity(
-        namePerfuration: params.namePerfuration,
-        id: params.id);
+        name: params.name,
+        id: params.id,
+        listPeriods: []);
+  }
+
+  @override
+  Future<List<PeriodEntity>> readPeriods() async {
+    final periods = await databaseService.periods.get();
+
+    return periods.docs.map((e) => periodMapper.fromMap(e.data())).toList();
   }
 }

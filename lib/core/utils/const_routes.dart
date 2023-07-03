@@ -4,4 +4,5 @@ class ConstRoutes {
   final String registerView = '/register';
   final String homeView = '/home';
   final String typePerfurationView = '/typePerfuration';
+  final String perfuration = '/perfuration';
 }

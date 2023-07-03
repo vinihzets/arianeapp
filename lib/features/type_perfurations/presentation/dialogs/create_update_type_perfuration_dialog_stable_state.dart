@@ -1,17 +1,18 @@
 import 'dart:developer';
 
-import 'package:ariane_app/core/core.dart';
-import 'package:ariane_app/features/periods/domain/entities/period_entity.dart';
-import 'package:ariane_app/features/type_perfurations/domain/entities/type_entity.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+
+import '../../../../core/core.dart';
+import '../../type_perfurations.dart';
 
 class CreateUpdateTypePerfurationStableState extends StatefulWidget {
   final TypePerfurationEntity? typePerfuration;
   final BlocState state;
-  const CreateUpdateTypePerfurationStableState(
-      {required this.typePerfuration, required this.state, super.key});
+  const CreateUpdateTypePerfurationStableState({
+    required this.typePerfuration,
+    required this.state,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<CreateUpdateTypePerfurationStableState> createState() =>
@@ -21,10 +22,17 @@ class CreateUpdateTypePerfurationStableState extends StatefulWidget {
 class _CreateUpdateTypePerfurationStableStateState
     extends State<CreateUpdateTypePerfurationStableState> {
   late TextEditingController namePerfurationController;
+  late List<PeriodEntity> selecteds;
+  late Map<PeriodEntity, bool> selectedMap;
 
   @override
   void initState() {
     namePerfurationController = TextEditingController();
+    selecteds = widget.typePerfuration?.listPeriods ?? [];
+    selectedMap = {};
+    for (var element in selecteds) {
+      selectedMap[element] = true;
+    }
 
     super.initState();
   }
@@ -61,28 +69,45 @@ class _CreateUpdateTypePerfurationStableStateState
             title: const Text('Periodos'),
             children: [
               ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: listPeriods.length,
-                  itemBuilder: (context, index) {
-                    final period = listPeriods[index];
-                    return ListTile(
-                      leading: Text(period.name),
-                      trailing: IconButton(
-                          onPressed: () {},
-                          icon: Icon(Icons.radio_button_unchecked)),
-                    );
-                  }),
+                shrinkWrap: true,
+                itemCount: listPeriods.length,
+                itemBuilder: (context, index) {
+                  final period = listPeriods[index];
+
+                  return CheckboxListTile(
+                    title: Text(period.name),
+                    value: selectedMap[period] ?? false,
+                    onChanged: (bool? selecionado) {
+                      setState(() {
+                        inspect(selecionado);
+                        selectedMap[period] = selecionado ?? false;
+
+                        if (selecionado == true) {
+                          selecteds.add(period);
+                        } else {
+                          selecteds.remove(period);
+                        }
+                      });
+                    },
+                  );
+                },
+              ),
             ],
           ),
           ElevatedButton(
-            onPressed: () => Navigator.of(context).pop(TypePerfurationEntity(
-              id: widget.typePerfuration?.id ?? '',
-              namePerfuration: namePerfurationController.text,
-            )),
+            onPressed: () {
+              Navigator.of(context).pop(
+                TypePerfurationEntity(
+                  id: widget.typePerfuration?.id ?? '',
+                  name: namePerfurationController.text,
+                  listPeriods: selecteds,
+                ),
+              );
+            },
             child: Text(
               widget.typePerfuration == null ? 'Criar' : 'Atualizar',
             ),
-          )
+          ),
         ],
       ),
     );
