@@ -1,13 +1,17 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
 
+import 'period_entity.dart';
+
 class TypePerfurationEntity extends Equatable {
-  final String namePerfuration;
+  final String name;
   final String id;
+  final List<PeriodEntity> listPeriods;
 
   const TypePerfurationEntity({
-
-    required this.namePerfuration,
+    required this.name,
     required this.id,
+    required this.listPeriods,
   });
 
   @override
