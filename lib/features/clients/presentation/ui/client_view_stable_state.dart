@@ -23,14 +23,15 @@ class _ClientViewStableStateState extends State<ClientViewStableState> {
   Widget build(BuildContext context) {
     List<ClientEntity> listClients = widget.state.data;
 
-    
-
     return ListView.builder(
       itemCount: listClients.length,
       itemBuilder: (context, index) {
         final client = listClients[index];
         return ListTile(
-            leading: Text('${client.firstName} ${client.lastName}', style: const TextStyle(fontSize: 18),),
+            leading: IconButton(onPressed: (){
+              widget.bloc.dispatchEvent(ClientEventNavigateToPerfuration(context, client));
+            }, icon: const Icon(Icons.add, color: Colors.deepPurple,)),
+            title: Text('${client.firstName} ${client.lastName}', style: const TextStyle(fontSize: 18),),
             trailing: PopupMenuButton<ClientMenuAction>(
               itemBuilder: (_) => [
                 const PopupMenuItem<ClientMenuAction>(
@@ -56,7 +57,7 @@ class _ClientViewStableStateState extends State<ClientViewStableState> {
                         ClientEventUpdateClient(context, client));
                     break;
                     case ClientMenuAction.read:
-        showDialog(context: context, builder: (context) => ShowCustomClientDetails(entity: client));
+                    showDialog(context: context, builder: (context) => ShowCustomClientDetails(entity: client));
                 }
               },
             ));

@@ -1,6 +1,3 @@
-import 'dart:developer';
-
-import 'package:ariane_app/features/periods/periods.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../../../../core/core.dart';
@@ -20,7 +17,7 @@ class _PerfurationViewState extends State<PerfurationView> {
   void initState() {
     bloc = GetIt.I.get();
 
-    bloc.dispatchEvent(PerfurationEventReadPerfuration());
+    bloc.dispatchEvent(PerfurationReadTypePerfuration());
 
     super.initState();
   }
@@ -28,6 +25,10 @@ class _PerfurationViewState extends State<PerfurationView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Adicionar Perfuração'),
+        centerTitle: true,
+      ),
       body: BlocScreenBuilder(
         stream: bloc.state,
         onEmpty: (state) => PerfurationViewEmptyState(state: state),
@@ -37,12 +38,6 @@ class _PerfurationViewState extends State<PerfurationView> {
         onLoading: (state) => PerfurationViewLoadingState(state: state),
         onStable: (state) =>
             PerfurationViewStableState(state: state, bloc: bloc),
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () =>
-            bloc.dispatchEvent(PerfurationEventCreatePerfuration(context)),
-        label: const Text('Nova Perfuração'),
-        icon: const Icon(Icons.person_add_alt_outlined),
       ),
     );
   }

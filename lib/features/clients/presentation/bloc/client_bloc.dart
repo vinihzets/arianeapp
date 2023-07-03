@@ -7,7 +7,7 @@ class ClientBloc extends Bloc {
   final ReadClientUseCaseImpl readClientUseCaseImpl;
   final DeleteClientUseCaseImpl deleteClientUseCaseImpl;
   final UpdateClientUseCaseImpl updateClientUseCaseImpl;
-
+  final ConstRoutes routes;
   late final List<ClientEntity> listClients;
 
   ClientBloc(
@@ -15,6 +15,7 @@ class ClientBloc extends Bloc {
     this.readClientUseCaseImpl,
     this.deleteClientUseCaseImpl,
     this.updateClientUseCaseImpl,
+    this.routes,
   ) {
     listClients = [];
   }
@@ -29,6 +30,8 @@ class ClientBloc extends Bloc {
       _handleDeleteClient(event.context, event.entity);
     } else if (event is ClientEventUpdateClient) {
       _handleUpdateClient(event.context, event.entity);
+    } else if (event is ClientEventNavigateToPerfuration){
+      _handleClientNavigateToPerfuration(event.context, event.entity);
     }
   }
 
@@ -117,5 +120,10 @@ class ClientBloc extends Bloc {
       listClients.insert(index, c);
       dispatchState(BlocStableState(data: listClients));
     });
+  }
+
+
+  _handleClientNavigateToPerfuration(BuildContext context, ClientEntity entity){
+      navigateThenUntil(context, routes.perfuration, entity);
   }
 }

@@ -9,8 +9,8 @@ class HudMixins {
     Navigator.of(context).pushNamedAndRemoveUntil(routeName, (route) => false);
   }
 
-  navigateThenUntil(BuildContext context, String routeName) {
-    Navigator.of(context).pushNamed(routeName);
+  navigateThenUntil(BuildContext context, String routeName, Object? args) {
+    Navigator.of(context).pushNamed(routeName, arguments: args);
   }
 
   navigatePop(BuildContext context) {

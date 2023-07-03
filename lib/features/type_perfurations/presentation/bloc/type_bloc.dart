@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:ariane_app/core/core.dart';
-import 'package:ariane_app/features/periods/domain/domain.dart';
 import 'package:ariane_app/features/type_perfurations/domain/usecases/read_periods_usecase_impl.dart';
 import 'package:flutter/material.dart';
 import '../../type_perfurations.dart';
@@ -126,7 +123,7 @@ class TypePerfurationsBloc extends Bloc {
 
     final request = await updateTypePerfurationsUseCaseImpl(
         UpdateTypePerfurationParams(
-            name: entity.name, id: entity.id));
+            name: entity.name, id: entity.id, listPeriods: entity.listPeriods));
 
     request.fold((f) => {showFailure(context, f.message)}, (c) {
       final index = listTypePerfurations.indexOf(typeperf);

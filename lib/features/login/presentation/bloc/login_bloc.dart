@@ -33,6 +33,6 @@ class LoginBloc extends Bloc {
   }
 
   _handleNavigateToRegister(BuildContext context) {
-    navigateThenUntil(context, routes.registerView);
+    navigateThenUntil(context, routes.registerView, null);
   }
 }

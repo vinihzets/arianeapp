@@ -1,7 +1,5 @@
 import 'package:ariane_app/core/architecture/mapper.dart';
 import 'package:ariane_app/features/type_perfurations/data/data.dart';
-
-import '../../../periods/data/mappers/period_mapper.dart';
 import '../../domain/entities/perfuration_entity.dart';
 
 class PerfurationMapper implements EntityMapper<PerfurationEntity> {
@@ -12,18 +10,17 @@ class PerfurationMapper implements EntityMapper<PerfurationEntity> {
   @override
   PerfurationEntity fromMap(Map<String, dynamic> map) {
     return PerfurationEntity(
-      name: map['name'] ?? '',
-      id: map['id'] ?? '',
-      listTypePerfuration:
-          (map['type_perfuration'] as List).map((e) => typePerfurationMapper.fromMap(e)).toList(),
-    );
+        clientId: map['clientId'],
+        id: map['id'],
+        typePerfuration:
+            typePerfurationMapper.fromMap(map['type_perfuration']));
   }
 
   @override
   Map<String, dynamic> toMap(PerfurationEntity entity) {
     return {
-      'name': entity.name,
-      'type_perfuration': entity.listTypePerfuration,
+      'clientId': entity.clientId,
+      'type_perfuration': typePerfurationMapper.toMap(entity.typePerfuration),
       'id': entity.id,
     };
   }

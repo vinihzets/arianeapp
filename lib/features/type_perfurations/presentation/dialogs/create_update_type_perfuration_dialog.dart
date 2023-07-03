@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:ariane_app/core/core.dart';
-import 'package:ariane_app/features/periods/periods.dart';
 import 'package:ariane_app/features/type_perfurations/presentation/bloc/type_bloc.dart';
 import 'package:ariane_app/features/type_perfurations/presentation/bloc/type_event.dart';
 import 'package:ariane_app/features/type_perfurations/presentation/dialogs/create_update_type_perfuration_dialog_stable_state.dart';

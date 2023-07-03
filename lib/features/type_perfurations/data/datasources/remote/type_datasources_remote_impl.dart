@@ -19,6 +19,8 @@ class TypePerfurationDataSourcesRemoteImpl
   Future<TypePerfurationEntity> createTypePerfuration(
       CreateTypePerfurationParams params) async {
     final doc = databaseService.typePerfurations.doc();
+
+    inspect(params.periods);
     await doc.set({
       'id': doc.id,
       'name': params.name,
@@ -54,12 +56,13 @@ class TypePerfurationDataSourcesRemoteImpl
       UpdateTypePerfurationParams params) async {
     await databaseService.typePerfurations.doc(params.id).update({
       'name': params.name,
+      'periods': params.listPeriods.map((e) => periodMapper.toMap(e)).toList()
     });
 
     return TypePerfurationEntity(
         name: params.name,
         id: params.id,
-        listPeriods: []);
+        listPeriods: params.listPeriods);
   }
 
   @override

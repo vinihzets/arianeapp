@@ -3,9 +3,6 @@
 
 
 import 'package:ariane_app/core/core.dart';
-
-import '../../periods.dart';
-
 abstract class PeriodDataSources{
 
     Future<PeriodEntity> createPeriod(CreatePeriodParams entity);

@@ -1,7 +1,9 @@
 import 'dart:developer';
 
 import 'package:ariane_app/core/architecture/bloc_state.dart';
+import 'package:ariane_app/core/global/entities/type_perfuration_entity.dart';
 import 'package:flutter/material.dart';
+import '../../../clients/domain/entities/client_entity.dart';
 import '../../perfurations.dart';
 
 enum PerfurationMenuAction {
@@ -23,40 +25,39 @@ class PerfurationViewStableState extends StatefulWidget {
 class _PerfurationViewStableStateState
     extends State<PerfurationViewStableState> {
   @override
-  Widget build(BuildContext context) {
-    List<PerfurationEntity> listPerfurations = widget.state.data;
+  void initState() {
+    super.initState();
+  }
 
-    return ListView.builder(
-      itemCount: listPerfurations.length,
-      itemBuilder: (context, index) {
-        final Perfuration = listPerfurations[index];
-        return ListTile(
-            leading: Text(Perfuration.name),
-            trailing: PopupMenuButton<PerfurationMenuAction>(
-              itemBuilder: (_) => [
-                const PopupMenuItem<PerfurationMenuAction>(
-                  value: PerfurationMenuAction.delete,
-                  child: Text('Apagar'),
-                ),
-                const PopupMenuItem<PerfurationMenuAction>(
-                  value: PerfurationMenuAction.update,
-                  child: Text('Atualizar'),
-                ),
-              ],
-              onSelected: (action) {
-                switch (action) {
-                  case PerfurationMenuAction.delete:
-                    widget.bloc.dispatchEvent(PerfurationEventDeletePerfuration(
-                        context, Perfuration));
-                    break;
-                  case PerfurationMenuAction.update:
-                    widget.bloc.dispatchEvent(PerfurationEventUpdatePerfuration(
-                        context, Perfuration));
-                    break;
-                }
-              },
-            ));
-      },
+  @override
+  Widget build(BuildContext context) {
+    List<TypePerfurationEntity> listTypePerfurations = widget.state.data;
+    final client = ModalRoute.of(context)?.settings.arguments as ClientEntity?;
+
+    return Column(
+      children: [
+        const Text('Tipos De Perfuração'),
+        ListView.builder(
+          shrinkWrap: true,
+          itemCount: listTypePerfurations.length,
+          itemBuilder: (context, index) {
+            final typePerfuration = listTypePerfurations[index];
+
+            return ListTile(
+              leading: Text(typePerfuration.name),
+              trailing: IconButton(
+                  onPressed: client != null
+                      ? () {
+                          widget.bloc.dispatchEvent(
+                              PerfurationEventCreatePerfuration(
+                                  context, client, typePerfuration));
+                        }
+                      : null,
+                  icon: const Icon(Icons.arrow_right)),
+            );
+          },
+        ),
+      ],
     );
   }
 }

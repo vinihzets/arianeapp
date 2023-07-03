@@ -4,9 +4,9 @@ class PeriodEntity extends Equatable {
   final String name;
   final String message;
   final String id;
-  final int? dayCounter;
-  final int? monthCounter;
-  final int? yearCounter;
+  final int dayCounter;
+  final int monthCounter;
+  final int yearCounter;
 
   const PeriodEntity({
     required this.name,

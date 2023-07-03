@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../../core/core.dart';
-import '../../periods.dart';
-
 class PeriodEvent extends BlocEvent {}
 
 class PeriodEventCreatePeriod implements PeriodEvent {

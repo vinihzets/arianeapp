@@ -27,3 +27,14 @@ class ClientEventUpdateClient implements ClientEvent {
 
   ClientEventUpdateClient(this.context, this.entity);
 }
+
+class ClientEventNavigateToPerfuration implements ClientEvent{
+  BuildContext context;
+  ClientEntity entity;
+
+  ClientEventNavigateToPerfuration(this.context, this.entity);
+
+
+
+
+}

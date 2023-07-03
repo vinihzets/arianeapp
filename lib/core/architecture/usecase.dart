@@ -80,16 +80,17 @@ class DeleteTypePerfurationParams {
 class UpdateTypePerfurationParams {
   final String name;
   final String id;
+  final List<PeriodEntity> listPeriods;
 
   UpdateTypePerfurationParams(
-      {required this.name, required this.id});
+      {required this.name, required this.id, required this.listPeriods});
 }
 
 class CreatePeriodParams {
   final String name;
-  final int? dayCounter;
-  final int? monthCounter;
-  final int? yearCounter;
+  final int dayCounter;
+  final int monthCounter;
+  final int yearCounter;
   final String message;
 
   CreatePeriodParams({
@@ -111,21 +112,20 @@ class UpdatePeriodParams {
   final String name;
   final String message;
   final String id;
-  final int? dayCounter;
-  final int? monthCounter;
-  final int? yearCounter;
+  final int dayCounter;
+  final int monthCounter;
+  final int yearCounter;
 
   UpdatePeriodParams(this.dayCounter, this.monthCounter, this.yearCounter,
       {required this.name, required this.message, required this.id});
 }
 
 class CreatePerfurationParams {
-  final String name;
-  final String id;
-  final List<TypePerfurationEntity> listTypePerfuration;
+  final String clientId;
+  final TypePerfurationEntity typePerfurationEntity;
 
   CreatePerfurationParams(
-      {required this.name, required this.id, required this.listTypePerfuration});
+      {required this.clientId, required this.typePerfurationEntity});
 }
 
 class DeletePerfurationParams {
@@ -138,7 +138,10 @@ class UpdatePerfurationParams {
   final String name;
   final String id;
 
-  UpdatePerfurationParams({required this.name, required this.id});
+  UpdatePerfurationParams({
+    required this.name,
+    required this.id,
+  });
 }
 
 class ReadPerfurationParams {}

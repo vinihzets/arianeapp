@@ -2,17 +2,15 @@
 import 'package:ariane_app/features/type_perfurations/type_perfurations.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../../core/global/entities/period_entity.dart';
-
 class PerfurationEntity extends Equatable {
-  final String name;
+  final String clientId;
   final String id;
-  final List<TypePerfurationEntity> listTypePerfuration;
+  final TypePerfurationEntity typePerfuration;
 
   const PerfurationEntity({
-    required this.name,
+    required this.clientId,
     required this.id,
-    required this.listTypePerfuration,
+    required this.typePerfuration,
   });
 
   @override

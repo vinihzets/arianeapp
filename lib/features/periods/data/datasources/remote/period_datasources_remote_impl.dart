@@ -12,16 +12,7 @@ class PeriodDataSourcesRemoteImpl implements PeriodDataSources {
   Future<PeriodEntity> createPeriod(CreatePeriodParams params) async {
     final doc = databaseService.periods.doc();
 
-    await doc.set({
-      'day': params.dayCounter,
-      'month': params.monthCounter,
-      'year': params.yearCounter,
-      'id': doc.id,
-      'name': params.name,
-      'message': params.message,
-    });
-
-    return PeriodEntity(
+    final entity = PeriodEntity(
       dayCounter: params.dayCounter,
       monthCounter: params.monthCounter,
       yearCounter: params.yearCounter,
@@ -29,6 +20,9 @@ class PeriodDataSourcesRemoteImpl implements PeriodDataSources {
       message: params.message,
       id: doc.id,
     );
+
+    await doc.set(mapper.toMap(entity));
+    return entity;
   }
 
   @override
@@ -51,15 +45,8 @@ class PeriodDataSourcesRemoteImpl implements PeriodDataSources {
 
   @override
   Future<PeriodEntity> updatePeriod(UpdatePeriodParams params) async {
-    await databaseService.periods.doc(params.id).update({
-      'day': params.dayCounter,
-      'month': params.monthCounter,
-      'year': params.yearCounter,
-      'name': params.name,
-      'message': params.message,
-    });
-
-    return PeriodEntity(
+    
+      final entity = PeriodEntity(
       dayCounter: params.dayCounter,
       monthCounter: params.monthCounter,
       yearCounter: params.yearCounter,
@@ -67,5 +54,9 @@ class PeriodDataSourcesRemoteImpl implements PeriodDataSources {
       message: params.message,
       id: params.id,
     );
+    
+    await databaseService.periods.doc(params.id).update(mapper.toMap(entity));
+
+    return entity;
   }
 }

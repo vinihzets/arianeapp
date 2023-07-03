@@ -6,9 +6,9 @@ class PeriodMapper implements EntityMapper<PeriodEntity> {
   @override
   PeriodEntity fromMap(Map<String, dynamic> map) {
     return PeriodEntity(
-      dayCounter: map['dayCounter'],
-      monthCounter: map['monthCounter'],
-      yearCounter: map['yearCounter'],
+      dayCounter: map['day'],
+      monthCounter: map['month'],
+      yearCounter: map['year'],
       name: map['name'],
       message: map['message'],
       id: map['id'],
@@ -21,9 +21,9 @@ class PeriodMapper implements EntityMapper<PeriodEntity> {
       'id': entity.id,
       'name': entity.name,
       'message': entity.message,
-      'dayCounter': entity.dayCounter,
-      'monthCounter': entity.monthCounter,
-      'yearCounter': entity.yearCounter,
+      'day': entity.dayCounter,
+      'month': entity.monthCounter,
+      'year': entity.yearCounter,
     };
   }
 }

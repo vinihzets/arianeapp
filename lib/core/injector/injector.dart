@@ -88,7 +88,6 @@ class Injector {
 
     // USECASES
     getIt.registerLazySingleton(() => ReadTypesPerfurationUseCaseImpl(getIt()));
-    getIt.registerLazySingleton(() => UpdatePerfurationsUseCaseImpl(getIt()));
     getIt.registerLazySingleton(() => DeletePerfurationUseCaseImpl(getIt()));
     getIt.registerLazySingleton(() => CreatePerfurationUseCaseImpl(getIt()));
     getIt.registerLazySingleton(() => ReadPerfurationsUseCaseImpl(getIt()));
@@ -114,13 +113,18 @@ class Injector {
 
     //BLOC
 
-    getIt.registerFactory(
-        () => PerfurationsBloc(getIt(), getIt(), getIt(), getIt(), getIt()));
+    getIt.registerFactory(() => PerfurationsBloc(
+          getIt(),
+          getIt(),
+          getIt(),
+          getIt(),
+        ));
     getIt
         .registerFactory(() => PeriodsBloc(getIt(), getIt(), getIt(), getIt()));
     getIt.registerFactory(() =>
         TypePerfurationsBloc(getIt(), getIt(), getIt(), getIt(), getIt()));
-    getIt.registerFactory(() => ClientBloc(getIt(), getIt(), getIt(), getIt()));
+    getIt.registerFactory(
+        () => ClientBloc(getIt(), getIt(), getIt(), getIt(), getIt()));
     getIt.registerFactory(() => HomeBloc(getIt(), getIt()));
     getIt.registerFactory(() => RegisterBloc(getIt()));
     getIt.registerFactory(() => LoginBloc(getIt(), getIt()));

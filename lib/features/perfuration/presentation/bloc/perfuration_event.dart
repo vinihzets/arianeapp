@@ -1,3 +1,5 @@
+import 'package:ariane_app/features/clients/domain/entities/client_entity.dart';
+import 'package:ariane_app/features/type_perfurations/type_perfurations.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/core.dart';
 import '../../perfurations.dart';
@@ -6,9 +8,13 @@ class PerfurationEvent extends BlocEvent {}
 
 class PerfurationEventCreatePerfuration implements PerfurationEvent {
   BuildContext context;
+  ClientEntity client;
+  TypePerfurationEntity typePerfuration;
 
   PerfurationEventCreatePerfuration(
     this.context,
+    this.client,
+    this.typePerfuration,
   );
 }
 
@@ -19,13 +25,6 @@ class PerfurationEventDeletePerfuration implements PerfurationEvent {
   PerfurationEntity entity;
 
   PerfurationEventDeletePerfuration(this.context, this.entity);
-}
-
-class PerfurationEventUpdatePerfuration implements PerfurationEvent {
-  BuildContext context;
-  PerfurationEntity entity;
-
-  PerfurationEventUpdatePerfuration(this.context, this.entity);
 }
 
 class PerfurationReadTypePerfuration implements PerfurationEvent {}
