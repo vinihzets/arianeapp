@@ -20,9 +20,12 @@ import 'package:ariane_app/features/home/presentation/bloc/home_bloc.dart';
 import 'package:ariane_app/features/login/data/datasources/login_datasources.dart';
 import 'package:ariane_app/features/login/data/datasources/remote/login_datasources_remote_impl.dart';
 import 'package:ariane_app/features/login/data/repositories/login_repository_impl.dart';
+
 import 'package:ariane_app/features/login/domain/repositories/login_repository.dart';
 import 'package:ariane_app/features/login/domain/usecases/sign_in_usecase_impl.dart';
 import 'package:ariane_app/features/login/presentation/bloc/login_bloc.dart';
+import 'package:ariane_app/features/pending/data/mappers/pending_mapper.dart';
+import 'package:ariane_app/features/pending/pending.dart';
 import 'package:ariane_app/features/perfuration/domain/usecases/read_type_perfuration_usecase_impl.dart';
 import 'package:ariane_app/features/perfuration/perfurations.dart';
 import 'package:ariane_app/features/periods/periods.dart';
@@ -51,6 +54,7 @@ class Injector {
     getIt.registerLazySingleton(() => TypePerfurationMapper(getIt()));
     getIt.registerLazySingleton(() => PeriodMapper());
     getIt.registerLazySingleton(() => PerfurationMapper(getIt()));
+    getIt.registerLazySingleton(() => PendingMapper());
 
     // DATASOURCES
 
@@ -68,6 +72,8 @@ class Injector {
         () => RegisterDataSourcesRemoteImpl(getIt(), getIt()));
     getIt.registerLazySingleton<LoginDataSources>(
         () => LoginDataSourcesRemoteImpl(getIt(), getIt()));
+    getIt.registerLazySingleton<PendingDataSource>(
+        () => PendingDataSourceRemoteImpl(getIt(), getIt()));
 
     //REPOSITORIES
 
@@ -85,6 +91,8 @@ class Injector {
         () => RegisterRepositoryImpl(getIt()));
     getIt.registerLazySingleton<LoginRepository>(
         () => LoginRepositoryImpl(getIt()));
+    getIt.registerLazySingleton<PendingRepository>(
+        () => PendingRepositoryImpl(getIt()));
 
     // USECASES
     getIt.registerLazySingleton(() => ReadTypesPerfurationUseCaseImpl(getIt()));
@@ -110,6 +118,7 @@ class Injector {
     getIt.registerLazySingleton(() => SignOutUseCaseImpl(getIt()));
     getIt.registerLazySingleton(() => SignUpUseCaseImpl(getIt()));
     getIt.registerLazySingleton(() => SignInUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(() => GetPendingUseCaseImpl(getIt()));
 
     //BLOC
 
@@ -129,5 +138,6 @@ class Injector {
     getIt.registerFactory(() => RegisterBloc(getIt()));
     getIt.registerFactory(() => LoginBloc(getIt(), getIt()));
     getIt.registerFactory(() => SplashBloc(getIt(), getIt()));
+    getIt.registerFactory(() => PendingBloc(getIt(), getIt()));
   }
 }

@@ -1,8 +1,10 @@
+import 'package:ariane_app/features/perfuration/perfurations.dart';
 import 'package:ariane_app/features/periods/periods.dart';
 import 'package:ariane_app/features/type_perfurations/type_perfurations.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../../../clients/clients.dart';
+import '../../../pending/presentation/ui/pending_view.dart';
 import '../../home.dart';
 
 class HomeView extends StatefulWidget {
@@ -34,6 +36,7 @@ class _HomeViewState extends State<HomeView> {
               onPressed: () => bloc.dispatchEvent(HomeEventSignOut(context)),
               child: const Text(
                 'Sair',
+                style: TextStyle(color: Colors.white),
               ))
         ],
       ),
@@ -65,7 +68,7 @@ class _HomeViewState extends State<HomeView> {
         children: const [
           ClientView(),
           TypePerfurationView(),
-          PeriodView(),
+          PendingView(),
         ],
       ),
     );

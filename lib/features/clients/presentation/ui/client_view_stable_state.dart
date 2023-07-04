@@ -23,7 +23,7 @@ class _ClientViewStableStateState extends State<ClientViewStableState> {
   Widget build(BuildContext context) {
     List<ClientEntity> listClients = widget.state.data;
 
-    return ListView.builder(
+    return ListView.separated(
       itemCount: listClients.length,
       itemBuilder: (context, index) {
         final client = listClients[index];
@@ -39,6 +39,7 @@ class _ClientViewStableStateState extends State<ClientViewStableState> {
                 )),
             title: Text(
               '${client.firstName} ${client.lastName}',
+              style: const TextStyle(fontSize: 18),
             ),
             trailing: PopupMenuButton<ClientMenuAction>(
               itemBuilder: (_) => [
@@ -74,6 +75,7 @@ class _ClientViewStableStateState extends State<ClientViewStableState> {
               },
             ));
       },
+      separatorBuilder: (context, index) => const Divider(),
     );
   }
 }

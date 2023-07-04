@@ -27,7 +27,6 @@ class _PerfurationViewState extends State<PerfurationView> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Adicionar Perfuração'),
-        centerTitle: true,
       ),
       body: BlocScreenBuilder(
         stream: bloc.state,
@@ -42,11 +41,3 @@ class _PerfurationViewState extends State<PerfurationView> {
     );
   }
 }
-
-/*
-
-
-
-
-
- */

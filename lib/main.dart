@@ -16,7 +16,7 @@ void main() async {
   routes = GetIt.I.get();
 
   runApp(MaterialApp(
-    theme: CustomThemeData.build(),
+    theme: ThemeData(useMaterial3: true),
     initialRoute: routes.splashView,
     routes: RoutesBuilder.build(routes),
   ));

@@ -23,18 +23,12 @@ class PerfurationViewStableState extends StatefulWidget {
 class _PerfurationViewStableStateState
     extends State<PerfurationViewStableState> {
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     List<TypePerfurationEntity> listTypePerfurations = widget.state.data;
     final client = ModalRoute.of(context)?.settings.arguments as ClientEntity?;
 
     return Column(
       children: [
-        const Text('Tipos De Perfuração'),
         ListView.builder(
           shrinkWrap: true,
           itemCount: listTypePerfurations.length,
@@ -43,15 +37,14 @@ class _PerfurationViewStableStateState
 
             return ListTile(
               leading: Text(typePerfuration.name),
-              trailing: IconButton(
-                  onPressed: client != null
-                      ? () {
-                          widget.bloc.dispatchEvent(
-                              PerfurationEventCreatePerfuration(
-                                  context, client, typePerfuration));
-                        }
-                      : null,
-                  icon: const Icon(Icons.arrow_right)),
+              onTap: client != null
+                  ? () {
+                      widget.bloc.dispatchEvent(
+                          PerfurationEventCreatePerfuration(
+                              context, client, typePerfuration));
+                    }
+                  : null,
+              trailing: const Icon(Icons.arrow_right),
             );
           },
         ),
