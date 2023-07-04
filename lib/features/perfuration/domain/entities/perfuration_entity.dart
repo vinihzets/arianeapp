@@ -4,12 +4,16 @@ import 'package:equatable/equatable.dart';
 
 class PerfurationEntity extends Equatable {
   final String clientId;
+  final String clientName;
   final String id;
+  final DateTime createdAt;
   final TypePerfurationEntity typePerfuration;
 
   const PerfurationEntity({
     required this.clientId,
+    required this.clientName,
     required this.id,
+    required this.createdAt,
     required this.typePerfuration,
   });
 

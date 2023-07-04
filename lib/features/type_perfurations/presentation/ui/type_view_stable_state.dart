@@ -28,8 +28,11 @@ class _TypePerfurationViewStableStateState
       itemCount: listTypePerfurations.length,
       itemBuilder: (context, index) {
         final typePerfuration = listTypePerfurations[index];
+
         return ListTile(
-            leading: Text(typePerfuration.name),
+            leading: Text(
+              typePerfuration.name,
+            ),
             trailing: PopupMenuButton<TypePerfurationMenuAction>(
               itemBuilder: (_) => [
                 const PopupMenuItem<TypePerfurationMenuAction>(

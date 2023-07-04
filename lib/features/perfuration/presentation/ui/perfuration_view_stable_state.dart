@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:ariane_app/core/architecture/bloc_state.dart';
 import 'package:ariane_app/core/global/entities/type_perfuration_entity.dart';
 import 'package:flutter/material.dart';

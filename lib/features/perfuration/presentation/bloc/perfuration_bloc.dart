@@ -25,7 +25,7 @@ class PerfurationsBloc extends Bloc {
     this.readPerfurationsUseCaseImpl,
     this.deletePerfurationUseCaseImpl,
     this.readTypesPerfurationsUseCaseImpl,
-  ) {}
+  );
 
   @override
   mapListenEvent(BlocEvent event) {
@@ -50,7 +50,9 @@ class PerfurationsBloc extends Bloc {
 
     final createRequest = await createPerfurationUseCaseImpl(
         CreatePerfurationParams(
-            clientId: client.id, typePerfurationEntity: entity));
+            clientName: client.firstName,
+            clientId: client.id,
+            typePerfurationEntity: entity));
 
     createRequest.fold((l) {
       showFailure(context, 'Erro ao registrar perfuração');

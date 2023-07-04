@@ -121,11 +121,14 @@ class UpdatePeriodParams {
 }
 
 class CreatePerfurationParams {
+  final String clientName;
   final String clientId;
   final TypePerfurationEntity typePerfurationEntity;
 
   CreatePerfurationParams(
-      {required this.clientId, required this.typePerfurationEntity});
+      {required this.clientName,
+      required this.clientId,
+      required this.typePerfurationEntity});
 }
 
 class DeletePerfurationParams {

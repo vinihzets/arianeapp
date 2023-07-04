@@ -15,8 +15,11 @@ class PerfurationDataSourcesRemoteImpl implements PerfurationDataSources {
   Future<PerfurationEntity> createPerfuration(
       CreatePerfurationParams params) async {
     final doc = databaseService.perfurations.doc();
+
     final entity = PerfurationEntity(
+        clientName: params.clientName,
         clientId: params.clientId,
+        createdAt: DateTime.now(),
         id: doc.id,
         typePerfuration: params.typePerfurationEntity);
 

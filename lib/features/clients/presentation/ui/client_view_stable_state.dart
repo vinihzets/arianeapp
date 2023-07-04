@@ -28,10 +28,18 @@ class _ClientViewStableStateState extends State<ClientViewStableState> {
       itemBuilder: (context, index) {
         final client = listClients[index];
         return ListTile(
-            leading: IconButton(onPressed: (){
-              widget.bloc.dispatchEvent(ClientEventNavigateToPerfuration(context, client));
-            }, icon: const Icon(Icons.add, color: Colors.deepPurple,)),
-            title: Text('${client.firstName} ${client.lastName}', style: const TextStyle(fontSize: 18),),
+            leading: IconButton(
+                onPressed: () {
+                  widget.bloc.dispatchEvent(
+                      ClientEventNavigateToPerfuration(context, client));
+                },
+                icon: const Icon(
+                  Icons.add,
+                  color: Colors.deepPurple,
+                )),
+            title: Text(
+              '${client.firstName} ${client.lastName}',
+            ),
             trailing: PopupMenuButton<ClientMenuAction>(
               itemBuilder: (_) => [
                 const PopupMenuItem<ClientMenuAction>(
@@ -41,7 +49,8 @@ class _ClientViewStableStateState extends State<ClientViewStableState> {
                 const PopupMenuItem<ClientMenuAction>(
                   value: ClientMenuAction.update,
                   child: Text('Atualizar'),
-                ),const PopupMenuItem<ClientMenuAction>(
+                ),
+                const PopupMenuItem<ClientMenuAction>(
                   value: ClientMenuAction.read,
                   child: Text('Visualizar'),
                 ),
@@ -56,14 +65,15 @@ class _ClientViewStableStateState extends State<ClientViewStableState> {
                     widget.bloc.dispatchEvent(
                         ClientEventUpdateClient(context, client));
                     break;
-                    case ClientMenuAction.read:
-                    showDialog(context: context, builder: (context) => ShowCustomClientDetails(entity: client));
+                  case ClientMenuAction.read:
+                    showDialog(
+                        context: context,
+                        builder: (context) =>
+                            ShowCustomClientDetails(entity: client));
                 }
               },
             ));
       },
     );
   }
-
- 
 }

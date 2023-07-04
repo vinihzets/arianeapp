@@ -31,7 +31,6 @@ class _PeriodsViewStableStateState extends State<PeriodsViewStableState> {
         return ListTile(
             leading: Text(
               periods.name,
-              style: const TextStyle(fontSize: 18),
             ),
             trailing: PopupMenuButton<PeriodsMenuAction>(
               itemBuilder: (_) => [
