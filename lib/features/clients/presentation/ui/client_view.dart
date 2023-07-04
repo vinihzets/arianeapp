@@ -35,7 +35,7 @@ class _ClientViewState extends State<ClientView> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => bloc.dispatchEvent(ClientEventCreateClient(context)),
-        label: const Text('Novo Cadastro'),
+        label: const Text('Cadastrar Novo Cliente'),
         icon: const Icon(Icons.person_add_alt_outlined),
       ),
     );

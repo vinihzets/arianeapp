@@ -1,8 +1,6 @@
-import 'package:ariane_app/features/perfuration/perfurations.dart';
-import 'package:ariane_app/features/periods/periods.dart';
-import 'package:ariane_app/features/type_perfurations/type_perfurations.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import '../../../../core/drawer/custom_drawer.dart';
 import '../../../clients/clients.dart';
 import '../../../pending/presentation/ui/pending_view.dart';
 import '../../home.dart';
@@ -30,13 +28,13 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const CustomDrawer(),
       appBar: AppBar(
         actions: [
           TextButton(
               onPressed: () => bloc.dispatchEvent(HomeEventSignOut(context)),
               child: const Text(
                 'Sair',
-                style: TextStyle(color: Colors.white),
               ))
         ],
       ),
@@ -50,12 +48,12 @@ class _HomeViewState extends State<HomeView> {
           items: const [
             BottomNavigationBarItem(
                 icon: Icon(Icons.person_2_outlined), label: 'Clientes'),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.home),
+            //   label: 'Tipos Perfurações',
+            // ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Tipos Perfurações',
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.person_2_outlined), label: 'Periodos'),
+                icon: Icon(Icons.notifications_active), label: 'Notificações'),
           ]),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
@@ -67,7 +65,7 @@ class _HomeViewState extends State<HomeView> {
         },
         children: const [
           ClientView(),
-          TypePerfurationView(),
+          // TypePerfurationView(),
           PendingView(),
         ],
       ),

@@ -1,3 +1,4 @@
+import 'package:ariane_app/core/validators/form_builder_validators.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
@@ -19,6 +20,7 @@ class _CreateUpdateClientDialogState extends State<CreateUpdateClientDialog> {
   late TextEditingController birthdayController;
   late MaskTextInputFormatter maskNumberFormatter;
   late MaskTextInputFormatter maskBirthdayFormatter;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -52,72 +54,78 @@ class _CreateUpdateClientDialogState extends State<CreateUpdateClientDialog> {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
         child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                  widget.client == null ? 'Novo Cliente' : 'Atualizar Cliente'),
-              const SizedBox(height: 6),
-              SizedBox(
-                width: 220,
-                child: TextField(
-                  controller: firstNameController,
-                  decoration: const InputDecoration(labelText: 'Nome'),
-                ),
-              ),
-              const SizedBox(
-                height: 3,
-              ),
-              SizedBox(
-                width: 220,
-                child: TextField(
-                  controller: lastNameController,
-                  decoration: const InputDecoration(labelText: 'Sobrenome'),
-                ),
-              ),
-              SizedBox(
-                width: 220,
-                child: TextField(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(widget.client == null
+                    ? 'Novo Cliente'
+                    : 'Atualizar Cliente'),
+                const SizedBox(height: 6),
+                TextFormField(
+                    controller: firstNameController,
+                    decoration: const InputDecoration(labelText: 'Nome'),
+                    validator: (value) =>
+                        FormBuilderValidator.firstNameValidator(value)),
+                TextFormField(
+                    controller: lastNameController,
+                    decoration: const InputDecoration(labelText: 'Sobrenome'),
+                    validator: (value) =>
+                        FormBuilderValidator.lastNameValidator(value)),
+                TextFormField(
                   inputFormatters: [maskNumberFormatter],
                   controller: numberController,
-                  decoration: const InputDecoration(labelText: 'Numero'),
-                ),
-              ),
-              SizedBox(
-                width: 220,
-                child: TextField(
-                  inputFormatters: [maskBirthdayFormatter],
-                  controller: birthdayController,
                   decoration:
-                      const InputDecoration(labelText: 'Data de Nascimento'),
+                      const InputDecoration(labelText: 'Número de telefone'),
+                  validator: (value) =>
+                      FormBuilderValidator.numberValidator(value),
+                  keyboardType: TextInputType.phone,
                 ),
-              ),
-              const SizedBox(
-                height: 3,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  final unMaskedNumber =
-                      maskNumberFormatter.unmaskText(numberController.text);
-                  final unMaskedBirthday =
-                      maskBirthdayFormatter.unmaskText(birthdayController.text);
+                TextFormField(
+                    inputFormatters: [maskBirthdayFormatter],
+                    controller: birthdayController,
+                    decoration:
+                        const InputDecoration(labelText: 'Data de Nascimento'),
+                    validator: (value) =>
+                        FormBuilderValidator.birthdayValidator(value)),
+                const SizedBox(
+                  height: 3,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    final unMaskedNumber =
+                        maskNumberFormatter.unmaskText(numberController.text);
 
-                  Navigator.of(context).pop(ClientEntity(
-                    id: widget.client?.id ?? '',
-                    firstName: firstNameController.text,
-                    lastName: lastNameController.text,
-                    number: int.parse(unMaskedNumber),
-                    birthday: unMaskedBirthday,
-                  ));
-                },
-                child: Text(
-                  widget.client == null ? 'Criar' : 'Atualizar',
-                ),
-              )
-            ],
+                    final unMaskedBirthday = maskBirthdayFormatter
+                        .unmaskText(birthdayController.text);
+
+                    if (_formKey.currentState?.validate() ?? false) {
+                      Navigator.of(context).pop(ClientEntity(
+                        id: widget.client?.id ?? '',
+                        firstName: firstNameController.text,
+                        lastName: lastNameController.text,
+                        number: int.parse(unMaskedNumber),
+                        birthday: unMaskedBirthday,
+                      ));
+                    }
+                  },
+                  child: Text(
+                    widget.client == null ? 'Criar' : 'Atualizar',
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
     );
+  }
+
+  bool isNumeric(String? value) {
+    if (value == null) {
+      return false;
+    }
+    return double.tryParse(value) != null;
   }
 }

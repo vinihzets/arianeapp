@@ -39,7 +39,6 @@ class _ClientViewStableStateState extends State<ClientViewStableState> {
                 )),
             title: Text(
               '${client.firstName} ${client.lastName}',
-              style: const TextStyle(fontSize: 18),
             ),
             trailing: PopupMenuButton<ClientMenuAction>(
               itemBuilder: (_) => [

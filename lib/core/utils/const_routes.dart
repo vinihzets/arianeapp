@@ -5,4 +5,5 @@ class ConstRoutes {
   final String homeView = '/home';
   final String typePerfurationView = '/typePerfuration';
   final String perfuration = '/perfuration';
+  final String periodsView = '/periods';
 }

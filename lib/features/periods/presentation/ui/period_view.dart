@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../../../../core/core.dart';
+import '../../../../core/drawer/custom_drawer.dart';
 import '../../periods.dart';
 
 class PeriodView extends StatefulWidget {
@@ -24,6 +25,8 @@ class _PeriodViewState extends State<PeriodView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
+      drawer: const CustomDrawer(),
       body: BlocScreenBuilder(
         stream: bloc.state,
         onEmpty: (state) => PeriodViewEmptyState(state: state),
@@ -35,7 +38,7 @@ class _PeriodViewState extends State<PeriodView> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => bloc.dispatchEvent(PeriodEventCreatePeriod(context)),
-        label: const Text('Novo Cadastro'),
+        label: const Text('Cadastrar Novo Periodo'),
         icon: const Icon(Icons.person_add_alt_outlined),
       ),
     );

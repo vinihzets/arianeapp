@@ -1,3 +1,4 @@
+import 'package:ariane_app/core/validators/form_builder_validators.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/global/entities/period_entity.dart';
 import '../widgets/counter_widget.dart';
@@ -17,6 +18,7 @@ class _CreateUpdatePeriodDialogState extends State<CreateUpdatePeriodDialog> {
   late int dayCounter;
   late int monthCounter;
   late int yearCounter;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -40,79 +42,108 @@ class _CreateUpdatePeriodDialogState extends State<CreateUpdatePeriodDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CounterWidget(
-                  label: 'Dia',
-                  counter: dayCounter,
-                  onAdd: () {
-                    dayCounter++;
-                    setState(() {});
-                  },
-                  onRemove: () {
-                    dayCounter--;
-                    setState(() {});
-                  }),
-              CounterWidget(
-                  label: 'Mes',
-                  counter: monthCounter,
-                  onAdd: () {
-                    monthCounter++;
-                    setState(() {});
-                  },
-                  onRemove: () {
-                    monthCounter--;
-                    setState(() {});
-                  }),
-              CounterWidget(
-                  label: 'Ano',
-                  counter: yearCounter,
-                  onAdd: () {
-                    yearCounter++;
-                    setState(() {});
-                  },
-                  onRemove: () {
-                    setState(() {});
-                    yearCounter--;
-                  }),
-            ],
-          ),
-          SizedBox(
-            width: 260,
-            child: TextField(
-              controller: nameController,
+    return Form(
+      key: _formKey,
+      child: Dialog(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CounterWidget(
+                    label: 'Dia',
+                    counter: dayCounter,
+                    onAdd: () {
+                      if (dayCounter > 31) {
+                        return;
+                      }
+                      dayCounter++;
+                      setState(() {});
+                    },
+                    onRemove: () {
+                      if (dayCounter < 2) {
+                        return;
+                      }
+
+                      dayCounter--;
+                      setState(() {});
+                    }),
+                CounterWidget(
+                    label: 'Mes',
+                    counter: monthCounter,
+                    onAdd: () {
+                      if (monthCounter > 11) {
+                        return;
+                      }
+                      monthCounter++;
+                      setState(() {});
+                    },
+                    onRemove: () {
+                      if (monthCounter < 1) {
+                        return;
+                      }
+
+                      monthCounter--;
+                      setState(() {});
+                    }),
+                CounterWidget(
+                    label: 'Ano',
+                    counter: yearCounter,
+                    onAdd: () {
+                      if (yearCounter > 11) {
+                        return;
+                      }
+                      yearCounter++;
+                      setState(() {});
+                    },
+                    onRemove: () {
+                      if (yearCounter < 1) {
+                        return;
+                      }
+                      setState(() {});
+                      yearCounter--;
+                    }),
+              ],
             ),
-          ),
-          SizedBox(
-            width: 260,
-            child: TextField(
-              controller: messageController,
+            SizedBox(
+              width: 260,
+              child: TextFormField(
+                validator: (v) =>
+                    FormBuilderValidator.customMinLengthValidator(v),
+                controller: nameController,
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 24,
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop(PeriodEntity(
-                name: nameController.text,
-                message: messageController.text,
-                id: widget.period?.id ?? '',
-                dayCounter: dayCounter,
-                monthCounter: monthCounter,
-                yearCounter: yearCounter,
-              ));
-            },
-            child: Text(
-              widget.period == null ? 'Criar' : 'Atualizar',
+            SizedBox(
+              width: 260,
+              child: TextFormField(
+                validator: (value) =>
+                    FormBuilderValidator.customMinLengthValidator(value),
+                controller: messageController,
+              ),
             ),
-          )
-        ],
+            const SizedBox(
+              height: 24,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState?.validate() ?? true) {
+                  Navigator.of(context).pop(PeriodEntity(
+                    name: nameController.text,
+                    message: messageController.text,
+                    id: widget.period?.id ?? '',
+                    dayCounter: dayCounter,
+                    monthCounter: monthCounter,
+                    yearCounter: yearCounter,
+                  ));
+                }
+              },
+              child: Text(
+                widget.period == null ? 'Criar' : 'Atualizar',
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

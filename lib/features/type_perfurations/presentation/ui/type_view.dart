@@ -1,3 +1,4 @@
+import 'package:ariane_app/core/drawer/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../../../../core/core.dart';
@@ -25,6 +26,8 @@ class _TypePerfurationViewState extends State<TypePerfurationView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
+      drawer: CustomDrawer(),
       body: BlocScreenBuilder(
         stream: bloc.state,
         onEmpty: (state) => TypePerfurationViewEmptyState(state: state),

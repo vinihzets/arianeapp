@@ -36,11 +36,9 @@ class _CounterWidgetState extends State<CounterWidget> {
               padding:
                   const EdgeInsets.symmetric(vertical: 2.0, horizontal: 0.0),
               decoration: const BoxDecoration(
-                  color: Colors.blue,
                   borderRadius: BorderRadius.all(Radius.circular(20))),
               child: Text(
                 widget.counter.toString(),
-                style: const TextStyle(color: Colors.white),
               ),
             ),
             IconButton(onPressed: widget.onAdd, icon: const Icon(Icons.add)),
