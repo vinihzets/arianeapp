@@ -1,9 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:ariane_app/features/type_perfurations/type_perfurations.dart';
 import 'package:dartz/dartz.dart';
 
 import 'package:ariane_app/core/failure/failure.dart';
+import 'package:ariane_app/features/type_perfurations/type_perfurations.dart';
 
+import '../../features/pending/pending.dart';
 import '../global/entities/period_entity.dart';
 
 abstract class UseCase<Input, Output> {
@@ -145,3 +146,15 @@ class UpdatePerfurationParams {
 }
 
 class ReadPerfurationParams {}
+
+class GetPendingsParams {
+  final DateTime date;
+  final PendingEntity? startAfter;
+  final int ammount;
+
+  GetPendingsParams({
+    required this.date,
+    required this.startAfter,
+    required this.ammount,
+  });
+}

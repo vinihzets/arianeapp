@@ -1,6 +1,3 @@
-
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import '../../../../core/core.dart';
@@ -28,21 +25,21 @@ class _CreateUpdateTypePerfurationStableStateState
 
   @override
   void initState() {
-    namePerfurationController = TextEditingController(text: widget.typePerfuration?.name);
+    namePerfurationController = TextEditingController(
+      text: widget.typePerfuration?.name,
+    );
+
     selecteds = widget.typePerfuration?.listPeriods.toList() ?? [];
 
     selectedMap = {};
- 
+
     for (var element in widget.state.data) {
       selectedMap[element] = false;
     }
- 
-   for (var element in selecteds) {
+
+    for (var element in selecteds) {
       selectedMap[element] = true;
     }
-
- 
-   
     super.initState();
   }
 

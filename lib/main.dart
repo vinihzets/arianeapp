@@ -8,7 +8,7 @@ import 'package:get_it/get_it.dart';
 void main() async {
   await FirebaseInitialize.build();
 
-   Injector.build();
+  Injector.build();
 
   late ConstRoutes routes;
 
@@ -16,7 +16,10 @@ void main() async {
 
   runApp(MaterialApp(
     theme: ThemeData(
-      useMaterial3: true
+      useMaterial3: true,
+      colorScheme: ColorScheme.fromSeed(
+        seedColor: Colors.deepPurple,
+      ),
     ),
     initialRoute: routes.splashView,
     routes: RoutesBuilder.build(routes),
