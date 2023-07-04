@@ -19,15 +19,15 @@ class CustomDrawerTile extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            hoverColor: Colors.blue,
+            iconColor: Colors.deepPurple,
             dense: true,
-            visualDensity: VisualDensity(vertical: -4),
+            visualDensity: const VisualDensity(vertical: 0),
             leading: leading,
             trailing: trailing,
             title: Text(title),
             onTap: onPressed,
           ),
-          Divider(
+          const Divider(
             color: Colors.grey,
           ),
         ],
