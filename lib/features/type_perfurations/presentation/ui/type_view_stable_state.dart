@@ -30,7 +30,7 @@ class _TypePerfurationViewStableStateState
         final typePerfuration = listTypePerfurations[index];
 
         return ListTile(
-            leading: Text(
+            title: Text(
               typePerfuration.name,
             ),
             trailing: PopupMenuButton<TypePerfurationMenuAction>(

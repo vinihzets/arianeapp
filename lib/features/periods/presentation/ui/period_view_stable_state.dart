@@ -29,7 +29,7 @@ class _PeriodsViewStableStateState extends State<PeriodsViewStableState> {
       itemBuilder: (context, index) {
         final periods = listPeriods[index];
         return ListTile(
-            leading: Text(
+            title: Text(
               periods.name,
             ),
             trailing: PopupMenuButton<PeriodsMenuAction>(
