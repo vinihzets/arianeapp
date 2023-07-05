@@ -7,11 +7,11 @@ class ClientViewEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: const [
-          Text('Nenhum Cliente Cadastrado Ainda'),
+        children: [
+          Text('Nenhum cliente cadastrado ainda.'),
           Icon(
             Icons.person_add_disabled_outlined,
             size: 89,

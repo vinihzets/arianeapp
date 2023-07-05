@@ -5,10 +5,9 @@ admin.initializeApp(functions.config().firebase);
 /**
  * Hooks
  */
-export { onPerfurationCreated } from './hooks/perfuration_hook';
-export { onPerfurationUpdated } from './hooks/perfuration_hook';
+export { onPerfurationCreated, onPerfurationUpdated, onPerfurationDeleted } from './hooks/perfuration_hook';
+export { onClientUpdated, onClientDeleted } from './hooks/client_hook';
 
-export { onClientUpdated } from './hooks/client_hook';
 export { onPeriodUpdated } from './hooks/period_hook';
 export { onTypePerfurationUpdated } from './hooks/type_perfuration_hook';
 

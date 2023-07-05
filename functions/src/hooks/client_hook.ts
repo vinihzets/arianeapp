@@ -25,3 +25,15 @@ export const onClientUpdated = functions.firestore.document('/clients/{clientId}
         return Promise.all(cJobs);
     });
 
+
+export const onClientDeleted = functions.firestore.document('/clients/{clientId}')
+    .onDelete(async (snap, _) => {
+        const cJobs: Promise<any>[] = [];
+        const perfurations = await admin.firestore().collection('perfurations').where('clientId', '==', snap.id).get();
+
+        perfurations.forEach((element) => {
+            cJobs.push(element.ref.delete());
+        })
+
+        return Promise.all(cJobs);
+    });

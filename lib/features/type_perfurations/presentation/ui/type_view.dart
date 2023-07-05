@@ -27,7 +27,7 @@ class _TypePerfurationViewState extends State<TypePerfurationView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      drawer: CustomDrawer(),
+      drawer: const CustomDrawer(),
       body: BlocScreenBuilder(
         stream: bloc.state,
         onEmpty: (state) => TypePerfurationViewEmptyState(state: state),
@@ -41,7 +41,7 @@ class _TypePerfurationViewState extends State<TypePerfurationView> {
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => bloc
             .dispatchEvent(TypePerfurationEventCreateTypePerfuration(context)),
-        label: const Text('Novo Tipo de Perfuração'),
+        label: const Text('Novo tipo de perfuração'),
         icon: const Icon(Icons.person_add_alt_outlined),
       ),
     );

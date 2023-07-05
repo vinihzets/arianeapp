@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class ClientEntity extends Equatable {
   final String firstName;
   final String lastName;
-  final int number;
+  final String number;
   final String birthday;
   final String id;
 

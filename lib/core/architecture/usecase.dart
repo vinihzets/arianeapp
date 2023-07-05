@@ -30,7 +30,7 @@ class SignUpParams {
 class CreateClientParams {
   final String firstName;
   final String lastName;
-  final int number;
+  final String number;
   final String birthday;
 
   CreateClientParams({
@@ -51,7 +51,7 @@ class DeleteClientParams {
 class UpdateClientParams {
   final String firstName;
   final String lastName;
-  final int number;
+  final String number;
   final String birthday;
   final String id;
   UpdateClientParams({

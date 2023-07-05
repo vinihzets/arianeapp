@@ -47,13 +47,13 @@ class _HomeViewState extends State<HomeView> {
           },
           items: const [
             BottomNavigationBarItem(
-                icon: Icon(Icons.person_2_outlined), label: 'Clientes'),
-            // BottomNavigationBarItem(
-            //   icon: Icon(Icons.home),
-            //   label: 'Tipos Perfurações',
-            // ),
+              icon: Icon(Icons.person_2_outlined),
+              label: 'Clientes',
+            ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.notifications_active), label: 'Notificações'),
+              icon: Icon(Icons.notifications_active),
+              label: 'Notificações',
+            ),
           ]),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
@@ -65,7 +65,6 @@ class _HomeViewState extends State<HomeView> {
         },
         children: const [
           ClientView(),
-          // TypePerfurationView(),
           PendingView(),
         ],
       ),

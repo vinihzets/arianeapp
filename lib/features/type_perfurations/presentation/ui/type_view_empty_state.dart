@@ -7,11 +7,11 @@ class TypePerfurationViewEmptyState extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        children: const [
-          Text('Nenhuma Perfuraçao Cadastrada Ainda'),
+        children: [
+          Text('Nenhuma perfuração cadastrado.'),
           Icon(
             Icons.person_add_disabled_outlined,
             size: 89,

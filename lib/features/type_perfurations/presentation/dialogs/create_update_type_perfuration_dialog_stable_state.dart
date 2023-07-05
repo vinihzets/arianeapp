@@ -63,8 +63,8 @@ class _CreateUpdateTypePerfurationStableStateState
         child: Column(
           children: [
             Text(widget.typePerfuration == null
-                ? 'Novo Tipo de Perfuração'
-                : 'Atualizar Tipo de Perfuração'),
+                ? 'Novo tipo de perfuração'
+                : 'Atualizar tipo de perfuração'),
             const SizedBox(height: 6),
             SizedBox(
               width: 220,

@@ -61,6 +61,21 @@ export const onPerfurationCreated = functions.firestore.document('/perfurations/
     });
 
 
+export const onPerfurationDeleted = functions.firestore.document('/perfurations/{perfurationId}')
+    .onDelete(async (snap, _) => {
+        const cJobs: Promise<any>[] = [];
+
+        const clientId = snap.data()['clientId'];
+        const pendings = await admin.firestore().collection('pendings').where('clientId', '==', clientId).get();
+
+        pendings.forEach((element) => {
+            cJobs.push(element.ref.delete());
+        })
+
+        return Promise.all(cJobs);
+    });
+
+
 export const onPerfurationUpdated = functions.firestore.document('/perfurations/{perfurationId}')
     .onUpdate(async (snap, _) => {
 

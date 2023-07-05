@@ -26,14 +26,19 @@ class _CreateUpdateClientDialogState extends State<CreateUpdateClientDialog> {
   void initState() {
     firstNameController = TextEditingController(text: widget.client?.firstName);
     lastNameController = TextEditingController(text: widget.client?.lastName);
-    numberController = TextEditingController(
-      text: widget.client?.number.toString(),
-    );
-    maskNumberFormatter = MaskTextInputFormatter(mask: '(##) #####-####');
-
-    maskBirthdayFormatter =
-        MaskTextInputFormatter(mask: '##/##/####', initialText: '03/05/1998');
     birthdayController = TextEditingController(text: widget.client?.birthday);
+    numberController = TextEditingController(
+      text: widget.client?.number,
+    );
+
+    maskNumberFormatter = MaskTextInputFormatter(
+      mask: '(##) #####-####',
+      initialText: widget.client?.number ?? '(62) 98642-4219',
+    );
+    maskBirthdayFormatter = MaskTextInputFormatter(
+      mask: '##/##/####',
+      initialText: widget.client?.birthday ?? '03/05/1998',
+    );
 
     super.initState();
   }
@@ -50,19 +55,15 @@ class _CreateUpdateClientDialogState extends State<CreateUpdateClientDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      child: Padding(
+    return AlertDialog(
+      title: Text(widget.client == null ? 'Novo Cliente' : 'Atualizar Cliente'),
+      content: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
             child: Column(
-              mainAxisSize: MainAxisSize.min,
               children: [
-                Text(widget.client == null
-                    ? 'Novo Cliente'
-                    : 'Atualizar Cliente'),
-                const SizedBox(height: 6),
                 TextFormField(
                     controller: firstNameController,
                     decoration: const InputDecoration(labelText: 'Nome'),
@@ -89,36 +90,29 @@ class _CreateUpdateClientDialogState extends State<CreateUpdateClientDialog> {
                         const InputDecoration(labelText: 'Data de Nascimento'),
                     validator: (value) =>
                         FormBuilderValidator.birthdayValidator(value)),
-                const SizedBox(
-                  height: 3,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    final unMaskedNumber =
-                        maskNumberFormatter.unmaskText(numberController.text);
-
-                    final unMaskedBirthday = maskBirthdayFormatter
-                        .unmaskText(birthdayController.text);
-
-                    if (_formKey.currentState?.validate() ?? false) {
-                      Navigator.of(context).pop(ClientEntity(
-                        id: widget.client?.id ?? '',
-                        firstName: firstNameController.text,
-                        lastName: lastNameController.text,
-                        number: int.parse(unMaskedNumber),
-                        birthday: unMaskedBirthday,
-                      ));
-                    }
-                  },
-                  child: Text(
-                    widget.client == null ? 'Criar' : 'Atualizar',
-                  ),
-                )
               ],
             ),
           ),
         ),
       ),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            if (_formKey.currentState?.validate() ?? false) {
+              Navigator.of(context).pop(ClientEntity(
+                id: widget.client?.id ?? '',
+                firstName: firstNameController.text,
+                lastName: lastNameController.text,
+                number: numberController.text,
+                birthday: birthdayController.text,
+              ));
+            }
+          },
+          child: Text(
+            widget.client == null ? 'Criar' : 'Atualizar',
+          ),
+        )
+      ],
     );
   }
 
