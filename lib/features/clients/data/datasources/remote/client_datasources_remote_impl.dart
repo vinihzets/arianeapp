@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:ariane_app/core/architecture/usecase.dart';
 import 'package:ariane_app/core/services/database_service.dart';
 import 'package:ariane_app/features/clients/data/datasources/client_datasources.dart';
@@ -77,8 +75,6 @@ class ClientDataSourcesRemoteImpl implements ClientDataSources {
         .startAt([params.query]).endAt(["${params.query}\uf8ff"]).get();
 
     final clients = query.docs.map((e) => mapper.fromMap(e.data())).toList();
-
-    inspect(clients);
 
     return clients;
   }
