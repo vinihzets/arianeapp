@@ -46,11 +46,7 @@ class _ClientViewStableStateState extends State<ClientViewStableState> {
 
   @override
   Widget build(BuildContext context) {
-    List<ClientEntity> listClients = data.listClients;
-
     return ListViewClientTile(
-        scrollController: scrollController,
-        listClients: listClients,
-        bloc: widget.bloc);
+        scrollController: scrollController, data: data, bloc: widget.bloc);
   }
 }

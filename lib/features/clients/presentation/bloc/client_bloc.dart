@@ -1,5 +1,6 @@
 import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/core/components/show_confirmation_dialog.dart';
+import 'package:ariane_app/features/clients/domain/usecases/search_client_usecase_impl.dart';
 import 'package:flutter/material.dart';
 import '../../clients.dart';
 
@@ -15,6 +16,7 @@ class ClientBloc extends Bloc {
   final ReadClientUseCaseImpl readClientUseCaseImpl;
   final DeleteClientUseCaseImpl deleteClientUseCaseImpl;
   final UpdateClientUseCaseImpl updateClientUseCaseImpl;
+  final SearchClientUseCaseImpl searchClientUseCaseImpl;
   final ConstRoutes routes;
   late final List<ClientEntity> listClients;
 
@@ -23,6 +25,7 @@ class ClientBloc extends Bloc {
     this.readClientUseCaseImpl,
     this.deleteClientUseCaseImpl,
     this.updateClientUseCaseImpl,
+    this.searchClientUseCaseImpl,
     this.routes,
   ) {
     listClients = [];
@@ -42,6 +45,8 @@ class ClientBloc extends Bloc {
       _handleClientNavigateToPerfuration(event.context, event.entity);
     } else if (event is ClientEventLoadMore) {
       _handleGetMore(event.ammount);
+    } else if (event is ClientEventSearch) {
+      _handleSearchClient(event.query);
     }
   }
 
@@ -168,6 +173,22 @@ class ClientBloc extends Bloc {
       dispatchState(BlocStableState(
           data: ClientStableData(
               listClients: listClients, reachMax: r.length < ammount)));
+    });
+  }
+
+  _handleSearchClient(String query) async {
+    final result =
+        await searchClientUseCaseImpl(SearchClientParams(query: query));
+
+    result.fold((l) {
+      dispatchState(BlocErrorState());
+    }, (r) {
+      if (r.isEmpty) {
+        dispatchState(BlocEmptyState());
+      } else {
+        dispatchState(BlocStableState(
+            data: ClientStableData(listClients: r, reachMax: true)));
+      }
     });
   }
 }

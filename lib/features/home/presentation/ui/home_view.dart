@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import '../../../../core/drawer/custom_drawer.dart';
 import '../../../clients/clients.dart';
 import '../../../pending/presentation/ui/pending_view.dart';
 import '../../home.dart';
@@ -27,6 +28,16 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const CustomDrawer(),
+      appBar: AppBar(
+        scrolledUnderElevation: 0.0,
+        actions: [
+          TextButton(
+            onPressed: () {},
+            child: const Text('Sair'),
+          ),
+        ],
+      ),
       body: IndexedStack(
         index: _page,
         children: const [

@@ -6,5 +6,5 @@ abstract class ClientDataSources {
   Future<List<ClientEntity>> readClient(GetClientsParams params);
   Future<void> deleteClient(DeleteClientParams entity);
   Future<ClientEntity> updateClient(UpdateClientParams params);
-  Future<List<ClientEntity>> searchClient(String query);
+  Future<List<ClientEntity>> searchClient(SearchClientParams query);
 }

@@ -9,6 +9,7 @@ import 'package:ariane_app/features/clients/domain/repositories/client_repositor
 import 'package:ariane_app/features/clients/domain/usecases/create_client_usecase_impl.dart';
 import 'package:ariane_app/features/clients/domain/usecases/delete_client_usecase_impl.dart';
 import 'package:ariane_app/features/clients/domain/usecases/read_client_usecase_impl.dart';
+import 'package:ariane_app/features/clients/domain/usecases/search_client_usecase_impl.dart';
 import 'package:ariane_app/features/clients/domain/usecases/update_client_usecase_impl.dart';
 import 'package:ariane_app/features/clients/presentation/bloc/client_bloc.dart';
 import 'package:ariane_app/features/home/data/datasources/home_datasources.dart';
@@ -94,6 +95,8 @@ class Injector {
         () => PendingRepositoryImpl(getIt()));
 
     // USECASES
+
+    getIt.registerLazySingleton(() => SearchClientUseCaseImpl(getIt()));
     getIt.registerLazySingleton(() => ReadTypesPerfurationUseCaseImpl(getIt()));
     getIt.registerLazySingleton(() => DeletePerfurationUseCaseImpl(getIt()));
     getIt.registerLazySingleton(() => CreatePerfurationUseCaseImpl(getIt()));
@@ -132,7 +135,7 @@ class Injector {
     getIt.registerFactory(() =>
         TypePerfurationsBloc(getIt(), getIt(), getIt(), getIt(), getIt()));
     getIt.registerFactory(
-        () => ClientBloc(getIt(), getIt(), getIt(), getIt(), getIt()));
+        () => ClientBloc(getIt(), getIt(), getIt(), getIt(), getIt(), getIt()));
     getIt.registerFactory(() => HomeBloc(getIt(), getIt()));
     getIt.registerFactory(() => RegisterBloc(getIt()));
     getIt.registerFactory(() => LoginBloc(getIt(), getIt()));

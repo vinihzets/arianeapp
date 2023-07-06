@@ -44,3 +44,9 @@ class ClientEventLoadMore implements ClientEvent {
 
   ClientEventLoadMore(this.ammount);
 }
+
+class ClientEventSearch implements ClientEvent {
+  String query;
+
+  ClientEventSearch(this.query);
+}

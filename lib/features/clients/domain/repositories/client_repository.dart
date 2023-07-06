@@ -9,4 +9,6 @@ abstract class ClientRepository {
       GetClientsParams params);
   Future<Either<Failure, dynamic>> deleteClient(DeleteClientParams entity);
   Future<Either<Failure, ClientEntity>> updateClient(UpdateClientParams params);
+  Future<Either<Failure, List<ClientEntity>>> searchClient(
+      SearchClientParams params);
 }

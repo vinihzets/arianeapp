@@ -3,20 +3,30 @@ import 'package:flutter/material.dart';
 
 class ListViewClientTile extends StatelessWidget {
   final ScrollController? scrollController;
-  final List<ClientEntity> listClients;
+  final ClientStableData data;
   final ClientBloc bloc;
   const ListViewClientTile(
       {required this.scrollController,
-      required this.listClients,
+      required this.data,
       required this.bloc,
       super.key});
 
   @override
   Widget build(BuildContext context) {
+    final List<ClientEntity> listClients = data.listClients;
+
     return ListView.separated(
       controller: scrollController,
-      itemCount: listClients.length,
+      itemCount: listClients.length + 1,
       itemBuilder: (context, index) {
+        if (index == listClients.length) {
+          return Center(
+            child: data.reachMax
+                ? const Text('Isso é tudo!')
+                : const CircularProgressIndicator.adaptive(),
+          );
+        }
+
         final client = listClients[index];
 
         return ListTile(

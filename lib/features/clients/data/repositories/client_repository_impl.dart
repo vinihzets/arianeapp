@@ -47,4 +47,14 @@ class ClientRepositoryImpl implements ClientRepository {
       return Left(RemoteFailure(message: e.toString()));
     }
   }
+
+  @override
+  Future<Either<Failure, List<ClientEntity>>> searchClient(
+      SearchClientParams params) async {
+    try {
+      return Right(await dataSources.searchClient(params));
+    } on Exception catch (e) {
+      return Left(RemoteFailure(message: e.toString()));
+    }
+  }
 }

@@ -175,3 +175,9 @@ class GetPendingsParams {
     required this.ammount,
   });
 }
+
+class SearchClientParams {
+  String query;
+
+  SearchClientParams({required this.query});
+}
