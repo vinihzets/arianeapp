@@ -36,7 +36,7 @@ class _PerfurationViewStableStateState
             final typePerfuration = listTypePerfurations[index];
 
             return ListTile(
-              leading: Text(typePerfuration.name),
+              title: Text(typePerfuration.name),
               onTap: client != null
                   ? () {
                       widget.bloc.dispatchEvent(

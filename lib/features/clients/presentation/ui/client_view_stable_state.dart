@@ -1,4 +1,5 @@
 import 'package:ariane_app/core/architecture/bloc_state.dart';
+import 'package:ariane_app/features/clients/presentation/widgets/list_view_client_tile.dart';
 import 'package:flutter/material.dart';
 import '../../clients.dart';
 
@@ -19,62 +20,37 @@ class ClientViewStableState extends StatefulWidget {
 }
 
 class _ClientViewStableStateState extends State<ClientViewStableState> {
+  late ScrollController scrollController;
+  ClientStableData get data => widget.state.data;
+
+  int fetchAmmount = 10;
+
+  @override
+  void initState() {
+    scrollController = ScrollController();
+
+    scrollController.addListener(onScrollEvent);
+
+    super.initState();
+  }
+
+  void onScrollEvent() {
+    bool isOnBottomOfScrollList =
+        scrollController.offset >= scrollController.position.maxScrollExtent &&
+            !scrollController.position.outOfRange;
+
+    if (isOnBottomOfScrollList && !data.reachMax) {
+      widget.bloc.dispatchEvent(ClientEventLoadMore(fetchAmmount));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<ClientEntity> listClients = widget.state.data;
+    List<ClientEntity> listClients = data.listClients;
 
-    return ListView.separated(
-      itemCount: listClients.length,
-      itemBuilder: (context, index) {
-        final client = listClients[index];
-        return ListTile(
-            leading: IconButton(
-                onPressed: () {
-                  widget.bloc.dispatchEvent(
-                      ClientEventNavigateToPerfuration(context, client));
-                },
-                icon: const Icon(
-                  Icons.add,
-                  color: Colors.deepPurple,
-                )),
-            title: Text(
-              '${client.firstName} ${client.lastName}',
-            ),
-            trailing: PopupMenuButton<ClientMenuAction>(
-              itemBuilder: (_) => [
-                const PopupMenuItem<ClientMenuAction>(
-                  value: ClientMenuAction.delete,
-                  child: Text('Apagar'),
-                ),
-                const PopupMenuItem<ClientMenuAction>(
-                  value: ClientMenuAction.update,
-                  child: Text('Atualizar'),
-                ),
-                const PopupMenuItem<ClientMenuAction>(
-                  value: ClientMenuAction.read,
-                  child: Text('Visualizar'),
-                ),
-              ],
-              onSelected: (action) {
-                switch (action) {
-                  case ClientMenuAction.delete:
-                    widget.bloc.dispatchEvent(
-                        ClientEventDeleteClient(context, client));
-                    break;
-                  case ClientMenuAction.update:
-                    widget.bloc.dispatchEvent(
-                        ClientEventUpdateClient(context, client));
-                    break;
-                  case ClientMenuAction.read:
-                    showDialog(
-                        context: context,
-                        builder: (context) =>
-                            ShowCustomClientDetails(entity: client));
-                }
-              },
-            ));
-      },
-      separatorBuilder: (context, index) => const Divider(),
-    );
+    return ListViewClientTile(
+        scrollController: scrollController,
+        listClients: listClients,
+        bloc: widget.bloc);
   }
 }

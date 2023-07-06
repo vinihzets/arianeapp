@@ -1,7 +1,9 @@
 import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/features/type_perfurations/domain/usecases/read_periods_usecase_impl.dart';
 import 'package:flutter/material.dart';
+import '../../../../core/components/show_confirmation_dialog.dart';
 import '../../type_perfurations.dart';
+import '../dialogs/create_update_type_perfuration_dialog.dart';
 
 class TypePerfurationStableData {
   List<TypePerfurationEntity> listPerfurations;
@@ -48,26 +50,41 @@ class TypePerfurationsBloc extends Bloc {
   _handleCreateTypePerfuration(
     BuildContext context,
   ) async {
+    final requestPeriods = await readPeriodsUseCaseImpl(NoParams());
+    final periods = requestPeriods.fold((l) {
+      return <PeriodEntity>[];
+    }, (r) {
+      return r;
+    });
+
+    // ignore: use_build_context_synchronously
     final TypePerfurationEntity? entity = await showCustomDialog(
       context,
-      const CreateUpdateTypePerfurationDialog(typePerfuration: null),
+      CreateUpdateTypePerfurationDialog(
+        typePerfuration: null,
+        listPeriods: periods,
+      ),
     );
 
     if (entity == null) {
       return;
     }
 
+    if (entity.listPeriods.isEmpty) {
+      // ignore: use_build_context_synchronously
+      showFailure(
+          context, 'Não é possível criar um tipo de perfuração sem um periodo');
+      return;
+    }
     dispatchState(BlocLoadingState());
 
     final request = await createTypePerfurationUseCaseImpl(
         CreateTypePerfurationParams(
-            name: entity.name,
-            id: entity.id,
-            periods: entity.listPeriods));
+            name: entity.name, id: entity.id, periods: entity.listPeriods));
 
     request.fold((f) => {showFailure(context, f.message)}, (c) {
       listTypePerfurations.add(c);
-      showSuccess(context, 'TypePerfuratione cadastrado com sucesso');
+      showSuccess(context, 'Tipo de perfuração cadastrado com sucesso');
       dispatchState(BlocStableState(data: listTypePerfurations));
     });
   }
@@ -94,6 +111,16 @@ class TypePerfurationsBloc extends Bloc {
 
   _handleDeleteTypePerfuration(
       BuildContext context, TypePerfurationEntity entity) async {
+    final confirmation = await showCustomDialog(
+        context,
+        const ShowConfirmationDialog(
+          message: 'Você realmente deseja apagar esse tipo de perfuração?',
+        ));
+
+    if (confirmation == null) {
+      return;
+    }
+
     final request = await deleteTypePerfurationUseCaseImpl
         .call(DeleteTypePerfurationParams(id: entity.id));
 
@@ -110,12 +137,30 @@ class TypePerfurationsBloc extends Bloc {
 
   _handleUpdateTypePerfuration(
       BuildContext context, TypePerfurationEntity typeperf) async {
+    final requestPeriods = await readPeriodsUseCaseImpl(NoParams());
+    final periods = requestPeriods.fold((l) {
+      return <PeriodEntity>[];
+    }, (r) {
+      return r;
+    });
+
+    // ignore: use_build_context_synchronously
     final TypePerfurationEntity? entity = await showCustomDialog(
       context,
-      CreateUpdateTypePerfurationDialog(typePerfuration: typeperf),
+      CreateUpdateTypePerfurationDialog(
+        typePerfuration: typeperf,
+        listPeriods: periods,
+      ),
     );
 
     if (entity == null) {
+      return;
+    }
+
+    if (entity.listPeriods.isEmpty) {
+      // ignore: use_build_context_synchronously
+      showFailure(context,
+          'Não é possível atualizar um tipo de perfuração sem um periodo');
       return;
     }
 

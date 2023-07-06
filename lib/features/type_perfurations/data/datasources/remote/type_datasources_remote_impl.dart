@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:ariane_app/core/architecture/usecase.dart';
 import 'package:ariane_app/core/services/database_service.dart';
 import 'package:ariane_app/features/periods/data/data.dart';
@@ -20,7 +18,6 @@ class TypePerfurationDataSourcesRemoteImpl
       CreateTypePerfurationParams params) async {
     final doc = databaseService.typePerfurations.doc();
 
-    inspect(params.periods);
     await doc.set({
       'id': doc.id,
       'name': params.name,
@@ -28,9 +25,7 @@ class TypePerfurationDataSourcesRemoteImpl
     });
 
     return TypePerfurationEntity(
-        name: params.name,
-        id: doc.id,
-        listPeriods: params.periods);
+        name: params.name, id: doc.id, listPeriods: params.periods);
   }
 
   @override
@@ -60,9 +55,7 @@ class TypePerfurationDataSourcesRemoteImpl
     });
 
     return TypePerfurationEntity(
-        name: params.name,
-        id: params.id,
-        listPeriods: params.listPeriods);
+        name: params.name, id: params.id, listPeriods: params.listPeriods);
   }
 
   @override

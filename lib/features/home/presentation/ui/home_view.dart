@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import '../../../../core/drawer/custom_drawer.dart';
 import '../../../clients/clients.dart';
 import '../../../pending/presentation/ui/pending_view.dart';
 import '../../home.dart';
@@ -28,44 +27,29 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const CustomDrawer(),
-      appBar: AppBar(
-        actions: [
-          TextButton(
-              onPressed: () => bloc.dispatchEvent(HomeEventSignOut(context)),
-              child: const Text(
-                'Sair',
-              ))
-        ],
-      ),
-      backgroundColor: Colors.grey[850],
-      bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _page,
-          onTap: (p) {
-            pageController.animateToPage(p,
-                duration: const Duration(seconds: 1), curve: Curves.ease);
-          },
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person_2_outlined),
-              label: 'Clientes',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.notifications_active),
-              label: 'Notificações',
-            ),
-          ]),
-      body: PageView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: pageController,
-        onPageChanged: (p) {
-          setState(() {
-            _page = p;
-          });
-        },
+      body: IndexedStack(
+        index: _page,
         children: const [
           ClientView(),
           PendingView(),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _page,
+        onTap: (index) {
+          setState(() {
+            _page = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.people),
+            label: 'Clientes',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.pending),
+            label: 'Pendentes',
+          ),
         ],
       ),
     );

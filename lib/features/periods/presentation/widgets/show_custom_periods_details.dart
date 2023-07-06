@@ -21,7 +21,7 @@ class ShowCustomPeriodsDetails extends StatelessWidget {
             const SizedBox(
               height: 9.0,
             ),
-            Text('Data de Nascimento: ${entity.message}',
+            Text('Mensagem: ${entity.message}',
                 style: const TextStyle(fontWeight: FontWeight.w500)),
             const SizedBox(
               height: 9.0,

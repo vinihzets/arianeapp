@@ -1,8 +1,6 @@
 export 'bloc/type_bloc.dart';
 export 'bloc/type_event.dart';
 
-export 'dialogs/create_update_type_perfuration_dialog.dart';
-
 export 'ui/type_view.dart';
 export 'ui/type_view_empty_state.dart';
 export 'ui/type_view_error_state.dart';

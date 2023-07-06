@@ -1,6 +1,14 @@
 import 'package:ariane_app/core/core.dart';
+import 'package:ariane_app/core/components/show_confirmation_dialog.dart';
 import 'package:flutter/material.dart';
 import '../../clients.dart';
+
+class ClientStableData {
+  final List<ClientEntity> listClients;
+  final bool reachMax;
+
+  ClientStableData({required this.listClients, required this.reachMax});
+}
 
 class ClientBloc extends Bloc {
   final CreateClientUseCaseImpl createClientUseCaseImpl;
@@ -25,13 +33,15 @@ class ClientBloc extends Bloc {
     if (event is ClientEventCreateClient) {
       _handleCreateClient(event.context);
     } else if (event is ClientEventReadClient) {
-      _handleReadClient();
+      _handleReadClient(event.ammount);
     } else if (event is ClientEventDeleteClient) {
       _handleDeleteClient(event.context, event.entity);
     } else if (event is ClientEventUpdateClient) {
       _handleUpdateClient(event.context, event.entity);
-    } else if (event is ClientEventNavigateToPerfuration){
+    } else if (event is ClientEventNavigateToPerfuration) {
       _handleClientNavigateToPerfuration(event.context, event.entity);
+    } else if (event is ClientEventLoadMore) {
+      _handleGetMore(event.ammount);
     }
   }
 
@@ -59,13 +69,15 @@ class ClientBloc extends Bloc {
     request.fold((f) => {showFailure(context, f.message)}, (c) {
       listClients.add(c);
       showSuccess(context, 'Cliente cadastrado com sucesso');
-      dispatchState(BlocStableState(data: listClients));
+      dispatchState(BlocStableState(
+          data: ClientStableData(listClients: listClients, reachMax: false)));
     });
   }
 
-  _handleReadClient() async {
+  _handleReadClient(int ammount) async {
     dispatchState(BlocLoadingState());
-    final request = await readClientUseCaseImpl.call(NoParams());
+    final request =
+        await readClientUseCaseImpl.call(GetClientsParams(ammount, null));
 
     request.fold((l) {
       dispatchState(BlocErrorState());
@@ -73,21 +85,39 @@ class ClientBloc extends Bloc {
         (r) => {
               listClients.addAll(r),
               if (listClients.isNotEmpty)
-                {dispatchState(BlocStableState(data: listClients))}
+                {
+                  dispatchState(BlocStableState(
+                      data: ClientStableData(
+                          listClients: listClients,
+                          reachMax: r.length < ammount)))
+                }
               else
                 {dispatchState(BlocEmptyState())}
             });
   }
 
   _handleDeleteClient(BuildContext context, ClientEntity entity) async {
+    final confirmation = await showCustomDialog(
+        context,
+        const ShowConfirmationDialog(
+          message: 'Você realmente deseja apagar esse cliente?',
+        ));
+
+    if (confirmation == null) {
+      return;
+    }
+
     final request =
         await deleteClientUseCaseImpl.call(DeleteClientParams(id: entity.id));
+
+    // ignore: use_build_context_synchronously
 
     request.fold((left) => showFailure(context, left.message), (right) {
       listClients.remove(entity);
 
       if (listClients.isNotEmpty) {
-        dispatchState(BlocStableState(data: listClients));
+        dispatchState(BlocStableState(
+            data: ClientStableData(listClients: listClients, reachMax: false)));
       } else {
         dispatchState(BlocEmptyState());
       }
@@ -118,12 +148,26 @@ class ClientBloc extends Bloc {
       final index = listClients.indexOf(client);
       listClients.remove(client);
       listClients.insert(index, c);
-      dispatchState(BlocStableState(data: listClients));
+      dispatchState(BlocStableState(
+          data: ClientStableData(listClients: listClients, reachMax: false)));
     });
   }
 
+  _handleClientNavigateToPerfuration(
+      BuildContext context, ClientEntity entity) {
+    navigateThenUntil(context, routes.perfuration, entity);
+  }
 
-  _handleClientNavigateToPerfuration(BuildContext context, ClientEntity entity){
-      navigateThenUntil(context, routes.perfuration, entity);
+  _handleGetMore(int ammount) async {
+    final request = await readClientUseCaseImpl(
+        GetClientsParams(ammount, listClients.last));
+
+    request.fold((l) {}, (r) {
+      listClients.addAll(r);
+
+      dispatchState(BlocStableState(
+          data: ClientStableData(
+              listClients: listClients, reachMax: r.length < ammount)));
+    });
   }
 }

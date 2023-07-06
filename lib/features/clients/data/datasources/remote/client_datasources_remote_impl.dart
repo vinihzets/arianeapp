@@ -3,6 +3,7 @@ import 'package:ariane_app/core/services/database_service.dart';
 import 'package:ariane_app/features/clients/data/datasources/client_datasources.dart';
 import 'package:ariane_app/features/clients/data/mappers/client_mapper.dart';
 import 'package:ariane_app/features/clients/domain/entities/client_entity.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ClientDataSourcesRemoteImpl implements ClientDataSources {
   DatabaseService databaseService;
@@ -28,14 +29,22 @@ class ClientDataSourcesRemoteImpl implements ClientDataSources {
   }
 
   @override
-  Future<List<ClientEntity>> readClient() async {
-    final clients = await databaseService.clients.get();
+  Future<List<ClientEntity>> readClient(GetClientsParams params) async {
+    final clients = databaseService.clients.limit(params.ammount);
 
-    final List<ClientEntity> listClients = clients.docs
-        .map(
-          (e) => mapper.fromMap(e.data()),
-        )
-        .toList();
+    Query query = clients;
+
+    if (params.startAfter != null) {
+      query =
+          query.orderBy('firstName').startAfter([params.startAfter!.firstName]);
+    }
+
+    final querySnapshot = await query.get();
+
+    final listClients = querySnapshot.docs.map((doc) {
+      final data = doc.data() as Map<String, dynamic>;
+      return mapper.fromMap(data);
+    }).toList();
 
     return listClients;
   }
@@ -57,5 +66,16 @@ class ClientDataSourcesRemoteImpl implements ClientDataSources {
     await databaseService.clients.doc(params.id).update(mapper.toMap(entity));
 
     return entity;
+  }
+
+  @override
+  Future<List<ClientEntity>> searchClient(String queryText) async {
+    final query = await databaseService.clients
+        .orderBy('completeSearchName')
+        .startAt([queryText]).endAt(["$queryText\uf8ff"]).get();
+
+    final clients = query.docs.map((e) => mapper.fromMap(e.data())).toList();
+
+    return clients;
   }
 }

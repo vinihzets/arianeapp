@@ -20,9 +20,10 @@ class ClientRepositoryImpl implements ClientRepository {
   }
 
   @override
-  Future<Either<Failure, List<ClientEntity>>> readClient() async {
+  Future<Either<Failure, List<ClientEntity>>> readClient(
+      GetClientsParams params) async {
     try {
-      return Right(await dataSources.readClient());
+      return Right(await dataSources.readClient(params));
     } on Exception catch (e) {
       return Left(RemoteFailure(message: e.toString()));
     }

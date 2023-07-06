@@ -44,106 +44,110 @@ class _CreateUpdatePeriodDialogState extends State<CreateUpdatePeriodDialog> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Dialog(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CounterWidget(
-                    label: 'Dia',
-                    counter: dayCounter,
-                    onAdd: () {
-                      if (dayCounter > 31) {
-                        return;
-                      }
-                      dayCounter++;
-                      setState(() {});
-                    },
-                    onRemove: () {
-                      if (dayCounter < 2) {
-                        return;
-                      }
+      child: AlertDialog(
+        title:
+            Text(widget.period == null ? 'Criar periodo' : 'Atualizar periodo'),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Column(
+                children: [
+                  CounterWidget(
+                      label: 'Dia',
+                      counter: dayCounter,
+                      onAdd: () {
+                        if (dayCounter > 31) {
+                          return;
+                        }
+                        dayCounter++;
+                        setState(() {});
+                      },
+                      onRemove: () {
+                        if (dayCounter < 1) {
+                          return;
+                        }
 
-                      dayCounter--;
-                      setState(() {});
-                    }),
-                CounterWidget(
-                    label: 'Mes',
-                    counter: monthCounter,
-                    onAdd: () {
-                      if (monthCounter > 11) {
-                        return;
-                      }
-                      monthCounter++;
-                      setState(() {});
-                    },
-                    onRemove: () {
-                      if (monthCounter < 1) {
-                        return;
-                      }
+                        dayCounter--;
+                        setState(() {});
+                      }),
+                  CounterWidget(
+                      label: 'Mes',
+                      counter: monthCounter,
+                      onAdd: () {
+                        if (monthCounter > 11) {
+                          return;
+                        }
+                        monthCounter++;
+                        setState(() {});
+                      },
+                      onRemove: () {
+                        if (monthCounter < 1) {
+                          return;
+                        }
 
-                      monthCounter--;
-                      setState(() {});
-                    }),
-                CounterWidget(
-                    label: 'Ano',
-                    counter: yearCounter,
-                    onAdd: () {
-                      if (yearCounter > 11) {
-                        return;
-                      }
-                      yearCounter++;
-                      setState(() {});
-                    },
-                    onRemove: () {
-                      if (yearCounter < 1) {
-                        return;
-                      }
-                      setState(() {});
-                      yearCounter--;
-                    }),
-              ],
-            ),
-            SizedBox(
-              width: 260,
-              child: TextFormField(
+                        monthCounter--;
+                        setState(() {});
+                      }),
+                  CounterWidget(
+                      label: 'Ano',
+                      counter: yearCounter,
+                      onAdd: () {
+                        if (yearCounter > 11) {
+                          return;
+                        }
+                        yearCounter++;
+                        setState(() {});
+                      },
+                      onRemove: () {
+                        if (yearCounter < 1) {
+                          return;
+                        }
+                        setState(() {});
+                        yearCounter--;
+                      }),
+                ],
+              ),
+              TextFormField(
+                decoration: const InputDecoration(hintText: 'Nome'),
                 validator: (v) =>
                     FormBuilderValidator.customMinLengthValidator(v),
                 controller: nameController,
               ),
-            ),
-            SizedBox(
-              width: 260,
-              child: TextFormField(
+              TextFormField(
+                decoration: const InputDecoration(hintText: 'Mensagem'),
                 validator: (value) =>
                     FormBuilderValidator.customMinLengthValidator(value),
                 controller: messageController,
               ),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState?.validate() ?? true) {
-                  Navigator.of(context).pop(PeriodEntity(
-                    name: nameController.text,
-                    message: messageController.text,
-                    id: widget.period?.id ?? '',
-                    dayCounter: dayCounter,
-                    monthCounter: monthCounter,
-                    yearCounter: yearCounter,
-                  ));
-                }
-              },
-              child: Text(
-                widget.period == null ? 'Criar' : 'Atualizar',
+              const SizedBox(
+                height: 24,
               ),
-            )
-          ],
+            ],
+          ),
         ),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              if (_formKey.currentState?.validate() ?? true) {
+                if (dayCounter == 0 && monthCounter == 0 && yearCounter == 0) {
+                  return;
+                }
+                Navigator.of(context).pop(PeriodEntity(
+                  name: nameController.text,
+                  message: messageController.text,
+                  id: widget.period?.id ?? '',
+                  dayCounter: dayCounter,
+                  monthCounter: monthCounter,
+                  yearCounter: yearCounter,
+                ));
+              }
+            },
+            child: Text(
+              widget.period == null ? 'Criar' : 'Atualizar',
+            ),
+          )
+        ],
       ),
     );
   }

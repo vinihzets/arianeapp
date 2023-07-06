@@ -58,7 +58,7 @@ class PerfurationsBloc extends Bloc {
       showFailure(context, 'Erro ao registrar perfuração');
     }, (r) {
       navigatePop(context);
-      showSuccess(context, 'Sucesso ao registrar perfuração no Cliente');
+      showSuccess(context, 'Sucesso ao registrar perfuração no cliente');
     });
   }
 

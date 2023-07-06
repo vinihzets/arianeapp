@@ -26,20 +26,15 @@ class _CounterWidgetState extends State<CounterWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(widget.label),
         Row(
           children: [
             IconButton(
                 onPressed: widget.onRemove, icon: const Icon(Icons.remove)),
-            Container(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 2.0, horizontal: 0.0),
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
-              child: Text(
-                widget.counter.toString(),
-              ),
+            Text(
+              widget.counter.toString(),
             ),
             IconButton(onPressed: widget.onAdd, icon: const Icon(Icons.add)),
           ],

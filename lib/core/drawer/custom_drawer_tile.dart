@@ -19,9 +19,6 @@ class CustomDrawerTile extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            iconColor: Colors.deepPurple,
-            dense: true,
-            visualDensity: const VisualDensity(vertical: 0),
             leading: leading,
             trailing: trailing,
             title: Text(title),

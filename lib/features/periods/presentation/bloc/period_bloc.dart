@@ -1,5 +1,6 @@
 import 'package:ariane_app/core/core.dart';
 import 'package:flutter/material.dart';
+import '../../../../core/components/show_confirmation_dialog.dart';
 import '../../periods.dart';
 
 class PeriodsBloc extends Bloc {
@@ -55,7 +56,7 @@ class PeriodsBloc extends Bloc {
 
     request.fold((f) => {showFailure(context, f.message)}, (c) {
       listPeriods.add(c);
-      showSuccess(context, 'Periode cadastrado com sucesso');
+      showSuccess(context, 'Periodo cadastrado com sucesso');
       dispatchState(BlocStableState(data: listPeriods));
     });
   }
@@ -77,6 +78,16 @@ class PeriodsBloc extends Bloc {
   }
 
   _handleDeletePeriod(BuildContext context, PeriodEntity entity) async {
+    final confirmation = await showCustomDialog(
+        context,
+        const ShowConfirmationDialog(
+          message: 'Você realmente deseja apagar esse periodo?',
+        ));
+
+    if (confirmation == null) {
+      return;
+    }
+
     final request =
         await deletePeriodUseCaseImpl.call(DeletePeriodParams(id: entity.id));
 

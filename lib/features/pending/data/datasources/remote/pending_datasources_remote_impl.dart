@@ -19,11 +19,11 @@ class PendingDataSourceRemoteImpl implements PendingDataSource {
     final startOfDay = DateTime(date.year, date.month, date.day, 0, 0);
     final endOfDay = DateTime(date.year, date.month, date.day, 24, 0);
 
-    final query = databaseService.pendings.where(
-      'date',
-      isGreaterThanOrEqualTo: startOfDay.millisecondsSinceEpoch,
-      isLessThanOrEqualTo: endOfDay.millisecondsSinceEpoch,
-    );
+    final query = databaseService.pendings.orderBy('date').where(
+          'date',
+          isGreaterThanOrEqualTo: startOfDay.millisecondsSinceEpoch,
+          isLessThanOrEqualTo: endOfDay.millisecondsSinceEpoch,
+        );
 
     if (startAfter != null) {
       query.startAfter([startAfter.date.millisecondsSinceEpoch]);

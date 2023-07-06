@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:ariane_app/features/clients/clients.dart';
 import 'package:dartz/dartz.dart';
 
 import 'package:ariane_app/core/failure/failure.dart';
@@ -61,6 +62,19 @@ class UpdateClientParams {
     required this.birthday,
     required this.id,
   });
+}
+
+class GetClientsParams {
+  int ammount;
+  ClientEntity? startAfter;
+  GetClientsParams(this.ammount, this.startAfter);
+}
+
+class GetMoreClientsParams {
+  int ammount;
+  ClientEntity? startAfter;
+
+  GetMoreClientsParams(this.ammount, this.startAfter);
 }
 
 class CreateTypePerfurationParams {

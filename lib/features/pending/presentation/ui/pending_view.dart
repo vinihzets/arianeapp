@@ -25,9 +25,6 @@ class _PendingViewState extends State<PendingView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Notificações de hoje'),
-      ),
       body: BlocScreenBuilder(
         onEmpty: (onEmpty) => const SizedBox.shrink(),
         onError: (onError) => const SizedBox.shrink(),
