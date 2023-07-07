@@ -1,6 +1,5 @@
 import 'package:ariane_app/features/pending/pending.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../core/components/counter_widget.dart';
 
 class CustomSearchPendingDialog extends StatefulWidget {
@@ -13,9 +12,9 @@ class CustomSearchPendingDialog extends StatefulWidget {
 }
 
 class _CustomSearchPendingDialogState extends State<CustomSearchPendingDialog> {
-  int dayCounter = 1;
-  int monthCounter = 1;
-  int yearCounter = 2023;
+  int dayCounter = DateTime.now().day;
+  int monthCounter = DateTime.now().month;
+  int yearCounter = DateTime.now().year;
 
   @override
   void initState() {

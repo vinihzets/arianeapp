@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/features/pending/domain/domain.dart';
 import 'package:flutter/material.dart';

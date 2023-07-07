@@ -1,9 +1,7 @@
 import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/features/pending/pending.dart';
-import 'package:ariane_app/features/pending/presentation/widgets/custom_search_pending_dialog.dart';
+import 'package:ariane_app/features/pending/presentation/widgets/custom_search_pending_by_date_dialog.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../core/components/counter_widget.dart';
 
 class PendingViewStableData extends StatefulWidget {
   final PendingBloc bloc;
@@ -22,9 +20,6 @@ class PendingViewStableData extends StatefulWidget {
 class _PendingViewStableDataState extends State<PendingViewStableData> {
   late ScrollController scrollController;
   PendingStableData get data => widget.state.data;
-  int dayCounter = 1;
-  int monthCounter = 1;
-  int yearCounter = 2023;
 
   @override
   void initState() {
