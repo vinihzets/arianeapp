@@ -1,7 +1,7 @@
 import 'package:ariane_app/core/validators/form_builder_validators.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/global/entities/period_entity.dart';
-import '../widgets/counter_widget.dart';
+import '../../../../core/components/counter_widget.dart';
 
 class CreateUpdatePeriodDialog extends StatefulWidget {
   final PeriodEntity? period;

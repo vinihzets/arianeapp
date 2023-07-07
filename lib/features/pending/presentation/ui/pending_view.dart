@@ -17,7 +17,7 @@ class _PendingViewState extends State<PendingView> {
   @override
   void initState() {
     bloc = GetIt.I.get();
-    bloc.dispatchEvent(PendingEventOnReady());
+    bloc.dispatchEvent(PendingEventOnReady(null, null, null));
 
     super.initState();
   }

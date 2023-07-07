@@ -1,6 +1,9 @@
 import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/features/pending/pending.dart';
+import 'package:ariane_app/features/pending/presentation/widgets/custom_search_pending_dialog.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../core/components/counter_widget.dart';
 
 class PendingViewStableData extends StatefulWidget {
   final PendingBloc bloc;
@@ -19,6 +22,9 @@ class PendingViewStableData extends StatefulWidget {
 class _PendingViewStableDataState extends State<PendingViewStableData> {
   late ScrollController scrollController;
   PendingStableData get data => widget.state.data;
+  int dayCounter = 1;
+  int monthCounter = 1;
+  int yearCounter = 2023;
 
   @override
   void initState() {
@@ -46,22 +52,37 @@ class _PendingViewStableDataState extends State<PendingViewStableData> {
   @override
   Widget build(BuildContext context) {
     final pendings = data.pendings;
-    return Center(
-      child: ListView.separated(
-        controller: scrollController,
-        itemCount: pendings.length + 1,
-        itemBuilder: (context, index) {
-          if (index == pendings.length) {
-            return Center(
-              child: data.reachMax
-                  ? const Text('Isso é tudo!')
-                  : const CircularProgressIndicator.adaptive(),
-            );
-          }
-          return _buildItem(pendings[index]);
-        },
-        separatorBuilder: (_, __) => const Divider(),
-      ),
+    return Column(
+      children: [
+        TextButton(
+            onPressed: () {
+              widget.bloc.dispatchEvent(PendingEventShowSearchDialog(
+                  context,
+                  CustomSearchPendingDialog(
+                    bloc: widget.bloc,
+                  )));
+            },
+            child: const Text('Pesquisar pendencias por data')),
+        Expanded(
+          child: Center(
+            child: ListView.separated(
+              controller: scrollController,
+              itemCount: pendings.length + 1,
+              itemBuilder: (context, index) {
+                if (index == pendings.length) {
+                  return Center(
+                    child: data.reachMax
+                        ? const Text('Isso é tudo!')
+                        : const CircularProgressIndicator.adaptive(),
+                  );
+                }
+                return _buildItem(pendings[index]);
+              },
+              separatorBuilder: (_, __) => const Divider(),
+            ),
+          ),
+        ),
+      ],
     );
   }
 

@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/features/pending/domain/domain.dart';
+import 'package:flutter/material.dart';
 
 import 'pending_event.dart';
 
@@ -24,18 +27,30 @@ class PendingBloc extends Bloc {
   @override
   mapListenEvent(BlocEvent event) {
     if (event is PendingEventOnReady) {
-      _handleReadyEvent();
+      _handleReadyEvent(
+          event.dayCounter, event.monthCounter, event.yearCounter);
     } else if (event is PendingEventLoadMore) {
       _handleLoadMore(event.cache);
+    } else if (event is PendingEventShowSearchDialog) {
+      _handleShowCustomDialog(event.context, event.dialog);
     }
   }
 
-  _handleReadyEvent() async {
+  _handleReadyEvent(
+      int? dayCounter, int? monthCounter, int? yearCounter) async {
     dispatchState(BlocLoadingState());
+
+    DateTime selectedDate;
+
+    if (dayCounter != null && monthCounter != null && yearCounter != null) {
+      selectedDate = DateTime(yearCounter, monthCounter, dayCounter).toLocal();
+    } else {
+      selectedDate = DateTime.now();
+    }
 
     final pendingRequest = await getPendingUseCaseImpl(
       GetPendingsParams(
-        date: DateTime.now(),
+        date: selectedDate,
         startAfter: null,
         ammount: fetchAmmount,
       ),
@@ -74,5 +89,9 @@ class PendingBloc extends Bloc {
         ),
       ),
     );
+  }
+
+  _handleShowCustomDialog(BuildContext context, Widget dialog) {
+    return showCustomDialog(context, dialog);
   }
 }
