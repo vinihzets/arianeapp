@@ -28,7 +28,8 @@ class PendingBloc extends Bloc {
       _handleReadyEvent(
           event.dayCounter, event.monthCounter, event.yearCounter);
     } else if (event is PendingEventLoadMore) {
-      _handleLoadMore(event.cache);
+      _handleLoadMore(
+          event.cache, event.dayCounter, event.monthCounter, event.yearCounter);
     } else if (event is PendingEventShowSearchDialog) {
       _handleShowCustomDialog(event.context, event.dialog);
     }
@@ -67,10 +68,19 @@ class PendingBloc extends Bloc {
     );
   }
 
-  _handleLoadMore(List<PendingEntity> cache) async {
+  _handleLoadMore(List<PendingEntity> cache, int? dayCounter, int? monthCounter,
+      int? yearCounter) async {
+    DateTime selectedDate;
+
+    if (dayCounter != null && monthCounter != null && yearCounter != null) {
+      selectedDate = DateTime(yearCounter, monthCounter, dayCounter).toLocal();
+    } else {
+      selectedDate = DateTime.now();
+    }
+
     final pendingRequest = await getPendingUseCaseImpl(
       GetPendingsParams(
-        date: DateTime.now(),
+        date: selectedDate,
         startAfter: cache.last,
         ammount: fetchAmmount,
       ),

@@ -14,10 +14,15 @@ class PendingEventOnReady implements PendingEvent {
 
 class PendingEventLoadMore implements PendingEvent {
   final List<PendingEntity> cache;
+  int? dayCounter;
+  int? monthCounter;
+  int? yearCounter;
 
-  PendingEventLoadMore({
-    required this.cache,
-  });
+  PendingEventLoadMore(
+      {required this.cache,
+      required this.dayCounter,
+      required this.monthCounter,
+      required this.yearCounter});
 }
 
 class PendingEventShowSearchDialog implements PendingEvent {

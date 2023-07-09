@@ -2,9 +2,19 @@ import 'package:ariane_app/features/pending/pending.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/components/counter_widget.dart';
 
+// ignore: must_be_immutable
 class CustomSearchPendingDialog extends StatefulWidget {
+  int dayCounter;
+  int monthCounter;
+  int yearCounter;
+
   final PendingBloc bloc;
-  const CustomSearchPendingDialog({required this.bloc, super.key});
+  CustomSearchPendingDialog(
+      {required this.bloc,
+      required this.dayCounter,
+      required this.monthCounter,
+      required this.yearCounter,
+      super.key});
 
   @override
   State<CustomSearchPendingDialog> createState() =>
@@ -12,10 +22,6 @@ class CustomSearchPendingDialog extends StatefulWidget {
 }
 
 class _CustomSearchPendingDialogState extends State<CustomSearchPendingDialog> {
-  int dayCounter = DateTime.now().day;
-  int monthCounter = DateTime.now().month;
-  int yearCounter = DateTime.now().year;
-
   @override
   void initState() {
     super.initState();
@@ -29,64 +35,64 @@ class _CustomSearchPendingDialogState extends State<CustomSearchPendingDialog> {
         children: [
           CounterWidget(
               label: 'Dia',
-              counter: dayCounter,
+              counter: widget.dayCounter,
               onAdd: () {
-                if (dayCounter > 31) {
+                if (widget.dayCounter > 31) {
                   return;
                 }
-                dayCounter++;
+                widget.dayCounter++;
                 setState(() {});
               },
               onRemove: () {
-                if (dayCounter < 1) {
+                if (widget.dayCounter < 1) {
                   return;
                 }
 
-                dayCounter--;
+                widget.dayCounter--;
                 setState(() {});
               }),
           CounterWidget(
               label: 'Mes',
-              counter: monthCounter,
+              counter: widget.monthCounter,
               onAdd: () {
-                if (monthCounter > 11) {
+                if (widget.monthCounter > 11) {
                   return;
                 }
-                monthCounter++;
+                widget.monthCounter++;
                 setState(() {});
               },
               onRemove: () {
-                if (monthCounter < 1) {
+                if (widget.monthCounter < 1) {
                   return;
                 }
 
-                monthCounter--;
+                widget.monthCounter--;
                 setState(() {});
               }),
           CounterWidget(
               label: 'Ano',
-              counter: yearCounter,
+              counter: widget.yearCounter,
               onAdd: () {
-                if (yearCounter > 11) {
+                if (widget.yearCounter > 11) {
                   return;
                 }
-                yearCounter++;
+                widget.yearCounter++;
                 setState(() {});
               },
               onRemove: () {
-                if (yearCounter < 1) {
+                if (widget.yearCounter < 1) {
                   return;
                 }
                 setState(() {});
-                yearCounter--;
+                widget.yearCounter--;
               }),
         ],
       ),
       actions: [
         TextButton(
             onPressed: () {
-              widget.bloc.dispatchEvent(
-                  PendingEventOnReady(dayCounter, monthCounter, yearCounter));
+              widget.bloc.dispatchEvent(PendingEventOnReady(
+                  widget.dayCounter, widget.monthCounter, widget.yearCounter));
             },
             child: const Text('Pesquisar'))
       ],

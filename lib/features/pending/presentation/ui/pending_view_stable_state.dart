@@ -20,6 +20,9 @@ class PendingViewStableData extends StatefulWidget {
 class _PendingViewStableDataState extends State<PendingViewStableData> {
   late ScrollController scrollController;
   PendingStableData get data => widget.state.data;
+  int dayCounter = DateTime.now().day;
+  int monthCounter = DateTime.now().month;
+  int yearCounter = DateTime.now().year;
 
   @override
   void initState() {
@@ -40,7 +43,11 @@ class _PendingViewStableDataState extends State<PendingViewStableData> {
             !scrollController.position.outOfRange;
 
     if (isOnBottomOfScrollList && !data.reachMax) {
-      widget.bloc.dispatchEvent(PendingEventLoadMore(cache: data.pendings));
+      widget.bloc.dispatchEvent(PendingEventLoadMore(
+          cache: data.pendings,
+          dayCounter: dayCounter,
+          monthCounter: monthCounter,
+          yearCounter: yearCounter));
     }
   }
 
@@ -55,6 +62,9 @@ class _PendingViewStableDataState extends State<PendingViewStableData> {
                   context,
                   CustomSearchPendingDialog(
                     bloc: widget.bloc,
+                    dayCounter: dayCounter,
+                    monthCounter: monthCounter,
+                    yearCounter: yearCounter,
                   )));
             },
             child: const Text('Pesquisar pendencias por data')),
