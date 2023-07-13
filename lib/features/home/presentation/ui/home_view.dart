@@ -33,7 +33,7 @@ class _HomeViewState extends State<HomeView> {
         scrolledUnderElevation: 0.0,
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () => bloc.dispatchEvent(HomeEventSignOut(context)),
             child: const Text('Sair'),
           ),
         ],
@@ -58,8 +58,8 @@ class _HomeViewState extends State<HomeView> {
             label: 'Clientes',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.pending),
-            label: 'Pendentes',
+            icon: Icon(Icons.pending_actions),
+            label: 'Pendencias',
           ),
         ],
       ),

@@ -1,18 +1,18 @@
 import 'package:ariane_app/core/core.dart';
-import 'package:ariane_app/features/pending/pending.dart';
+import 'package:ariane_app/features/scheduling_message/scheduling_message.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-class PendingView extends StatefulWidget {
-  const PendingView({super.key});
+class SchedulingMessageView extends StatefulWidget {
+  const SchedulingMessageView({super.key});
 
   @override
-  State<PendingView> createState() => _PendingViewState();
+  State<SchedulingMessageView> createState() => _SchedulingMessageViewState();
 }
 
-class _PendingViewState extends State<PendingView> {
-  late PendingBloc bloc;
+class _SchedulingMessageViewState extends State<SchedulingMessageView> {
+  late SchedulingMessageBloc bloc;
 
   @override
   void initState() {
@@ -31,7 +31,7 @@ class _PendingViewState extends State<PendingView> {
         onLoading: (onLoading) => const Center(
           child: CircularProgressIndicator.adaptive(),
         ),
-        onStable: (onStable) => PendingViewStableData(
+        onStable: (onStable) => SchedulingMessageViewStableData(
           bloc: bloc,
           state: onStable,
         ),

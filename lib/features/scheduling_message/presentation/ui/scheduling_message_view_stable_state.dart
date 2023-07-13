@@ -2,21 +2,23 @@ import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/features/pending/pending.dart';
 import 'package:flutter/material.dart';
 
-class PendingViewStableData extends StatefulWidget {
+class SchedulingMessageViewStableData extends StatefulWidget {
   final PendingBloc bloc;
   final BlocState state;
 
-  const PendingViewStableData({
+  const SchedulingMessageViewStableData({
     required this.bloc,
     required this.state,
     super.key,
   });
 
   @override
-  State<PendingViewStableData> createState() => _PendingViewStableDataState();
+  State<SchedulingMessageViewStableData> createState() =>
+      _SchedulingMessageViewStableDataState();
 }
 
-class _PendingViewStableDataState extends State<PendingViewStableData> {
+class _SchedulingMessageViewStableDataState
+    extends State<SchedulingMessageViewStableData> {
   late ScrollController scrollController;
   PendingStableData get data => widget.state.data;
 

@@ -1,16 +1,16 @@
 import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/features/pending/domain/domain.dart';
-import 'package:flutter/material.dart';
-
 import 'pending_event.dart';
 
 class PendingStableData {
   final List<PendingEntity> pendings;
   final bool reachMax;
+  final DateTime date;
 
   PendingStableData({
     required this.pendings,
     required this.reachMax,
+    required this.date,
   });
 }
 
@@ -25,31 +25,18 @@ class PendingBloc extends Bloc {
   @override
   mapListenEvent(BlocEvent event) {
     if (event is PendingEventOnReady) {
-      _handleReadyEvent(
-          event.dayCounter, event.monthCounter, event.yearCounter);
+      _handleReadyEvent(event.date);
     } else if (event is PendingEventLoadMore) {
-      _handleLoadMore(
-          event.cache, event.dayCounter, event.monthCounter, event.yearCounter);
-    } else if (event is PendingEventShowSearchDialog) {
-      _handleShowCustomDialog(event.context, event.dialog);
+      _handleLoadMore(event.cache, event.date);
     }
   }
 
-  _handleReadyEvent(
-      int? dayCounter, int? monthCounter, int? yearCounter) async {
+  _handleReadyEvent(DateTime date) async {
     dispatchState(BlocLoadingState());
-
-    DateTime selectedDate;
-
-    if (dayCounter != null && monthCounter != null && yearCounter != null) {
-      selectedDate = DateTime(yearCounter, monthCounter, dayCounter).toLocal();
-    } else {
-      selectedDate = DateTime.now();
-    }
 
     final pendingRequest = await getPendingUseCaseImpl(
       GetPendingsParams(
-        date: selectedDate,
+        date: date,
         startAfter: null,
         ammount: fetchAmmount,
       ),
@@ -60,6 +47,7 @@ class PendingBloc extends Bloc {
       (r) => dispatchState(
         BlocStableState(
           data: PendingStableData(
+            date: date,
             pendings: r,
             reachMax: r.length < fetchAmmount,
           ),
@@ -68,19 +56,10 @@ class PendingBloc extends Bloc {
     );
   }
 
-  _handleLoadMore(List<PendingEntity> cache, int? dayCounter, int? monthCounter,
-      int? yearCounter) async {
-    DateTime selectedDate;
-
-    if (dayCounter != null && monthCounter != null && yearCounter != null) {
-      selectedDate = DateTime(yearCounter, monthCounter, dayCounter).toLocal();
-    } else {
-      selectedDate = DateTime.now();
-    }
-
+  _handleLoadMore(List<PendingEntity> cache, DateTime date) async {
     final pendingRequest = await getPendingUseCaseImpl(
       GetPendingsParams(
-        date: selectedDate,
+        date: date,
         startAfter: cache.last,
         ammount: fetchAmmount,
       ),
@@ -91,15 +70,12 @@ class PendingBloc extends Bloc {
       (r) => dispatchState(
         BlocStableState(
           data: PendingStableData(
+            date: date,
             pendings: r,
             reachMax: r.length < fetchAmmount,
           ),
         ),
       ),
     );
-  }
-
-  _handleShowCustomDialog(BuildContext context, Widget dialog) {
-    return showCustomDialog(context, dialog);
   }
 }

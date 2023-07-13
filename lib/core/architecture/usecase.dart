@@ -181,3 +181,16 @@ class SearchClientParams {
 
   SearchClientParams({required this.query});
 }
+
+class CreateSchedulingMessageParams {
+  final List<ClientEntity> listClients;
+  final String message;
+  final DateTime date;
+  final DateTime createdAt;
+
+  CreateSchedulingMessageParams(
+      {required this.listClients,
+      required this.message,
+      required this.date,
+      required this.createdAt});
+}
