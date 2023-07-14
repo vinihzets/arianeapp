@@ -1,38 +1,28 @@
 import 'package:ariane_app/core/core.dart';
-import 'package:ariane_app/features/pending/pending.dart';
+import 'package:ariane_app/features/scheduling_message/domain/entities/scheduling_message_entity.dart';
+import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_bloc.dart';
+import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_event.dart';
 import 'package:flutter/material.dart';
 
-class PendingViewStableData extends StatefulWidget {
-  final PendingBloc bloc;
+class SchedulingMessageViewStableState extends StatefulWidget {
+  final SchedulingMessageBloc bloc;
   final BlocState state;
 
-  const PendingViewStableData({
+  const SchedulingMessageViewStableState({
     required this.bloc,
     required this.state,
     super.key,
   });
 
   @override
-  State<PendingViewStableData> createState() => _PendingViewStableDataState();
+  State<SchedulingMessageViewStableState> createState() =>
+      _SchedulingMessageViewStableStateState();
 }
 
-class _PendingViewStableDataState extends State<PendingViewStableData> {
-  onSearchPressed() async {
-    final result = await showDatePicker(
-        context: context,
-        initialDate: DateTime.now(),
-        firstDate: DateTime.now(),
-        lastDate: DateTime(2050));
-
-    if (result == null) {
-      return;
-    }
-
-    widget.bloc.dispatchEvent(PendingEventOnReady(date: result));
-  }
-
+class _SchedulingMessageViewStableStateState
+    extends State<SchedulingMessageViewStableState> {
   late ScrollController scrollController;
-  PendingStableData get data => widget.state.data;
+  SchedulingMessageStableData get data => widget.state.data;
 
   @override
   void initState() {
@@ -53,33 +43,30 @@ class _PendingViewStableDataState extends State<PendingViewStableData> {
             !scrollController.position.outOfRange;
 
     if (isOnBottomOfScrollList && !data.reachMax) {
-      widget.bloc.dispatchEvent(
-          PendingEventLoadMore(cache: data.pendings, date: data.date));
+      widget.bloc
+          .dispatchEvent(SchedulingMessageEventLoadMore(date: DateTime.now()));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final pendings = data.pendings;
+    final messages = data.listMessages;
     return Column(
       children: [
-        TextButton(
-            onPressed: () => onSearchPressed(),
-            child: const Text('Pesquisar pendencias por data')),
         Expanded(
           child: Center(
             child: ListView.separated(
               controller: scrollController,
-              itemCount: pendings.length + 1,
+              itemCount: messages.length + 1,
               itemBuilder: (context, index) {
-                if (index == pendings.length) {
+                if (index == messages.length) {
                   return Center(
                     child: data.reachMax
                         ? const Text('Isso é tudo!')
                         : const CircularProgressIndicator.adaptive(),
                   );
                 }
-                return _buildItem(pendings[index]);
+                return _buildItem(messages[index]);
               },
               separatorBuilder: (_, __) => const Divider(),
             ),
@@ -89,19 +76,10 @@ class _PendingViewStableDataState extends State<PendingViewStableData> {
     );
   }
 
-  Widget _buildItem(PendingEntity item) {
+  Widget _buildItem(SchedulingMessageEntity item) {
     return ListTile(
-      title: Text(item.clientName),
+      title: Text(item.message),
       subtitle: Text(item.message),
-      trailing: item.sent
-          ? const Icon(
-              Icons.check,
-              color: Colors.green,
-            )
-          : const Icon(
-              Icons.schedule,
-              color: Colors.orange,
-            ),
     );
   }
 }

@@ -9,4 +9,6 @@ class DatabaseService {
   final typePerfurations = FirebaseFirestore.instance.collection(
     'type_perfurations',
   );
+  final schedulingMessages =
+      FirebaseFirestore.instance.collection('scheduling_messages');
 }

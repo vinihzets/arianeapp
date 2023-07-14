@@ -181,3 +181,44 @@ class SearchClientParams {
 
   SearchClientParams({required this.query});
 }
+
+class ReadSchedulingMessagesParams {
+  final int ammount;
+  final DateTime date;
+
+  ReadSchedulingMessagesParams({required this.ammount, required this.date});
+}
+
+class CreateSchedulingMessageParams {
+  final List<ClientEntity> listClients;
+  final String message;
+  final String date;
+  final DateTime createdAt;
+
+  CreateSchedulingMessageParams(
+      {required this.listClients,
+      required this.message,
+      required this.date,
+      required this.createdAt});
+}
+
+class UpdateSchedulingMessageParams {
+  final List<ClientEntity> listClients;
+  final String id;
+  final String message;
+  final String date;
+  final DateTime createdAt;
+
+  UpdateSchedulingMessageParams(
+      {required this.createdAt,
+      required this.id,
+      required this.date,
+      required this.listClients,
+      required this.message});
+}
+
+class DeleteSchedulingMessageParams {
+  final String id;
+
+  DeleteSchedulingMessageParams({required this.id});
+}

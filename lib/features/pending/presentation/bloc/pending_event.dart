@@ -5,24 +5,16 @@ import 'package:flutter/material.dart';
 class PendingEvent extends BlocEvent {}
 
 class PendingEventOnReady implements PendingEvent {
-  int? dayCounter;
-  int? monthCounter;
-  int? yearCounter;
+  final DateTime date;
 
-  PendingEventOnReady(this.dayCounter, this.monthCounter, this.yearCounter);
+  PendingEventOnReady({required this.date});
 }
 
 class PendingEventLoadMore implements PendingEvent {
   final List<PendingEntity> cache;
-  int? dayCounter;
-  int? monthCounter;
-  int? yearCounter;
+  final DateTime date;
 
-  PendingEventLoadMore(
-      {required this.cache,
-      required this.dayCounter,
-      required this.monthCounter,
-      required this.yearCounter});
+  PendingEventLoadMore({required this.cache, required this.date});
 }
 
 class PendingEventShowSearchDialog implements PendingEvent {

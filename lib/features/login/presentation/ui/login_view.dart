@@ -1,4 +1,5 @@
 import 'package:ariane_app/features/login/presentation/bloc/login_event.dart';
+import 'package:ariane_app/features/login/presentation/ui/login_view_loading_state.dart';
 import 'package:ariane_app/features/login/presentation/ui/login_view_stable_state.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -29,7 +30,7 @@ class _LoginViewState extends State<LoginView> {
       body: BlocScreenBuilder(
           onEmpty: (onEmpty) => const SizedBox.shrink(),
           onError: (onError) => const SizedBox.shrink(),
-          onLoading: (onLoading) => const SizedBox.shrink(),
+          onLoading: (onLoading) => const LoginViewLoadingState(),
           onStable: (onStable) => LoginViewStableData(
                 bloc: bloc,
               ),

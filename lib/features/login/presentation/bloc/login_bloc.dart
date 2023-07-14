@@ -28,6 +28,7 @@ class LoginBloc extends Bloc {
     signInUseCaseImpl(SignInParams(email, password)).then((value) => value.fold(
             (l) => showSnack(
                 context, StringTranslator.build(l.message), Colors.red), (r) {
+
           navigateRemoveUntil(context, routes.homeView);
         }));
   }

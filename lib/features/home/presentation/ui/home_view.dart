@@ -1,8 +1,8 @@
+import 'package:ariane_app/features/scheduling_message/presentation/ui/scheduling_message_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../../../../core/drawer/custom_drawer.dart';
 import '../../../clients/clients.dart';
-import '../../../pending/presentation/ui/pending_view.dart';
 import '../../home.dart';
 
 class HomeView extends StatefulWidget {
@@ -33,7 +33,7 @@ class _HomeViewState extends State<HomeView> {
         scrolledUnderElevation: 0.0,
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () => bloc.dispatchEvent(HomeEventSignOut(context)),
             child: const Text('Sair'),
           ),
         ],
@@ -42,7 +42,7 @@ class _HomeViewState extends State<HomeView> {
         index: _page,
         children: const [
           ClientView(),
-          PendingView(),
+          SchedulingMessageView(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -58,7 +58,7 @@ class _HomeViewState extends State<HomeView> {
             label: 'Clientes',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.pending),
+            icon: Icon(Icons.pending_actions),
             label: 'Pendentes',
           ),
         ],

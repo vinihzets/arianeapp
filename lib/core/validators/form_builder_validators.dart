@@ -22,6 +22,13 @@ class FormBuilderValidator {
     return null;
   }
 
+  static String? messageValidator(String? value) {
+    if (value?.isEmpty ?? true) {
+      return 'Por favor, insira a mensagem';
+    }
+    return null;
+  }
+
   static String? numberValidator(String? value) {
     int maxLength = 15;
 

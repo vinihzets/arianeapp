@@ -35,6 +35,16 @@ import 'package:ariane_app/features/register/data/repositories/register_reposito
 import 'package:ariane_app/features/register/domain/repositories/register_repository.dart';
 import 'package:ariane_app/features/register/domain/usecases/sign_up_usecase_impl.dart';
 import 'package:ariane_app/features/register/presentation/bloc/register_bloc.dart';
+import 'package:ariane_app/features/scheduling_message/data/datasources/remote/scheduling_message_datasources_remote_impl.dart';
+import 'package:ariane_app/features/scheduling_message/data/datasources/scheduling_message_datasources.dart';
+import 'package:ariane_app/features/scheduling_message/data/mappers/scheduling_message_mapper.dart';
+import 'package:ariane_app/features/scheduling_message/data/repositories/scheduling_message_repository_impl.dart';
+import 'package:ariane_app/features/scheduling_message/domain/repositories/scheduling_message_repository.dart';
+import 'package:ariane_app/features/scheduling_message/domain/usecases/create_scheduling_message_usecase_impl.dart';
+import 'package:ariane_app/features/scheduling_message/domain/usecases/delete_scheduling_message_usecase_impl.dart';
+import 'package:ariane_app/features/scheduling_message/domain/usecases/read_scheduling_messages_usecase_impl.dart';
+import 'package:ariane_app/features/scheduling_message/domain/usecases/update_scheduling_message_usecase_impl.dart';
+import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_bloc.dart';
 import 'package:ariane_app/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:ariane_app/features/type_perfurations/domain/usecases/read_periods_usecase_impl.dart';
 import 'package:ariane_app/features/type_perfurations/type_perfurations.dart';
@@ -55,9 +65,12 @@ class Injector {
     getIt.registerLazySingleton(() => PeriodMapper());
     getIt.registerLazySingleton(() => PerfurationMapper(getIt()));
     getIt.registerLazySingleton(() => PendingMapper());
+    getIt.registerLazySingleton(() => SchedulingMessageMapper());
 
     // DATASOURCES
 
+    getIt.registerLazySingleton<SchedulingMessageDataSources>(
+        () => SchedulingMessageDataSourcesRemoteImpl(getIt(), getIt()));
     getIt.registerLazySingleton<PerfurationDataSources>(
         () => PerfurationDataSourcesRemoteImpl(getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<PeriodDataSources>(
@@ -77,6 +90,8 @@ class Injector {
 
     //REPOSITORIES
 
+    getIt.registerLazySingleton<SchedulingMessageRepository>(
+        () => SchedulingMessageRepositoryImpl(getIt()));
     getIt.registerLazySingleton<PerfurationRepository>(
         () => PerfurationRepositoryImpl(getIt()));
     getIt.registerLazySingleton<PeriodRepository>(
@@ -96,6 +111,14 @@ class Injector {
 
     // USECASES
 
+    getIt.registerLazySingleton(
+        () => ReadSchedulingMessagesUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(
+        () => DeleteSchedulingMessageUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(
+        () => UpdateSchedulingMessageUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(
+        () => CreateSchedulingMessageUseCaseImpl(getIt()));
     getIt.registerLazySingleton(() => SearchClientUseCaseImpl(getIt()));
     getIt.registerLazySingleton(() => ReadTypesPerfurationUseCaseImpl(getIt()));
     getIt.registerLazySingleton(() => DeletePerfurationUseCaseImpl(getIt()));
@@ -124,12 +147,10 @@ class Injector {
 
     //BLOC
 
-    getIt.registerFactory(() => PerfurationsBloc(
-          getIt(),
-          getIt(),
-          getIt(),
-          getIt(),
-        ));
+    getIt.registerFactory(
+        () => SchedulingMessageBloc(getIt(), getIt(), getIt(), getIt()));
+    getIt.registerFactory(
+        () => PerfurationsBloc(getIt(), getIt(), getIt(), getIt()));
     getIt
         .registerFactory(() => PeriodsBloc(getIt(), getIt(), getIt(), getIt()));
     getIt.registerFactory(() =>
