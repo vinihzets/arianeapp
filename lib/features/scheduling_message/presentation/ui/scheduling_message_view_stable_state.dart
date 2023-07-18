@@ -4,6 +4,8 @@ import 'package:ariane_app/features/scheduling_message/presentation/bloc/schedul
 import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_event.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/components/text_field_delayed.dart';
+
 class SchedulingMessageViewStableState extends StatefulWidget {
   final SchedulingMessageBloc bloc;
   final BlocState state;
@@ -23,6 +25,7 @@ class _SchedulingMessageViewStableStateState
     extends State<SchedulingMessageViewStableState> {
   late ScrollController scrollController;
   SchedulingMessageStableData get data => widget.state.data;
+  int fetchAmmount = 10;
 
   @override
   void initState() {

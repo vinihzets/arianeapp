@@ -1,3 +1,4 @@
+import 'package:ariane_app/core/utils/const_routes.dart';
 import 'package:ariane_app/core/validators/form_builder_validators.dart';
 import 'package:ariane_app/features/clients/clients.dart';
 import 'package:ariane_app/features/scheduling_message/data/datasources/scheduling_message_datasources.dart';
@@ -24,10 +25,12 @@ class _CreateUpdateSchedulingMessageDialogState
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late SchedulingMessageBloc bloc;
   final List<ClientEntity> selectedsClients = [];
+  late ConstRoutes routes;
 
   @override
   void initState() {
     bloc = GetIt.I.get();
+    routes = GetIt.I.get();
     dataSources = GetIt.I.get();
     message =
         TextEditingController(text: widget.schedulingMessageEntity?.message);
@@ -86,7 +89,7 @@ class _CreateUpdateSchedulingMessageDialogState
                     IconButton(
                         onPressed: () async {
                           final result = await Navigator.of(context).pushNamed(
-                              '/schedulingMessagesSearch',
+                              routes.schedulingMessagesSearchClients,
                               arguments: selectedsClients);
 
                           if (result == null) {

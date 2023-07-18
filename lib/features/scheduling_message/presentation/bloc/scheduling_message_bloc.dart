@@ -1,10 +1,13 @@
+import 'dart:developer';
+
 import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/features/clients/clients.dart';
 import 'package:ariane_app/features/scheduling_message/domain/entities/scheduling_message_entity.dart';
 import 'package:ariane_app/features/scheduling_message/domain/usecases/create_scheduling_message_usecase_impl.dart';
 import 'package:ariane_app/features/scheduling_message/domain/usecases/delete_scheduling_message_usecase_impl.dart';
-import 'package:ariane_app/features/scheduling_message/domain/usecases/get_clients_usecase_impl.dart';
+import 'package:ariane_app/features/scheduling_message/domain/usecases/scheduling_message_read_clients_usecase_impl.dart';
 import 'package:ariane_app/features/scheduling_message/domain/usecases/read_scheduling_messages_usecase_impl.dart';
+import 'package:ariane_app/features/scheduling_message/domain/usecases/scheduling_message_search_clients_usecase_imppl.dart';
 import 'package:ariane_app/features/scheduling_message/domain/usecases/update_scheduling_message_usecase_impl.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_event.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/dialog/create_update_scheduling_message_dialog.dart';
@@ -31,7 +34,10 @@ class SchedulingMessageBloc extends Bloc {
   UpdateSchedulingMessageUseCaseImpl updateSchedulingMessageUseCaseImpl;
   DeleteSchedulingMessageUseCaseImpl deleteSchedulingMessageUseCaseImpl;
   ReadSchedulingMessagesUseCaseImpl readSchedulingMessagesUseCaseImpl;
-  GetClientsUseCaseImpl getClientsUseCaseImpl;
+  SchedulingMessageReadClientsUseCaseImpl
+      schedulingMessageReadClientsUseCaseImpl;
+  SchedulingMessageSearchClientsUseCaseImpl
+      schedulingMessageSearchClientsUseCaseImpl;
 
   List<SchedulingMessageEntity> cache = [];
   List<ClientEntity> listClients = [];
@@ -41,7 +47,8 @@ class SchedulingMessageBloc extends Bloc {
       this.deleteSchedulingMessageUseCaseImpl,
       this.readSchedulingMessagesUseCaseImpl,
       this.updateSchedulingMessageUseCaseImpl,
-      this.getClientsUseCaseImpl);
+      this.schedulingMessageReadClientsUseCaseImpl,
+      this.schedulingMessageSearchClientsUseCaseImpl);
 
   @override
   mapListenEvent(BlocEvent event) {
@@ -61,6 +68,8 @@ class SchedulingMessageBloc extends Bloc {
       _handleGetClients(event.ammount);
     } else if (event is SchedulingMessageEventLoadMoreClients) {
       _handleLoadMoreClients(event.ammount);
+    } else if (event is SchedulingMessageEventSearchClients) {
+      _handleSearchClient(event.query);
     }
   }
 
@@ -166,7 +175,8 @@ class SchedulingMessageBloc extends Bloc {
   _handleGetClients(
     int ammount,
   ) async {
-    final result = await getClientsUseCaseImpl(GetClientsParams(ammount, null));
+    final result = await schedulingMessageReadClientsUseCaseImpl(
+        GetClientsParams(ammount, null));
 
     result.fold((l) => null, (r) {
       listClients.addAll(r);
@@ -178,7 +188,7 @@ class SchedulingMessageBloc extends Bloc {
   }
 
   _handleLoadMoreClients(int ammount) async {
-    final result = await getClientsUseCaseImpl(
+    final result = await schedulingMessageReadClientsUseCaseImpl(
         GetClientsParams(ammount, listClients.last));
 
     result.fold((l) => null, (r) {
@@ -187,6 +197,24 @@ class SchedulingMessageBloc extends Bloc {
       dispatchState(BlocStableState(
           data: SchedulingMessageClientsStableData(
               listClients: listClients, reachMax: r.length < ammount)));
+    });
+  }
+
+  _handleSearchClient(String query) async {
+    final result = await schedulingMessageSearchClientsUseCaseImpl(
+        SearchClientParams(query: query));
+
+    result.fold((l) {
+      dispatchState(BlocErrorState());
+    }, (r) {
+      if (r.isEmpty) {
+        dispatchState(BlocEmptyState());
+      } else {
+        dispatchState(BlocStableState(
+            data: SchedulingMessageClientsStableData(
+                listClients: r, reachMax: true)));
+        listClients.clear();
+      }
     });
   }
 }

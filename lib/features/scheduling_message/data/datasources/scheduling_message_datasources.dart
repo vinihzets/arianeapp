@@ -10,4 +10,5 @@ abstract class SchedulingMessageDataSources {
   Future<SchedulingMessageEntity> updateSchedulingMessage(
       UpdateSchedulingMessageParams params);
   Future<List<ClientEntity>> getClients(GetClientsParams params);
+  Future<List<ClientEntity>> searchClient(SearchClientParams params);
 }

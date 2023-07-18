@@ -52,3 +52,9 @@ class SchedulingMessageEventLoadMoreClients implements SchedulingMessageEvent {
 
   SchedulingMessageEventLoadMoreClients({required this.ammount});
 }
+
+class SchedulingMessageEventSearchClients implements SchedulingMessageEvent {
+  final String query;
+
+  SchedulingMessageEventSearchClients({required this.query});
+}

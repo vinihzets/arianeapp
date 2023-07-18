@@ -15,4 +15,7 @@ abstract class SchedulingMessageRepository {
       DeleteSchedulingMessageParams params);
   Future<Either<Failure, List<ClientEntity>>> getClients(
       GetClientsParams params);
+
+  Future<Either<Failure, List<ClientEntity>>> searchClient(
+      SearchClientParams params);
 }

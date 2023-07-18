@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_bloc.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_event.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/components/text_field_delayed.dart';
 import '../../../clients/domain/entities/client_entity.dart';
 
 class CustomListClientsViewStableState extends StatefulWidget {
@@ -68,37 +71,60 @@ class _CustomListClientsViewStableStateState
           title: const Text('Clientes'),
           centerTitle: true,
         ),
-        body: ListView.separated(
-          controller: controller,
-          itemCount: listClients.length + 1,
-          itemBuilder: (context, index) {
-            if (index == listClients.length) {
-              return Center(
-                child: widget.state.data.reachMax
-                    ? const Text('Isso é tudo!')
-                    : const CircularProgressIndicator.adaptive(),
-              );
-            }
-
-            final client = listClients[index];
-
-            return CheckboxListTile(
-              title: Text(client.firstName),
-              value: selectedMap[client] ?? false,
-              onChanged: (bool? selecionado) {
-                setState(() {
-                  selectedMap[client] = selecionado ?? false;
-
-                  if (selecionado == true) {
-                    selecteds.add(client);
-                  } else {
-                    selecteds.remove(client);
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextFieldDelayed(
+                onClear: () {
+                  widget.bloc.dispatchEvent(
+                      SchedulingMessageEventGetClients(ammount: fetchAmmount));
+                },
+                onChanged: (v) {
+                  widget.bloc.dispatchEvent(
+                      SchedulingMessageEventSearchClients(query: v));
+                },
+              ),
+            ),
+            Expanded(
+              child: ListView.separated(
+                controller: controller,
+                itemCount: listClients.length + 1,
+                itemBuilder: (context, index) {
+                  if (index == listClients.length) {
+                    return Center(
+                      child: widget.state.data.reachMax
+                          ? const Text('Isso é tudo!')
+                          : const CircularProgressIndicator.adaptive(),
+                    );
                   }
-                });
-              },
-            );
-          },
-          separatorBuilder: (context, index) => const Divider(),
+
+                  final client = listClients[index];
+
+                  return _buildItem(client);
+                },
+                separatorBuilder: (context, index) => const Divider(),
+              ),
+            ),
+          ],
         ));
+  }
+
+  _buildItem(ClientEntity client) {
+    return CheckboxListTile(
+      title: Text(client.firstName),
+      value: selectedMap[client] ?? false,
+      onChanged: (bool? selecionado) {
+        setState(() {
+          selectedMap[client] = selecionado ?? false;
+
+          if (selecionado == true) {
+            selecteds.add(client);
+          } else {
+            selecteds.remove(client);
+          }
+        });
+      },
+    );
   }
 }
