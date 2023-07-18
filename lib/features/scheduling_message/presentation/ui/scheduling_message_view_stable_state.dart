@@ -4,8 +4,6 @@ import 'package:ariane_app/features/scheduling_message/presentation/bloc/schedul
 import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_event.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/components/text_field_delayed.dart';
-
 class SchedulingMessageViewStableState extends StatefulWidget {
   final SchedulingMessageBloc bloc;
   final BlocState state;

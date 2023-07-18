@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_bloc.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_event.dart';

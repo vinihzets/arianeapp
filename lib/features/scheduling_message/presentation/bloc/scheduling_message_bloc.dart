@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/features/clients/clients.dart';
 import 'package:ariane_app/features/scheduling_message/domain/entities/scheduling_message_entity.dart';
