@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,7 @@ class TextFieldDelayed extends StatefulWidget {
 class _TextFieldDelayedState extends State<TextFieldDelayed> {
   late Timer? timer;
   late TextEditingController controller;
+  bool isTextEmpty = true;
 
   @override
   void initState() {
@@ -36,6 +38,16 @@ class _TextFieldDelayedState extends State<TextFieldDelayed> {
   }
 
   void _onChanged(String text) {
+    if (text.isEmpty) {
+      setState(() {
+        isTextEmpty = true;
+      });
+    } else {
+      setState(() {
+        isTextEmpty = false;
+      });
+    }
+
     if (timer == null) {
       timer = Timer(
         Duration(seconds: widget.delaySeconds),
@@ -60,11 +72,14 @@ class _TextFieldDelayedState extends State<TextFieldDelayed> {
       decoration: InputDecoration(
           prefixIcon: const Icon(Icons.search),
           suffixIcon: IconButton(
-              onPressed: () {
-                controller.clear();
-                widget.onClear();
-                setState(() {});
-              },
+              onPressed: isTextEmpty
+                  ? null
+                  : () {
+                      controller.clear();
+                      widget.onClear();
+                      isTextEmpty = true;
+                      setState(() {});
+                    },
               icon: const Icon(Icons.close)),
           hintText: 'Pesquisar',
           border: const OutlineInputBorder(

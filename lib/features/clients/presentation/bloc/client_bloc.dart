@@ -94,7 +94,7 @@ class ClientBloc extends Bloc {
                   dispatchState(BlocStableState(
                       data: ClientStableData(
                           listClients: listClients,
-                          reachMax: r.length < ammount)))
+                          reachMax: r.length < ammount))),
                 }
               else
                 {dispatchState(BlocEmptyState())}
@@ -188,6 +188,8 @@ class ClientBloc extends Bloc {
       } else {
         dispatchState(BlocStableState(
             data: ClientStableData(listClients: r, reachMax: true)));
+
+        listClients.clear();
       }
     });
   }
