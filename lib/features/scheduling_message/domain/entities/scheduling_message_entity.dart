@@ -5,7 +5,7 @@ class SchedulingMessageEntity {
   final List<ClientEntity> listClients;
   final String id;
   final String date;
-  final DateTime createdAt;
+  final String createdAt;
 
   SchedulingMessageEntity(
       {required this.message,

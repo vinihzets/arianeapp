@@ -1,4 +1,6 @@
 import 'package:ariane_app/core/validators/form_builder_validators.dart';
+import 'package:ariane_app/features/clients/clients.dart';
+import 'package:ariane_app/features/scheduling_message/data/datasources/scheduling_message_datasources.dart';
 import 'package:ariane_app/features/scheduling_message/domain/entities/scheduling_message_entity.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_bloc.dart';
 import 'package:flutter/material.dart';
@@ -16,15 +18,17 @@ class CreateUpdateSchedulingMessageDialog extends StatefulWidget {
 
 class _CreateUpdateSchedulingMessageDialogState
     extends State<CreateUpdateSchedulingMessageDialog> {
+  late SchedulingMessageDataSources dataSources;
   late TextEditingController message;
-  late String date;
+  DateTime date = DateTime.now();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late SchedulingMessageBloc bloc;
-  DateTime? dateNow;
+  final List<ClientEntity> selectedsClients = [];
 
   @override
   void initState() {
     bloc = GetIt.I.get();
+    dataSources = GetIt.I.get();
     message =
         TextEditingController(text: widget.schedulingMessageEntity?.message);
 
@@ -48,8 +52,7 @@ class _CreateUpdateSchedulingMessageDialogState
     if (result == null) {
       return;
     }
-    date = result.millisecondsSinceEpoch.toString();
-    dateNow = result;
+    date = result;
     setState(() {});
   }
 
@@ -65,10 +68,40 @@ class _CreateUpdateSchedulingMessageDialogState
           child: Form(
             key: _formKey,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                TextButton(
-                    onPressed: () => onDataPressed(),
-                    child: const Text('Agendar Data')),
+                Row(
+                  children: [
+                    Text('Data: ${date.day}/${date.month}/${date.year}'),
+                    TextButton(
+                        onPressed: () => onDataPressed(),
+                        child: const Text('Agendar Data')),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    const Text('Clientes'),
+                    IconButton(
+                        onPressed: () async {
+                          final result = await Navigator.of(context).pushNamed(
+                              '/schedulingMessagesSearch',
+                              arguments: selectedsClients);
+
+                          if (result == null) {
+                            return;
+                          }
+
+                          setState(() {});
+                        },
+                        icon: const Icon(Icons.add))
+                  ],
+                ),
+                Column(
+                  children:
+                      selectedsClients.map((e) => Text(e.firstName)).toList(),
+                ),
                 TextFormField(
                     controller: message,
                     decoration: const InputDecoration(labelText: 'Mensagem'),
@@ -85,11 +118,11 @@ class _CreateUpdateSchedulingMessageDialogState
             if (_formKey.currentState?.validate() ?? false) {
               Navigator.of(context).pop(SchedulingMessageEntity(
                   id: widget.schedulingMessageEntity?.id ?? '',
-                  createdAt: DateTime.now(),
+                  createdAt: DateTime.now().millisecondsSinceEpoch.toString(),
                   message:
                       widget.schedulingMessageEntity?.message ?? message.text,
-                  listClients: [],
-                  date: date));
+                  listClients: selectedsClients,
+                  date: date.millisecondsSinceEpoch.toString()));
             }
           },
           child: Text(

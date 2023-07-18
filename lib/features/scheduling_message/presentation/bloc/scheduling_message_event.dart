@@ -40,3 +40,15 @@ class SchedulingMessageEventLoadMore implements SchedulingMessageEvent {
 
   SchedulingMessageEventLoadMore({required this.date});
 }
+
+class SchedulingMessageEventGetClients implements SchedulingMessageEvent {
+  final int ammount;
+
+  SchedulingMessageEventGetClients({required this.ammount});
+}
+
+class SchedulingMessageEventLoadMoreClients implements SchedulingMessageEvent {
+  final int ammount;
+
+  SchedulingMessageEventLoadMoreClients({required this.ammount});
+}

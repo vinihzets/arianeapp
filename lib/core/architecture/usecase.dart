@@ -193,7 +193,7 @@ class CreateSchedulingMessageParams {
   final List<ClientEntity> listClients;
   final String message;
   final String date;
-  final DateTime createdAt;
+  final String createdAt;
 
   CreateSchedulingMessageParams(
       {required this.listClients,
@@ -207,7 +207,7 @@ class UpdateSchedulingMessageParams {
   final String id;
   final String message;
   final String date;
-  final DateTime createdAt;
+  final String createdAt;
 
   UpdateSchedulingMessageParams(
       {required this.createdAt,

@@ -42,6 +42,7 @@ import 'package:ariane_app/features/scheduling_message/data/repositories/schedul
 import 'package:ariane_app/features/scheduling_message/domain/repositories/scheduling_message_repository.dart';
 import 'package:ariane_app/features/scheduling_message/domain/usecases/create_scheduling_message_usecase_impl.dart';
 import 'package:ariane_app/features/scheduling_message/domain/usecases/delete_scheduling_message_usecase_impl.dart';
+import 'package:ariane_app/features/scheduling_message/domain/usecases/get_clients_usecase_impl.dart';
 import 'package:ariane_app/features/scheduling_message/domain/usecases/read_scheduling_messages_usecase_impl.dart';
 import 'package:ariane_app/features/scheduling_message/domain/usecases/update_scheduling_message_usecase_impl.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_bloc.dart';
@@ -65,12 +66,12 @@ class Injector {
     getIt.registerLazySingleton(() => PeriodMapper());
     getIt.registerLazySingleton(() => PerfurationMapper(getIt()));
     getIt.registerLazySingleton(() => PendingMapper());
-    getIt.registerLazySingleton(() => SchedulingMessageMapper());
+    getIt.registerLazySingleton(() => SchedulingMessageMapper(getIt()));
 
     // DATASOURCES
 
-    getIt.registerLazySingleton<SchedulingMessageDataSources>(
-        () => SchedulingMessageDataSourcesRemoteImpl(getIt(), getIt()));
+    getIt.registerLazySingleton<SchedulingMessageDataSources>(() =>
+        SchedulingMessageDataSourcesRemoteImpl(getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<PerfurationDataSources>(
         () => PerfurationDataSourcesRemoteImpl(getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<PeriodDataSources>(
@@ -111,6 +112,7 @@ class Injector {
 
     // USECASES
 
+    getIt.registerLazySingleton(() => GetClientsUseCaseImpl(getIt()));
     getIt.registerLazySingleton(
         () => ReadSchedulingMessagesUseCaseImpl(getIt()));
     getIt.registerLazySingleton(
@@ -147,8 +149,8 @@ class Injector {
 
     //BLOC
 
-    getIt.registerFactory(
-        () => SchedulingMessageBloc(getIt(), getIt(), getIt(), getIt()));
+    getIt.registerFactory(() =>
+        SchedulingMessageBloc(getIt(), getIt(), getIt(), getIt(), getIt()));
     getIt.registerFactory(
         () => PerfurationsBloc(getIt(), getIt(), getIt(), getIt()));
     getIt

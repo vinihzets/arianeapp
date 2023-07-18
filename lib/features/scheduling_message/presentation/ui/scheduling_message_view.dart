@@ -15,9 +15,14 @@ class SchedulingMessageView extends StatefulWidget {
 class _SchedulingMessageViewState extends State<SchedulingMessageView> {
   late SchedulingMessageBloc bloc;
 
+  final int fetchAmmount = 10;
+
   @override
   void initState() {
     bloc = GetIt.I.get();
+
+    bloc.dispatchEvent(SchedulingMessageEventRead(
+        date: DateTime.now(), ammount: fetchAmmount));
 
     super.initState();
   }
@@ -33,6 +38,7 @@ class _SchedulingMessageViewState extends State<SchedulingMessageView> {
           onLoading: (s) => const SizedBox.shrink(),
           onEmpty: (s) => const SizedBox.shrink()),
       floatingActionButton: FloatingActionButton.extended(
+          heroTag: null,
           label: const Text('Novo agendamento de mensagem'),
           onPressed: () => bloc.dispatchEvent(
               SchedulingMessageEventCreate(context: context, bloc: bloc))),

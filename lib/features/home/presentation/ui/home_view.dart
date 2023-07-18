@@ -1,3 +1,4 @@
+import 'package:ariane_app/features/pending/pending.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/ui/scheduling_message_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -40,10 +41,7 @@ class _HomeViewState extends State<HomeView> {
       ),
       body: IndexedStack(
         index: _page,
-        children: const [
-          ClientView(),
-          SchedulingMessageView(),
-        ],
+        children: const [ClientView(), PendingView(), SchedulingMessageView()],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _page,
@@ -59,7 +57,11 @@ class _HomeViewState extends State<HomeView> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.pending_actions),
-            label: 'Pendentes',
+            label: 'Pendencias',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.pending),
+            label: 'Mensagens',
           ),
         ],
       ),

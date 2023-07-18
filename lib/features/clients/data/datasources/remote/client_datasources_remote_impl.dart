@@ -41,12 +41,10 @@ class ClientDataSourcesRemoteImpl implements ClientDataSources {
 
     final querySnapshot = await query.get();
 
-    final listClients = querySnapshot.docs.map((doc) {
+    return querySnapshot.docs.map((doc) {
       final data = doc.data() as Map<String, dynamic>;
       return mapper.fromMap(data);
     }).toList();
-
-    return listClients;
   }
 
   @override

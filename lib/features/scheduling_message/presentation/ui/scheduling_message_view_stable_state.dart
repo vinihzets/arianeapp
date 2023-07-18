@@ -77,9 +77,12 @@ class _SchedulingMessageViewStableStateState
   }
 
   Widget _buildItem(SchedulingMessageEntity item) {
+    final normalDate =
+        DateTime.fromMillisecondsSinceEpoch(int.parse(item.createdAt));
+
     return ListTile(
       title: Text(item.message),
-      subtitle: Text(item.message),
+      subtitle: Text(normalDate.toString()),
     );
   }
 }

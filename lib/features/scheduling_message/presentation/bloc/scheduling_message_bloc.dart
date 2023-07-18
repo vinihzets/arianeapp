@@ -1,9 +1,9 @@
-import 'dart:developer';
-
 import 'package:ariane_app/core/core.dart';
+import 'package:ariane_app/features/clients/clients.dart';
 import 'package:ariane_app/features/scheduling_message/domain/entities/scheduling_message_entity.dart';
 import 'package:ariane_app/features/scheduling_message/domain/usecases/create_scheduling_message_usecase_impl.dart';
 import 'package:ariane_app/features/scheduling_message/domain/usecases/delete_scheduling_message_usecase_impl.dart';
+import 'package:ariane_app/features/scheduling_message/domain/usecases/get_clients_usecase_impl.dart';
 import 'package:ariane_app/features/scheduling_message/domain/usecases/read_scheduling_messages_usecase_impl.dart';
 import 'package:ariane_app/features/scheduling_message/domain/usecases/update_scheduling_message_usecase_impl.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_event.dart';
@@ -18,19 +18,30 @@ class SchedulingMessageStableData {
       {required this.listMessages, required this.reachMax});
 }
 
+class SchedulingMessageClientsStableData {
+  final List<ClientEntity> listClients;
+  final bool reachMax;
+
+  SchedulingMessageClientsStableData(
+      {required this.listClients, required this.reachMax});
+}
+
 class SchedulingMessageBloc extends Bloc {
   CreateSchedulingMessageUseCaseImpl createSchedulingMessageUseCaseImpl;
   UpdateSchedulingMessageUseCaseImpl updateSchedulingMessageUseCaseImpl;
   DeleteSchedulingMessageUseCaseImpl deleteSchedulingMessageUseCaseImpl;
   ReadSchedulingMessagesUseCaseImpl readSchedulingMessagesUseCaseImpl;
+  GetClientsUseCaseImpl getClientsUseCaseImpl;
 
   List<SchedulingMessageEntity> cache = [];
+  List<ClientEntity> listClients = [];
 
   SchedulingMessageBloc(
       this.createSchedulingMessageUseCaseImpl,
       this.deleteSchedulingMessageUseCaseImpl,
       this.readSchedulingMessagesUseCaseImpl,
-      this.updateSchedulingMessageUseCaseImpl);
+      this.updateSchedulingMessageUseCaseImpl,
+      this.getClientsUseCaseImpl);
 
   @override
   mapListenEvent(BlocEvent event) {
@@ -46,6 +57,10 @@ class SchedulingMessageBloc extends Bloc {
       _handleUpdate(event.entity, event.context);
     } else if (event is SchedulingMessageEventLoadMore) {
       _handleLoadMore(cache, event.date);
+    } else if (event is SchedulingMessageEventGetClients) {
+      _handleGetClients(event.ammount);
+    } else if (event is SchedulingMessageEventLoadMoreClients) {
+      _handleLoadMoreClients(event.ammount);
     }
   }
 
@@ -73,7 +88,10 @@ class SchedulingMessageBloc extends Bloc {
 
       showSuccess(context, r.message);
 
-      dispatchState(BlocStableState(data: cache));
+      dispatchState(BlocStableState(
+          data: SchedulingMessageStableData(
+              listMessages: cache,
+              reachMax: r.listClients.length < cache.length)));
     });
   }
 
@@ -143,5 +161,32 @@ class SchedulingMessageBloc extends Bloc {
         ),
       ),
     );
+  }
+
+  _handleGetClients(
+    int ammount,
+  ) async {
+    final result = await getClientsUseCaseImpl(GetClientsParams(ammount, null));
+
+    result.fold((l) => null, (r) {
+      listClients.addAll(r);
+
+      dispatchState(BlocStableState(
+          data: SchedulingMessageClientsStableData(
+              listClients: r, reachMax: false)));
+    });
+  }
+
+  _handleLoadMoreClients(int ammount) async {
+    final result = await getClientsUseCaseImpl(
+        GetClientsParams(ammount, listClients.last));
+
+    result.fold((l) => null, (r) {
+      listClients.addAll(r);
+
+      dispatchState(BlocStableState(
+          data: SchedulingMessageClientsStableData(
+              listClients: listClients, reachMax: r.length < ammount)));
+    });
   }
 }

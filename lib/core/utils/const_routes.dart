@@ -6,4 +6,6 @@ class ConstRoutes {
   final String typePerfurationView = '/typePerfuration';
   final String perfuration = '/perfuration';
   final String periodsView = '/periods';
+  final String schedulingMessages = '/schedulingMessages';
+  final String schedulingMessagesSearchClients = '/schedulingMessagesSearch';
 }

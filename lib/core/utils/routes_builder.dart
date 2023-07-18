@@ -4,6 +4,8 @@ import 'package:ariane_app/features/login/presentation/ui/login_view.dart';
 import 'package:ariane_app/features/perfuration/perfurations.dart';
 import 'package:ariane_app/features/periods/periods.dart';
 import 'package:ariane_app/features/register/presentation/ui/register_view.dart';
+import 'package:ariane_app/features/scheduling_message/presentation/ui/scheduling_message_view.dart';
+import 'package:ariane_app/features/scheduling_message/presentation/widgets/custom_list_clients_view.dart';
 import 'package:ariane_app/features/splash/presentation/ui/splash_view.dart';
 import 'package:ariane_app/features/type_perfurations/type_perfurations.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +20,9 @@ class RoutesBuilder {
       routes.typePerfurationView: (_) => const TypePerfurationView(),
       routes.perfuration: (_) => const PerfurationView(),
       routes.periodsView: (_) => const PeriodView(),
+      routes.schedulingMessages: (_) => const SchedulingMessageView(),
+      routes.schedulingMessagesSearchClients: (_) =>
+          const CustomListClientsView(),
     };
   }
 }
