@@ -97,8 +97,7 @@ class SchedulingMessageBloc extends Bloc {
 
       dispatchState(BlocStableState(
           data: SchedulingMessageStableData(
-              listMessages: cache,
-              reachMax: r.listClients.length < cache.length)));
+              listMessages: cache, reachMax: true)));
     });
   }
 

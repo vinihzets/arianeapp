@@ -2,8 +2,6 @@ import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_bloc.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_event.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../core/components/text_field_delayed.dart';
 import '../../../clients/domain/entities/client_entity.dart';
 
 class CustomListClientsViewStableState extends StatefulWidget {

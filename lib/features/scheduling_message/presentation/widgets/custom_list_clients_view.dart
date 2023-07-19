@@ -1,7 +1,6 @@
 import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_bloc.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_event.dart';
-import 'package:ariane_app/features/scheduling_message/presentation/ui/scheduling_message_empty_state.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/widgets/custom_list_clients_view_empty_state.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/widgets/custom_list_clients_view_stable_state.dart.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +71,7 @@ class _CustomListClientsViewState extends State<CustomListClientsView> {
                     ),
                 onError: (onError) => Container(),
                 onLoading: (onLoading) => Container(),
-                onEmpty: (onEmpty) => CustomListClientViewEmptyState()),
+                onEmpty: (onEmpty) => const CustomListClientViewEmptyState()),
           ),
         ],
       ),
