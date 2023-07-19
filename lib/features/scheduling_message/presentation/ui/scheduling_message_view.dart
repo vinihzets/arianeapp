@@ -1,6 +1,7 @@
 import 'package:ariane_app/core/components/bloc_screen_builder.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_bloc.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_event.dart';
+import 'package:ariane_app/features/scheduling_message/presentation/ui/scheduling_message_empty_state.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/ui/scheduling_message_view_stable_state.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -36,7 +37,9 @@ class _SchedulingMessageViewState extends State<SchedulingMessageView> {
               SchedulingMessageViewStableState(bloc: bloc, state: s),
           onError: (s) => const SizedBox.shrink(),
           onLoading: (s) => const SizedBox.shrink(),
-          onEmpty: (s) => const SizedBox.shrink()),
+          onEmpty: (s) => SchedulingMessageViewEmptyState(
+                state: s,
+              )),
       floatingActionButton: FloatingActionButton.extended(
           heroTag: null,
           label: const Text('Novo agendamento de mensagem'),

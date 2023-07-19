@@ -59,53 +59,24 @@ class _CustomListClientsViewStableStateState
   Widget build(BuildContext context) {
     final List<ClientEntity> listClients = widget.state.data.listClients;
 
-    return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-              onPressed: () {
-                Navigator.of(context).pop(selecteds);
-              },
-              icon: const Icon(Icons.arrow_back_ios)),
-          title: const Text('Clientes'),
-          centerTitle: true,
-        ),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: TextFieldDelayed(
-                onClear: () {
-                  widget.bloc.dispatchEvent(
-                      SchedulingMessageEventGetClients(ammount: fetchAmmount));
-                },
-                onChanged: (v) {
-                  widget.bloc.dispatchEvent(
-                      SchedulingMessageEventSearchClients(query: v));
-                },
-              ),
-            ),
-            Expanded(
-              child: ListView.separated(
-                controller: controller,
-                itemCount: listClients.length + 1,
-                itemBuilder: (context, index) {
-                  if (index == listClients.length) {
-                    return Center(
-                      child: widget.state.data.reachMax
-                          ? const Text('Isso é tudo!')
-                          : const CircularProgressIndicator.adaptive(),
-                    );
-                  }
+    return ListView.separated(
+      controller: controller,
+      itemCount: listClients.length + 1,
+      itemBuilder: (context, index) {
+        if (index == listClients.length) {
+          return Center(
+            child: widget.state.data.reachMax
+                ? const Text('Isso é tudo!')
+                : const CircularProgressIndicator.adaptive(),
+          );
+        }
 
-                  final client = listClients[index];
+        final client = listClients[index];
 
-                  return _buildItem(client);
-                },
-                separatorBuilder: (context, index) => const Divider(),
-              ),
-            ),
-          ],
-        ));
+        return _buildItem(client);
+      },
+      separatorBuilder: (context, index) => const Divider(),
+    );
   }
 
   _buildItem(ClientEntity client) {
