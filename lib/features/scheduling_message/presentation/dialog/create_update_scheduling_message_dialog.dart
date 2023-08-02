@@ -1,4 +1,5 @@
 import 'package:ariane_app/core/utils/const_routes.dart';
+import 'package:ariane_app/core/utils/date_formatter.dart';
 import 'package:ariane_app/core/validators/form_builder_validators.dart';
 import 'package:ariane_app/features/clients/clients.dart';
 import 'package:ariane_app/features/scheduling_message/data/datasources/scheduling_message_datasources.dart';
@@ -73,13 +74,12 @@ class _CreateUpdateSchedulingMessageDialogState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Text('Data: ${date.day}/${date.month}/${date.year}'),
-                    TextButton(
-                        onPressed: () => onDataPressed(),
-                        child: const Text('Agendar Data')),
-                  ],
+                Align(
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                    onPressed: () => onDataPressed(),
+                    child: Text(DateFormatter.ddMMyyyy(date)),
+                  ),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -102,6 +102,7 @@ class _CreateUpdateSchedulingMessageDialogState
                   ],
                 ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children:
                       selectedsClients.map((e) => Text(e.firstName)).toList(),
                 ),
@@ -120,12 +121,13 @@ class _CreateUpdateSchedulingMessageDialogState
           onPressed: () {
             if (_formKey.currentState?.validate() ?? false) {
               Navigator.of(context).pop(SchedulingMessageEntity(
-                  id: widget.schedulingMessageEntity?.id ?? '',
-                  createdAt: DateTime.now().millisecondsSinceEpoch.toString(),
-                  message:
-                      widget.schedulingMessageEntity?.message ?? message.text,
-                  listClients: selectedsClients,
-                  date: date.millisecondsSinceEpoch.toString()));
+                id: widget.schedulingMessageEntity?.id ?? '',
+                createdAt: DateTime.now().millisecondsSinceEpoch.toString(),
+                message:
+                    widget.schedulingMessageEntity?.message ?? message.text,
+                listClients: selectedsClients,
+                date: date,
+              ));
             }
           },
           child: Text(

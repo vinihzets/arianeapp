@@ -29,8 +29,6 @@ class PendingDataSourceRemoteImpl implements PendingDataSource {
       query.startAfter([startAfter.date.millisecondsSinceEpoch]);
     }
 
-    query.limit(ammount);
-
     final request = await query.get();
 
     return request.docs.map((e) => mapper.fromMap(e.data())).toList();

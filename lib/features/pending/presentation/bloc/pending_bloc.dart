@@ -1,4 +1,5 @@
 import 'package:ariane_app/core/core.dart';
+import 'package:ariane_app/features/clients/clients.dart';
 import 'package:ariane_app/features/pending/domain/domain.dart';
 import 'pending_event.dart';
 
@@ -16,6 +17,7 @@ class PendingStableData {
 
 class PendingBloc extends Bloc {
   GetPendingUseCaseImpl getPendingUseCaseImpl;
+
   ConstRoutes routes;
 
   PendingBloc(this.getPendingUseCaseImpl, this.routes);
@@ -28,6 +30,25 @@ class PendingBloc extends Bloc {
       _handleReadyEvent(event.date);
     } else if (event is PendingEventLoadMore) {
       _handleLoadMore(event.cache, event.date);
+    } else if (event is PendingEventSendMessage) {
+      _handleSendMessage(event.entity, event.date);
+    }
+  }
+
+  _handleSendMessage(PendingEntity entity, DateTime date) async {
+    final clientDoc = await DatabaseService()
+        .clients
+        .doc(
+          entity.clientId,
+        )
+        .get();
+
+    final client = ClientMapper().fromMap(clientDoc.data()!);
+
+    final result = await WhatsApp.sendMessage(client.number, entity.message);
+    if (result) {
+      DatabaseService().pendings.doc(entity.id).update({'sent': true});
+      _handleReadyEvent(date);
     }
   }
 

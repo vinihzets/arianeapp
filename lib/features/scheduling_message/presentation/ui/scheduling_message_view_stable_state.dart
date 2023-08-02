@@ -1,4 +1,5 @@
 import 'package:ariane_app/core/core.dart';
+import 'package:ariane_app/core/utils/date_formatter.dart';
 import 'package:ariane_app/features/scheduling_message/domain/entities/scheduling_message_entity.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_bloc.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_event.dart';
@@ -78,12 +79,37 @@ class _SchedulingMessageViewStableStateState
   }
 
   Widget _buildItem(SchedulingMessageEntity item) {
-    final normalDate =
-        DateTime.fromMillisecondsSinceEpoch(int.parse(item.createdAt));
+    final normalDate = DateTime.fromMillisecondsSinceEpoch(
+      int.parse(item.createdAt),
+    );
 
     return ListTile(
       title: Text(item.message),
-      subtitle: Text(normalDate.toString()),
+      subtitle: Text(DateFormatter.ddMMyyyy(normalDate)),
+      trailing: const Icon(Icons.arrow_right),
+      onTap: () => showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Clientes'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: item.listClients
+                .map(
+                  (e) => ListTile(
+                    title: Text(e.firstName),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.send),
+                      onPressed: () => WhatsApp.sendMessage(
+                        e.number,
+                        item.message,
+                      ),
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
+        ),
+      ),
     );
   }
 }

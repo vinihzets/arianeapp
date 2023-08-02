@@ -23,33 +23,32 @@ class _CustomDrawerState extends State<CustomDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            CustomDrawerTile(
+    return SafeArea(
+      child: Drawer(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              CustomDrawerTile(
                 title: 'Home',
                 trailing: const Icon(Icons.arrow_right),
                 leading: const Icon(Icons.home),
-                onPressed: () {
-                  Navigator.of(context).pushNamed(routes.homeView);
-                }),
-            CustomDrawerTile(
+                route: routes.homeView,
+              ),
+              CustomDrawerTile(
                 title: 'Tipo de Perfuração',
                 trailing: const Icon(Icons.arrow_right),
                 leading: const Icon(Icons.edit),
-                onPressed: () {
-                  Navigator.of(context).pushNamed(routes.typePerfurationView);
-                }),
-            CustomDrawerTile(
+                route: routes.typePerfurationView,
+              ),
+              CustomDrawerTile(
                 title: 'Periodos',
                 trailing: const Icon(Icons.arrow_right),
                 leading: const Icon(Icons.pending_actions_rounded),
-                onPressed: () {
-                  Navigator.of(context).pushNamed(routes.periodsView);
-                }),
-          ],
+                route: routes.periodsView,
+              )
+            ],
+          ),
         ),
       ),
     );

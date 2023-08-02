@@ -35,8 +35,9 @@ class ClientDataSourcesRemoteImpl implements ClientDataSources {
     Query query = clients;
 
     if (params.startAfter != null) {
-      query =
-          query.orderBy('firstName').startAfter([params.startAfter!.firstName]);
+      query = query.orderBy('id').startAfter([
+        params.startAfter!.id,
+      ]);
     }
 
     final querySnapshot = await query.get();

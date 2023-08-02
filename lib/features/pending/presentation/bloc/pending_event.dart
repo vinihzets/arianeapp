@@ -23,3 +23,10 @@ class PendingEventShowSearchDialog implements PendingEvent {
 
   PendingEventShowSearchDialog(this.context, this.dialog);
 }
+
+class PendingEventSendMessage implements PendingEvent {
+  final PendingEntity entity;
+  final DateTime date;
+
+  PendingEventSendMessage(this.entity, this.date);
+}

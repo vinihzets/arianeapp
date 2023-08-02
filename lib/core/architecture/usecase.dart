@@ -192,7 +192,7 @@ class ReadSchedulingMessagesParams {
 class CreateSchedulingMessageParams {
   final List<ClientEntity> listClients;
   final String message;
-  final String date;
+  final DateTime date;
   final String createdAt;
 
   CreateSchedulingMessageParams(
@@ -206,7 +206,7 @@ class UpdateSchedulingMessageParams {
   final List<ClientEntity> listClients;
   final String id;
   final String message;
-  final String date;
+  final DateTime date;
   final String createdAt;
 
   UpdateSchedulingMessageParams(

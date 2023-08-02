@@ -1,6 +1,25 @@
 import * as functions from "firebase-functions";
 import * as  admin from "firebase-admin";
 
+
+export const onClientCreated = functions.firestore.document('/clients/{clientId}')
+    .onCreate(async (snap, _) => {
+        const data = snap.data();
+        const firstName = data['firstName'] as string;
+        const lastName = data['lastName'] as string;
+
+        let completeSearchName = firstName;
+
+        if (lastName.length > 0) {
+            completeSearchName = completeSearchName.concat(' ').concat(lastName);
+        }
+
+        return snap.ref.set({
+            'completeSearchName': completeSearchName.normalize().toLowerCase(),
+        }, { merge: true });
+    });
+
+
 export const onClientUpdated = functions.firestore.document('/clients/{clientId}')
     .onUpdate(async (snap, _) => {
 

@@ -91,9 +91,7 @@ class _PendingViewStableDataState extends State<PendingViewStableData> {
 
   Widget _buildItem(PendingEntity item) {
     return ListTile(
-      title: Text(item.clientName),
-      subtitle: Text(item.message),
-      trailing: item.sent
+      leading: item.sent
           ? const Icon(
               Icons.check,
               color: Colors.green,
@@ -102,6 +100,14 @@ class _PendingViewStableDataState extends State<PendingViewStableData> {
               Icons.schedule,
               color: Colors.orange,
             ),
+      title: Text('${item.clientName} (${item.period.name})'),
+      subtitle: Text(item.typePerfuration.name),
+      trailing: IconButton(
+        onPressed: () => widget.bloc.dispatchEvent(
+          PendingEventSendMessage(item, data.date),
+        ),
+        icon: const Icon(Icons.send),
+      ),
     );
   }
 }

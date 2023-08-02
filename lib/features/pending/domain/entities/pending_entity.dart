@@ -1,3 +1,5 @@
+import 'package:ariane_app/core/core.dart';
+import 'package:ariane_app/core/global/entities/type_perfuration_entity.dart';
 import 'package:equatable/equatable.dart';
 
 class PendingEntity extends Equatable {
@@ -9,6 +11,9 @@ class PendingEntity extends Equatable {
   final String message;
   final bool sent;
 
+  final TypePerfurationEntity typePerfuration;
+  final PeriodEntity period;
+
   const PendingEntity({
     required this.id,
     required this.clientName,
@@ -16,6 +21,8 @@ class PendingEntity extends Equatable {
     required this.date,
     required this.message,
     required this.sent,
+    required this.period,
+    required this.typePerfuration,
   });
 
   @override

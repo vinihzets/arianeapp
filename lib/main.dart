@@ -3,6 +3,7 @@ import 'package:ariane_app/core/injector/injector.dart';
 import 'package:ariane_app/core/utils/const_routes.dart';
 import 'package:ariane_app/core/utils/routes_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get_it/get_it.dart';
 
 void main() async {
@@ -14,9 +15,17 @@ void main() async {
 
   routes = GetIt.I.get();
 
-  runApp(MaterialApp(
+  return runApp(MaterialApp(
     theme: ThemeData(useMaterial3: true),
     initialRoute: routes.splashView,
     routes: RoutesBuilder.build(routes),
+    localizationsDelegates: const [
+      GlobalMaterialLocalizations.delegate,
+      GlobalWidgetsLocalizations.delegate,
+      GlobalCupertinoLocalizations.delegate,
+    ],
+    supportedLocales: const [
+      Locale('pt', 'BR'), // English
+    ],
   ));
 }

@@ -66,7 +66,7 @@ class Injector {
     getIt.registerLazySingleton(() => TypePerfurationMapper(getIt()));
     getIt.registerLazySingleton(() => PeriodMapper());
     getIt.registerLazySingleton(() => PerfurationMapper(getIt()));
-    getIt.registerLazySingleton(() => PendingMapper());
+    getIt.registerLazySingleton(() => PendingMapper(getIt(), getIt()));
     getIt.registerLazySingleton(() => SchedulingMessageMapper(getIt()));
 
     // DATASOURCES

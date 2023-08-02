@@ -80,6 +80,7 @@ class _CustomListClientsViewStableStateState
   _buildItem(ClientEntity client) {
     return CheckboxListTile(
       title: Text(client.firstName),
+      subtitle: Text(client.lastName),
       value: selectedMap[client] ?? false,
       onChanged: (bool? selecionado) {
         setState(() {
