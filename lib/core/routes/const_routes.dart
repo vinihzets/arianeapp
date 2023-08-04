@@ -8,4 +8,5 @@ class ConstRoutes {
   final String periodsView = '/periods';
   final String schedulingMessages = '/schedulingMessages';
   final String schedulingMessagesSearchClients = '/schedulingMessagesSearch';
+  final String clientPerfurations = '/clientPerfurations';
 }

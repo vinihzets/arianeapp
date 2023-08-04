@@ -1,6 +1,6 @@
 import 'package:ariane_app/core/architecture/usecase.dart';
 import 'package:ariane_app/core/failure/failure.dart';
-import 'package:ariane_app/features/perfuration/domain/entities/perfuration_entity.dart';
+import 'package:ariane_app/core/global/entities/perfuration_entity.dart';
 import 'package:ariane_app/features/perfuration/domain/repositories/perfuration_repository.dart';
 import 'package:dartz/dartz.dart';
 

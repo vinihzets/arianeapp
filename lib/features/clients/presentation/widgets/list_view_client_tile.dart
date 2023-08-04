@@ -1,3 +1,4 @@
+import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/features/clients/clients.dart';
 import 'package:flutter/material.dart';
 
@@ -5,10 +6,12 @@ class ListViewClientTile extends StatelessWidget {
   final ScrollController? scrollController;
   final ClientStableData data;
   final ClientBloc bloc;
+  final ConstRoutes routes;
   const ListViewClientTile(
       {required this.scrollController,
       required this.data,
       required this.bloc,
+      required this.routes,
       super.key});
 
   @override
@@ -32,8 +35,8 @@ class ListViewClientTile extends StatelessWidget {
         return ListTile(
             leading: IconButton(
                 onPressed: () {
-                  bloc.dispatchEvent(
-                      ClientEventNavigateToPerfuration(context, client));
+                  bloc.dispatchEvent(ClientEventNavigateThenArguments(
+                      context, client, routes.perfuration));
                 },
                 icon: const Icon(
                   Icons.add,
@@ -55,6 +58,10 @@ class ListViewClientTile extends StatelessWidget {
                   value: ClientMenuAction.read,
                   child: Text('Visualizar'),
                 ),
+                const PopupMenuItem<ClientMenuAction>(
+                  value: ClientMenuAction.perfurations,
+                  child: Text('Perfurações'),
+                ),
               ],
               onSelected: (action) {
                 switch (action) {
@@ -71,6 +78,11 @@ class ListViewClientTile extends StatelessWidget {
                         context: context,
                         builder: (context) =>
                             ShowCustomClientDetails(entity: client));
+                    break;
+                  case ClientMenuAction.perfurations:
+                    bloc.dispatchEvent(ClientEventNavigateThenArguments(
+                        context, client, routes.clientPerfurations));
+                    break;
                 }
               },
             ));

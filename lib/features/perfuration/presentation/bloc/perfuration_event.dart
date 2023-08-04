@@ -1,8 +1,6 @@
 import 'package:ariane_app/features/clients/domain/entities/client_entity.dart';
-import 'package:ariane_app/features/type_perfurations/type_perfurations.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/core.dart';
-import '../../perfurations.dart';
 
 class PerfurationEvent extends BlocEvent {}
 

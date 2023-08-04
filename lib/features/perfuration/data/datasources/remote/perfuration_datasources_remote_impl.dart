@@ -19,7 +19,7 @@ class PerfurationDataSourcesRemoteImpl implements PerfurationDataSources {
     final entity = PerfurationEntity(
         clientName: params.clientName,
         clientId: params.clientId,
-        createdAt: DateTime.now(),
+        createdAt: DateTime.now().millisecondsSinceEpoch,
         id: doc.id,
         typePerfuration: params.typePerfurationEntity);
 

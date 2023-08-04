@@ -4,7 +4,7 @@ import 'package:ariane_app/features/perfuration/data/datasources/perfuration_dat
 import 'package:ariane_app/features/type_perfurations/type_perfurations.dart';
 import 'package:dartz/dartz.dart';
 
-import '../../domain/entities/perfuration_entity.dart';
+import '../../../../core/global/entities/perfuration_entity.dart';
 import '../../domain/repositories/perfuration_repository.dart';
 
 class PerfurationRepositoryImpl implements PerfurationRepository {

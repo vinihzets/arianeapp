@@ -36,7 +36,7 @@ class _ClientViewState extends State<ClientView> {
                 bloc.dispatchEvent(ClientEventReadClient(fetchAmmount));
               },
               onChanged: (v) {
-                bloc.dispatchEvent(ClientEventSearch(v));
+                bloc.dispatchEvent(ClientEventSearch(v.toLowerCase()));
               },
             ),
           ),

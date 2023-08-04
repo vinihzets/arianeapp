@@ -1,5 +1,4 @@
 import 'package:ariane_app/core/core.dart';
-import 'package:ariane_app/core/global/entities/type_perfuration_entity.dart';
 import 'package:equatable/equatable.dart';
 
 class PendingEntity extends Equatable {

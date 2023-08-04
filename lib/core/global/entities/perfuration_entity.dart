@@ -6,7 +6,7 @@ class PerfurationEntity extends Equatable {
   final String clientId;
   final String clientName;
   final String id;
-  final DateTime createdAt;
+  final int createdAt;
   final TypePerfurationEntity typePerfuration;
 
   const PerfurationEntity({

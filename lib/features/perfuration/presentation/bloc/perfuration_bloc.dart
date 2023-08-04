@@ -1,7 +1,6 @@
 import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/features/perfuration/domain/usecases/read_type_perfuration_usecase_impl.dart';
 import 'package:ariane_app/features/perfuration/presentation/dialogs/show_perfuration_dialog.dart';
-import 'package:ariane_app/features/type_perfurations/type_perfurations.dart';
 import 'package:flutter/material.dart';
 import '../../../clients/domain/entities/client_entity.dart';
 import '../../perfurations.dart';

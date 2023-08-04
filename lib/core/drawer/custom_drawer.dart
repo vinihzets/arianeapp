@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../../core/utils/const_routes.dart';
+import '../routes/const_routes.dart';
 import 'custom_drawer_tile.dart';
 
 class CustomDrawer extends StatefulWidget {

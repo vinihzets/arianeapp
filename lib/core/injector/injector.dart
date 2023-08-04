@@ -1,6 +1,13 @@
 import 'package:ariane_app/core/services/auth_service.dart';
 import 'package:ariane_app/core/services/database_service.dart';
-import 'package:ariane_app/core/utils/const_routes.dart';
+import 'package:ariane_app/core/routes/const_routes.dart';
+import 'package:ariane_app/features/client_perfurations/data/datasources/client_perfurations_datasources.dart';
+import 'package:ariane_app/features/client_perfurations/data/datasources/remote/client_perfurations_datasources_remote_impl.dart';
+import 'package:ariane_app/features/client_perfurations/data/repositories/client_perfurations_repository_impl.dart';
+import 'package:ariane_app/features/client_perfurations/domain/repositories/client_perfurations_repository.dart';
+import 'package:ariane_app/features/client_perfurations/domain/usecases/delete_client_perfuration_usecase_impl.dart';
+import 'package:ariane_app/features/client_perfurations/domain/usecases/read_client_perfurations_usecase_impl.dart';
+import 'package:ariane_app/features/client_perfurations/presentation/bloc/client_perfurations_bloc.dart';
 import 'package:ariane_app/features/clients/data/datasources/client_datasources.dart';
 import 'package:ariane_app/features/clients/data/datasources/remote/client_datasources_remote_impl.dart';
 import 'package:ariane_app/features/clients/data/mappers/client_mapper.dart';
@@ -71,6 +78,8 @@ class Injector {
 
     // DATASOURCES
 
+    getIt.registerLazySingleton<ClientPerfurationsDataSources>(
+        () => ClientPerfurationsDataSourcesRemoteImpl(getIt()));
     getIt.registerLazySingleton<SchedulingMessageDataSources>(() =>
         SchedulingMessageDataSourcesRemoteImpl(getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<PerfurationDataSources>(
@@ -92,6 +101,8 @@ class Injector {
 
     //REPOSITORIES
 
+    getIt.registerLazySingleton<ClientPerfurationsRepository>(
+        () => ClientPerfurationsRepositoryImpl(getIt()));
     getIt.registerLazySingleton<SchedulingMessageRepository>(
         () => SchedulingMessageRepositoryImpl(getIt()));
     getIt.registerLazySingleton<PerfurationRepository>(
@@ -113,6 +124,10 @@ class Injector {
 
     // USECASES
 
+    getIt.registerLazySingleton(
+        () => DeleteClientPerfurationUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(
+        () => ReadClientPerfurationsUseCaseImpl(getIt()));
     getIt.registerLazySingleton(
         () => SchedulingMessageSearchClientsUseCaseImpl(getIt()));
     getIt.registerLazySingleton(
@@ -154,6 +169,7 @@ class Injector {
 
     //BLOC
 
+    getIt.registerFactory(() => ClientPerfurationsBloc(getIt(), getIt()));
     getIt.registerFactory(() => SchedulingMessageBloc(
         getIt(), getIt(), getIt(), getIt(), getIt(), getIt()));
     getIt.registerFactory(

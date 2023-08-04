@@ -41,8 +41,9 @@ class ClientBloc extends Bloc {
       _handleDeleteClient(event.context, event.entity);
     } else if (event is ClientEventUpdateClient) {
       _handleUpdateClient(event.context, event.entity);
-    } else if (event is ClientEventNavigateToPerfuration) {
-      _handleClientNavigateToPerfuration(event.context, event.entity);
+    } else if (event is ClientEventNavigateThenArguments) {
+      _handleClientNavigateThenArguments(
+          event.context, event.entity, event.route);
     } else if (event is ClientEventLoadMore) {
       _handleGetMore(event.ammount);
     } else if (event is ClientEventSearch) {
@@ -158,9 +159,9 @@ class ClientBloc extends Bloc {
     });
   }
 
-  _handleClientNavigateToPerfuration(
-      BuildContext context, ClientEntity entity) {
-    navigateThenUntil(context, routes.perfuration, entity);
+  _handleClientNavigateThenArguments(
+      BuildContext context, ClientEntity entity, String route) {
+    navigateThenUntil(context, route, entity);
   }
 
   _handleGetMore(int ammount) async {

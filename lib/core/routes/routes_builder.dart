@@ -1,4 +1,5 @@
-import 'package:ariane_app/core/utils/const_routes.dart';
+import 'package:ariane_app/core/routes/const_routes.dart';
+import 'package:ariane_app/features/client_perfurations/presentation/ui/client_perfurations_view.dart';
 import 'package:ariane_app/features/home/presentation/ui/home_view.dart';
 import 'package:ariane_app/features/login/presentation/ui/login_view.dart';
 import 'package:ariane_app/features/perfuration/perfurations.dart';
@@ -23,6 +24,7 @@ class RoutesBuilder {
       routes.schedulingMessages: (_) => const SchedulingMessageView(),
       routes.schedulingMessagesSearchClients: (_) =>
           const CustomListClientsView(),
+      routes.clientPerfurations: (_) => const ClientPerfurationsView(),
     };
   }
 }

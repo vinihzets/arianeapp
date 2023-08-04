@@ -234,3 +234,15 @@ class DeleteSchedulingMessageParams {
 
   DeleteSchedulingMessageParams({required this.id});
 }
+
+class ReadClientPerfurationsParams {
+  final ClientEntity entity;
+
+  ReadClientPerfurationsParams(this.entity);
+}
+
+class DeleteClientPerfurationParams {
+  final String id;
+
+  DeleteClientPerfurationParams(this.id);
+}

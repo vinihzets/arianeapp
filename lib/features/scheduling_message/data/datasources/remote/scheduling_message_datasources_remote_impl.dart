@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:ariane_app/core/architecture/usecase.dart';
 import 'package:ariane_app/core/services/database_service.dart';
 import 'package:ariane_app/features/clients/clients.dart';
@@ -88,8 +86,6 @@ class SchedulingMessageDataSourcesRemoteImpl
 
   @override
   Future<List<ClientEntity>> searchClient(SearchClientParams params) async {
-    inspect(params.query);
-
     final query = await databaseService.clients
         .orderBy('completeSearchName')
         .startAt([params.query]).endAt(["${params.query}\uf8ff"]).get();

@@ -32,11 +32,12 @@ class ClientEventUpdateClient implements ClientEvent {
   ClientEventUpdateClient(this.context, this.entity);
 }
 
-class ClientEventNavigateToPerfuration implements ClientEvent {
+class ClientEventNavigateThenArguments implements ClientEvent {
   BuildContext context;
   ClientEntity entity;
+  String route;
 
-  ClientEventNavigateToPerfuration(this.context, this.entity);
+  ClientEventNavigateThenArguments(this.context, this.entity, this.route);
 }
 
 class ClientEventLoadMore implements ClientEvent {

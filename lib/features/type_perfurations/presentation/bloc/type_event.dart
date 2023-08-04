@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../../core/core.dart';
-import '../../type_perfurations.dart';
 
 class TypePerfurationEvent extends BlocEvent {}
 

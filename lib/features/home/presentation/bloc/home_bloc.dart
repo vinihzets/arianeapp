@@ -1,7 +1,7 @@
 import 'package:ariane_app/core/architecture/bloc.dart';
 import 'package:ariane_app/core/architecture/bloc_event.dart';
 import 'package:ariane_app/core/architecture/usecase.dart';
-import 'package:ariane_app/core/utils/const_routes.dart';
+import 'package:ariane_app/core/routes/const_routes.dart';
 import 'package:ariane_app/features/home/domain/usecases/sign_out_usecase_impl.dart';
 import 'package:ariane_app/features/home/presentation/bloc/home_event.dart';
 import 'package:flutter/material.dart';

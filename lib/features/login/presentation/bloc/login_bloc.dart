@@ -2,7 +2,7 @@ import 'package:ariane_app/core/architecture/bloc.dart';
 import 'package:ariane_app/core/architecture/bloc_event.dart';
 import 'package:ariane_app/core/architecture/bloc_state.dart';
 import 'package:ariane_app/core/architecture/usecase.dart';
-import 'package:ariane_app/core/utils/const_routes.dart';
+import 'package:ariane_app/core/routes/const_routes.dart';
 import 'package:ariane_app/core/utils/string_translator.dart';
 import 'package:ariane_app/features/login/domain/usecases/sign_in_usecase_impl.dart';
 import 'package:ariane_app/features/login/presentation/bloc/login_event.dart';
@@ -28,7 +28,6 @@ class LoginBloc extends Bloc {
     signInUseCaseImpl(SignInParams(email, password)).then((value) => value.fold(
             (l) => showSnack(
                 context, StringTranslator.build(l.message), Colors.red), (r) {
-
           navigateRemoveUntil(context, routes.homeView);
         }));
   }

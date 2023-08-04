@@ -1,6 +1,6 @@
 import 'package:ariane_app/core/architecture/usecase.dart';
 import 'package:ariane_app/core/services/auth_service.dart';
-import 'package:ariane_app/core/utils/const_routes.dart';
+import 'package:ariane_app/core/routes/const_routes.dart';
 import 'package:ariane_app/features/login/data/datasources/login_datasources.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 

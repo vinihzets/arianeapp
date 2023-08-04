@@ -1,6 +1,6 @@
 import 'package:ariane_app/core/architecture/mapper.dart';
 import 'package:ariane_app/features/type_perfurations/data/data.dart';
-import '../../domain/entities/perfuration_entity.dart';
+import '../entities/perfuration_entity.dart';
 
 class PerfurationMapper implements EntityMapper<PerfurationEntity> {
   late TypePerfurationMapper typePerfurationMapper;

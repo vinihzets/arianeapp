@@ -1,12 +1,14 @@
-import 'package:ariane_app/core/architecture/bloc_state.dart';
+import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/features/clients/presentation/widgets/list_view_client_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import '../../clients.dart';
 
 enum ClientMenuAction {
   delete,
   update,
   read,
+  perfurations,
 }
 
 class ClientViewStableState extends StatefulWidget {
@@ -21,6 +23,7 @@ class ClientViewStableState extends StatefulWidget {
 
 class _ClientViewStableStateState extends State<ClientViewStableState> {
   late ScrollController scrollController;
+  late ConstRoutes routes;
   ClientStableData get data => widget.state.data;
 
   int fetchAmmount = 10;
@@ -28,6 +31,7 @@ class _ClientViewStableStateState extends State<ClientViewStableState> {
   @override
   void initState() {
     scrollController = ScrollController();
+    routes = GetIt.I.get();
 
     scrollController.addListener(onScrollEvent);
 
@@ -47,6 +51,10 @@ class _ClientViewStableStateState extends State<ClientViewStableState> {
   @override
   Widget build(BuildContext context) {
     return ListViewClientTile(
-        scrollController: scrollController, data: data, bloc: widget.bloc);
+      scrollController: scrollController,
+      data: data,
+      bloc: widget.bloc,
+      routes: routes,
+    );
   }
 }
