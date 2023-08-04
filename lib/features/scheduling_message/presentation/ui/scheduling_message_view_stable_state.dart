@@ -79,13 +79,9 @@ class _SchedulingMessageViewStableStateState
   }
 
   Widget _buildItem(SchedulingMessageEntity item) {
-    final normalDate = DateTime.fromMillisecondsSinceEpoch(
-      int.parse(item.createdAt),
-    );
-
     return ListTile(
       title: Text(item.message),
-      subtitle: Text(DateFormatter.ddMMyyyy(normalDate)),
+      subtitle: Text(DateFormatter.ddMMyyyy(item.date)),
       trailing: const Icon(Icons.arrow_right),
       onTap: () => showDialog(
         context: context,

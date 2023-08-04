@@ -23,11 +23,13 @@ class SchedulingMessageDataSourcesRemoteImpl
     final doc = databaseService.schedulingMessages.doc();
 
     final entity = SchedulingMessageEntity(
-        message: params.message,
-        listClients: params.listClients,
-        id: doc.id,
-        date: params.date,
-        createdAt: params.createdAt);
+      message: params.message,
+      listClients: params.listClients,
+      id: doc.id,
+      date: params.date,
+      createdAt: params.createdAt,
+      sent: false,
+    );
 
     await doc.set(mapper.toMap(entity));
 
@@ -46,11 +48,13 @@ class SchedulingMessageDataSourcesRemoteImpl
   Future<SchedulingMessageEntity> updateSchedulingMessage(
       UpdateSchedulingMessageParams params) async {
     final entity = SchedulingMessageEntity(
-        message: params.message,
-        listClients: params.listClients,
-        id: params.id,
-        date: params.date,
-        createdAt: params.createdAt);
+      message: params.message,
+      listClients: params.listClients,
+      id: params.id,
+      date: params.date,
+      createdAt: params.createdAt,
+      sent: params.sent,
+    );
 
     await databaseService.schedulingMessages
         .doc(entity.id)

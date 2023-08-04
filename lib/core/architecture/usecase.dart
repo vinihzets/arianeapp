@@ -176,6 +176,14 @@ class GetPendingsParams {
   });
 }
 
+class GetMessagesParams {
+  final DateTime date;
+
+  GetMessagesParams({
+    required this.date,
+  });
+}
+
 class SearchClientParams {
   String query;
 
@@ -195,11 +203,12 @@ class CreateSchedulingMessageParams {
   final DateTime date;
   final String createdAt;
 
-  CreateSchedulingMessageParams(
-      {required this.listClients,
-      required this.message,
-      required this.date,
-      required this.createdAt});
+  CreateSchedulingMessageParams({
+    required this.listClients,
+    required this.message,
+    required this.date,
+    required this.createdAt,
+  });
 }
 
 class UpdateSchedulingMessageParams {
@@ -208,13 +217,16 @@ class UpdateSchedulingMessageParams {
   final String message;
   final DateTime date;
   final String createdAt;
+  final bool sent;
 
-  UpdateSchedulingMessageParams(
-      {required this.createdAt,
-      required this.id,
-      required this.date,
-      required this.listClients,
-      required this.message});
+  UpdateSchedulingMessageParams({
+    required this.createdAt,
+    required this.id,
+    required this.date,
+    required this.listClients,
+    required this.message,
+    required this.sent,
+  });
 }
 
 class DeleteSchedulingMessageParams {

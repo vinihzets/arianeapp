@@ -117,17 +117,21 @@ class SchedulingMessageBloc extends Bloc {
   _handleUpdate(SchedulingMessageEntity schedulingMessageEntity,
       BuildContext context) async {
     final SchedulingMessageEntity entity = await showCustomDialog(
-        context,
-        CreateUpdateSchedulingMessageDialog(
-            schedulingMessageEntity: schedulingMessageEntity));
+      context,
+      CreateUpdateSchedulingMessageDialog(
+        schedulingMessageEntity: schedulingMessageEntity,
+      ),
+    );
 
-    final result = await updateSchedulingMessageUseCaseImpl(
-        UpdateSchedulingMessageParams(
-            createdAt: entity.createdAt,
-            id: entity.id,
-            date: entity.date,
-            listClients: entity.listClients,
-            message: entity.message));
+    final result =
+        await updateSchedulingMessageUseCaseImpl(UpdateSchedulingMessageParams(
+      createdAt: entity.createdAt,
+      id: entity.id,
+      date: entity.date,
+      listClients: entity.listClients,
+      message: entity.message,
+      sent: entity.sent,
+    ));
 
     result.fold((l) => null, (r) {
       final index = cache.indexOf(entity);

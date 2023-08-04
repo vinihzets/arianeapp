@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>236280198203-o1qqe6malqrcfap5tht2viq4vi762oiu.apps.googleusercontent.com</string>
+	<string>236280198203-rbl6kjsvkh5i1rsidgba09cgm0mcdimc.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.236280198203-o1qqe6malqrcfap5tht2viq4vi762oiu</string>
+	<string>com.googleusercontent.apps.236280198203-rbl6kjsvkh5i1rsidgba09cgm0mcdimc</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCltedjIsJnSlQEwD3SxVSLfgXTms3Ijlw</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.br.ariane</string>
+	<string>com.br.ariane.app</string>
 	<key>PROJECT_ID</key>
 	<string>arianeapp-9faa5</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:236280198203:ios:0264f2eeda02370023d81e</string>
+	<string>1:236280198203:ios:59bf506f6375b44d23d81e</string>
 </dict>
 </plist>

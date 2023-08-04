@@ -127,6 +127,7 @@ class _CreateUpdateSchedulingMessageDialogState
                     widget.schedulingMessageEntity?.message ?? message.text,
                 listClients: selectedsClients,
                 date: date,
+                sent: widget.schedulingMessageEntity?.sent ?? false,
               ));
             }
           },

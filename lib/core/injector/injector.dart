@@ -88,7 +88,7 @@ class Injector {
     getIt.registerLazySingleton<LoginDataSources>(
         () => LoginDataSourcesRemoteImpl(getIt(), getIt()));
     getIt.registerLazySingleton<PendingDataSource>(
-        () => PendingDataSourceRemoteImpl(getIt(), getIt()));
+        () => PendingDataSourceRemoteImpl(getIt(), getIt(), getIt()));
 
     //REPOSITORIES
 
@@ -150,6 +150,7 @@ class Injector {
     getIt.registerLazySingleton(() => SignUpUseCaseImpl(getIt()));
     getIt.registerLazySingleton(() => SignInUseCaseImpl(getIt()));
     getIt.registerLazySingleton(() => GetPendingUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(() => GetMessagesUseCaseImpl(getIt()));
 
     //BLOC
 
@@ -167,6 +168,6 @@ class Injector {
     getIt.registerFactory(() => RegisterBloc(getIt()));
     getIt.registerFactory(() => LoginBloc(getIt(), getIt()));
     getIt.registerFactory(() => SplashBloc(getIt(), getIt()));
-    getIt.registerFactory(() => PendingBloc(getIt(), getIt()));
+    getIt.registerFactory(() => PendingBloc(getIt(), getIt(), getIt()));
   }
 }

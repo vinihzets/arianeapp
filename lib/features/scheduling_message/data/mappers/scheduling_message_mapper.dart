@@ -10,12 +10,14 @@ class SchedulingMessageMapper extends EntityMapper<SchedulingMessageEntity> {
   @override
   SchedulingMessageEntity fromMap(dynamic map) {
     return SchedulingMessageEntity(
-        message: map["message"] ?? '',
-        listClients:
-            (map["listClients"] as List).map((e) => mapper.fromMap(e)).toList(),
-        date: DateTime.fromMillisecondsSinceEpoch(map["date"]),
-        id: map["id"] ?? '',
-        createdAt: map["createdAt"]);
+      message: map["message"] ?? '',
+      listClients:
+          (map["listClients"] as List).map((e) => mapper.fromMap(e)).toList(),
+      date: DateTime.fromMillisecondsSinceEpoch(map["date"]),
+      id: map["id"] ?? '',
+      createdAt: map["createdAt"],
+      sent: map['sent'] ?? false,
+    );
   }
 
   @override
@@ -26,6 +28,7 @@ class SchedulingMessageMapper extends EntityMapper<SchedulingMessageEntity> {
       "date": entity.date.millisecondsSinceEpoch,
       "createdAt": entity.createdAt,
       'id': entity.id,
+      'sent': entity.sent,
     };
   }
 }
