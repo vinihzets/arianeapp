@@ -1,4 +1,5 @@
 import 'package:ariane_app/core/core.dart';
+import 'package:ariane_app/core/utils/date_formatter.dart';
 import 'package:ariane_app/features/client_perfurations/presentation/bloc/client_perfurations_bloc.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +37,7 @@ class _ClientPerfurationsViewStableStateState
     );
   }
 
-  buildConfirmationDialog(PerfurationEntity perfuration) async {
+  void showConfirmationDialog(PerfurationEntity perfuration) async {
     return await showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -64,47 +65,21 @@ class _ClientPerfurationsViewStableStateState
   }
 
   Widget buildDismissibleCardClientPerfurations(
-      TypePerfurationEntity typePerfuration, PerfurationEntity perfuration) {
-    return Dismissible(
-      key: Key(typePerfuration.id),
-      background: Container(
-        color: Colors.red,
-        child: const Icon(Icons.delete),
+    TypePerfurationEntity typePerfuration,
+    PerfurationEntity perfuration,
+  ) {
+    return ListTile(
+      title: Text(typePerfuration.name),
+      subtitle: Text(
+        DateFormatter.ddMMyyyy(
+          DateTime.fromMillisecondsSinceEpoch(perfuration.createdAt),
+        ),
       ),
-      confirmDismiss: (DismissDirection direction) async {
-        return await buildConfirmationDialog(perfuration);
-      },
-      child: Card(
-        elevation: 2,
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        typePerfuration.name,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: typePerfuration.listPeriods
-                            .map((e) => Text(
-                                  e.name,
-                                ))
-                            .toList(),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+      trailing: IconButton(
+        onPressed: () => showConfirmationDialog(perfuration),
+        icon: const Icon(
+          Icons.close,
+          color: Colors.red,
         ),
       ),
     );
