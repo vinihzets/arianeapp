@@ -38,6 +38,7 @@ class _ClientPerfurationsViewState extends State<ClientPerfurationsView> {
                 onDelete: (String perfurationID) {
                   bloc.dispatchEvent(ClientPerfurationsEventDeletePerfuration(
                       perfurationID, context));
+                  Navigator.pop(context);
                 },
               ),
           onError: (state) => ClientPerfurationsViewErrorState(
