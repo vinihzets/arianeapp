@@ -36,6 +36,33 @@ class _ClientPerfurationsViewStableStateState
     );
   }
 
+  buildConfirmationDialog(PerfurationEntity perfuration) async {
+    return await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Confirmação"),
+          content: const Text("Deseja realmente excluir esta perfuração?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: const Text("Cancelar"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(true);
+                widget.onDelete(perfuration.id);
+              },
+              child: const Text("Excluir"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget buildDismissibleCardClientPerfurations(
       TypePerfurationEntity typePerfuration, PerfurationEntity perfuration) {
     return Dismissible(
@@ -45,30 +72,7 @@ class _ClientPerfurationsViewStableStateState
         child: const Icon(Icons.delete),
       ),
       confirmDismiss: (DismissDirection direction) async {
-        return await showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text("Confirmação"),
-              content: const Text("Deseja realmente excluir esta perfuração?"),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(false);
-                  },
-                  child: const Text("Cancelar"),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(true);
-                    widget.onDelete(perfuration.id);
-                  },
-                  child: const Text("Excluir"),
-                ),
-              ],
-            );
-          },
-        );
+        return await buildConfirmationDialog(perfuration);
       },
       child: Card(
         elevation: 2,
