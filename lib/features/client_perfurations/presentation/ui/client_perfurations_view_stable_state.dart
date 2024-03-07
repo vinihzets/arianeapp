@@ -52,7 +52,7 @@ class _ClientPerfurationsViewStableStateState
               child: const Text("Cancelar"),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 Navigator.of(context).pop(true);
                 widget.onDelete(perfuration.id);
               },
