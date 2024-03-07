@@ -27,28 +27,23 @@ class _PerfurationViewStableStateState
     List<TypePerfurationEntity> listTypePerfurations = widget.state.data;
     final client = ModalRoute.of(context)?.settings.arguments as ClientEntity?;
 
-    return Column(
-      children: [
-        ListView.builder(
-          shrinkWrap: true,
-          itemCount: listTypePerfurations.length,
-          itemBuilder: (context, index) {
-            final typePerfuration = listTypePerfurations[index];
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: listTypePerfurations.length,
+      itemBuilder: (context, index) {
+        final typePerfuration = listTypePerfurations[index];
 
-            return ListTile(
-              title: Text(typePerfuration.name),
-              onTap: client != null
-                  ? () {
-                      widget.bloc.dispatchEvent(
-                          PerfurationEventCreatePerfuration(
-                              context, client, typePerfuration));
-                    }
-                  : null,
-              trailing: const Icon(Icons.arrow_right),
-            );
-          },
-        ),
-      ],
+        return ListTile(
+          title: Text(typePerfuration.name),
+          onTap: client != null
+              ? () {
+                  widget.bloc.dispatchEvent(PerfurationEventCreatePerfuration(
+                      context, client, typePerfuration));
+                }
+              : null,
+          trailing: const Icon(Icons.arrow_right),
+        );
+      },
     );
   }
 }

@@ -14,7 +14,8 @@ class ReadSchedulingMessagesUseCaseImpl
 
   @override
   Future<Either<Failure, List<SchedulingMessageEntity>>> call(
-      ReadSchedulingMessagesParams params) async {
-    return repository.readSchedulingsMessages();
+    ReadSchedulingMessagesParams params,
+  ) async {
+    return repository.readSchedulingsMessages(params);
   }
 }

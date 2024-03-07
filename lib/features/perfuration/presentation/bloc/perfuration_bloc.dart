@@ -30,7 +30,10 @@ class PerfurationsBloc extends Bloc {
   mapListenEvent(BlocEvent event) {
     if (event is PerfurationEventCreatePerfuration) {
       _handleCreatePerfuration(
-          event.context, event.client, event.typePerfuration);
+        event.context,
+        event.client,
+        event.typePerfuration,
+      );
     } else if (event is PerfurationEventDeletePerfuration) {
       _handleDeletePerfuration(event.context, event.entity);
     } else if (event is PerfurationReadTypePerfuration) {
@@ -38,20 +41,40 @@ class PerfurationsBloc extends Bloc {
     }
   }
 
-  _handleCreatePerfuration(BuildContext context, ClientEntity client,
-      TypePerfurationEntity entity) async {
+  _handleCreatePerfuration(
+    BuildContext context,
+    ClientEntity client,
+    TypePerfurationEntity entity,
+  ) async {
+    final date = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now().subtract(const Duration(days: 365)),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
+    );
+
+    if (date == null) {
+      return;
+    }
+
+    // ignore: use_build_context_synchronously
     final result = await showCustomDialog(
-        context, const ShowConfirmationPerfurationDialog()) as bool?;
+      context,
+      const ShowConfirmationPerfurationDialog(),
+    ) as bool?;
 
     if (result == null) {
       return;
     }
 
     final createRequest = await createPerfurationUseCaseImpl(
-        CreatePerfurationParams(
-            clientName: client.firstName,
-            clientId: client.id,
-            typePerfurationEntity: entity));
+      CreatePerfurationParams(
+        clientName: client.firstName,
+        clientId: client.id,
+        typePerfurationEntity: entity,
+        date: date,
+      ),
+    );
 
     createRequest.fold((l) {
       showFailure(context, 'Erro ao registrar perfuração');

@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:ariane_app/features/clients/clients.dart';
+import 'package:ariane_app/features/scheduling_message/domain/entities/scheduling_message_entity.dart';
 import 'package:dartz/dartz.dart';
 
 import 'package:ariane_app/core/failure/failure.dart';
@@ -139,11 +140,14 @@ class CreatePerfurationParams {
   final String clientName;
   final String clientId;
   final TypePerfurationEntity typePerfurationEntity;
+  final DateTime date;
 
-  CreatePerfurationParams(
-      {required this.clientName,
-      required this.clientId,
-      required this.typePerfurationEntity});
+  CreatePerfurationParams({
+    required this.clientName,
+    required this.clientId,
+    required this.typePerfurationEntity,
+    required this.date,
+  });
 }
 
 class DeletePerfurationParams {
@@ -192,9 +196,9 @@ class SearchClientParams {
 
 class ReadSchedulingMessagesParams {
   final int ammount;
-  final DateTime date;
+  final SchedulingMessageEntity? last;
 
-  ReadSchedulingMessagesParams({required this.ammount, required this.date});
+  ReadSchedulingMessagesParams({required this.ammount, required this.last});
 }
 
 class CreateSchedulingMessageParams {

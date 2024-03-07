@@ -3,7 +3,8 @@ import 'package:ariane_app/features/clients/clients.dart';
 import 'package:ariane_app/features/scheduling_message/domain/entities/scheduling_message_entity.dart';
 
 abstract class SchedulingMessageDataSources {
-  Future<List<SchedulingMessageEntity>> readSchedulingsMessages();
+  Future<List<SchedulingMessageEntity>> readSchedulingsMessages(
+      ReadSchedulingMessagesParams params);
   Future<SchedulingMessageEntity> createSchedulingMessage(
       CreateSchedulingMessageParams params);
   Future<void> deleteSchedulingMessage(DeleteSchedulingMessageParams params);

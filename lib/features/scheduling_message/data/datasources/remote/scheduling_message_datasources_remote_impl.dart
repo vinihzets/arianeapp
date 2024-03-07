@@ -35,9 +35,16 @@ class SchedulingMessageDataSourcesRemoteImpl
   }
 
   @override
-  Future<List<SchedulingMessageEntity>> readSchedulingsMessages() async {
-    final messages =
-        await databaseService.schedulingMessages.orderBy('date').get();
+  Future<List<SchedulingMessageEntity>> readSchedulingsMessages(
+      ReadSchedulingMessagesParams params) async {
+    var query = databaseService.schedulingMessages
+        .orderBy('createdAt', descending: true);
+
+    if (params.last != null) {
+      query = query.startAfter([params.last!.createdAt]);
+    }
+
+    final messages = await query.get();
 
     return messages.docs.map((e) => mapper.fromMap(e.data())).toList();
   }

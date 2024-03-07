@@ -13,15 +13,17 @@ class PerfurationDataSourcesRemoteImpl implements PerfurationDataSources {
 
   @override
   Future<PerfurationEntity> createPerfuration(
-      CreatePerfurationParams params) async {
+    CreatePerfurationParams params,
+  ) async {
     final doc = databaseService.perfurations.doc();
 
     final entity = PerfurationEntity(
-        clientName: params.clientName,
-        clientId: params.clientId,
-        createdAt: DateTime.now().millisecondsSinceEpoch,
-        id: doc.id,
-        typePerfuration: params.typePerfurationEntity);
+      clientName: params.clientName,
+      clientId: params.clientId,
+      createdAt: params.date.millisecondsSinceEpoch,
+      id: doc.id,
+      typePerfuration: params.typePerfurationEntity,
+    );
 
     await doc.set(mapper.toMap(entity));
 

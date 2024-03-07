@@ -51,9 +51,7 @@ class SchedulingMessageBloc extends Bloc {
   @override
   mapListenEvent(BlocEvent event) {
     if (event is SchedulingMessageEventCreate) {
-      _handleCreate(
-        event.context,
-      );
+      _handleCreate(event.context);
     } else if (event is SchedulingMessageEventRead) {
       _handleRead(event.date, event.ammount);
     } else if (event is SchedulingMessageEventDelete) {
@@ -102,8 +100,11 @@ class SchedulingMessageBloc extends Bloc {
   }
 
   _handleRead(DateTime date, int ammount) async {
-    final result = await readSchedulingMessagesUseCaseImpl(
-        ReadSchedulingMessagesParams(ammount: ammount, date: date));
+    final result =
+        await readSchedulingMessagesUseCaseImpl(ReadSchedulingMessagesParams(
+      ammount: ammount,
+      last: null,
+    ));
 
     result.fold((l) {}, (r) {
       cache.addAll(r);
@@ -145,12 +146,21 @@ class SchedulingMessageBloc extends Bloc {
 
   _handleDelete(SchedulingMessageEntity entity) async {
     final result = await deleteSchedulingMessageUseCaseImpl(
-        DeleteSchedulingMessageParams(id: entity.id));
+      DeleteSchedulingMessageParams(
+        id: entity.id,
+      ),
+    );
 
     result.fold((l) {}, (r) {
       cache.remove(entity);
-
-      dispatchState(BlocStableState(data: cache));
+      dispatchState(
+        BlocStableState(
+          data: SchedulingMessageStableData(
+            listMessages: cache,
+            reachMax: false,
+          ),
+        ),
+      );
     });
   }
 
@@ -158,19 +168,23 @@ class SchedulingMessageBloc extends Bloc {
     int fetchAmmount = 10;
 
     final pendingRequest = await readSchedulingMessagesUseCaseImpl(
-        ReadSchedulingMessagesParams(ammount: fetchAmmount, date: date));
+      ReadSchedulingMessagesParams(
+        ammount: fetchAmmount,
+        last: cache.last,
+      ),
+    );
 
-    pendingRequest.fold(
-      (l) {},
-      (r) => dispatchState(
+    pendingRequest.fold((l) {}, (r) {
+      cache.addAll(r);
+      dispatchState(
         BlocStableState(
           data: SchedulingMessageStableData(
             listMessages: cache,
             reachMax: r.length < fetchAmmount,
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   _handleGetClients(

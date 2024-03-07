@@ -21,10 +21,11 @@ class PendingViewStableData extends StatefulWidget {
 class _PendingViewStableDataState extends State<PendingViewStableData> {
   onSearchPressed() async {
     final result = await showDatePicker(
-        context: context,
-        initialDate: data.date,
-        firstDate: DateTime.now(),
-        lastDate: DateTime(2050));
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2022),
+      lastDate: DateTime(2050),
+    );
 
     if (result == null) {
       return;

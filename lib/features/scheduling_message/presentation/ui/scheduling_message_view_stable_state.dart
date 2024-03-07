@@ -44,7 +44,7 @@ class _SchedulingMessageViewStableStateState
         scrollController.offset >= scrollController.position.maxScrollExtent &&
             !scrollController.position.outOfRange;
 
-    if (isOnBottomOfScrollList && !data.reachMax) {
+    if (isOnBottomOfScrollList) {
       widget.bloc
           .dispatchEvent(SchedulingMessageEventLoadMore(date: DateTime.now()));
     }
@@ -87,9 +87,8 @@ class _SchedulingMessageViewStableStateState
         context: context,
         builder: (context) => AlertDialog(
           title: const Text('Clientes'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: item.listClients
+          content: Column(mainAxisSize: MainAxisSize.min, children: [
+            ...item.listClients
                 .map(
                   (e) => ListTile(
                     title: Text(e.firstName),
@@ -103,9 +102,44 @@ class _SchedulingMessageViewStableStateState
                   ),
                 )
                 .toList(),
-          ),
+            ElevatedButton(
+              onPressed: () => showConfirmationDialog(item),
+              child: const Text('Apagar'),
+            )
+          ]),
         ),
       ),
+    );
+  }
+
+  void showConfirmationDialog(SchedulingMessageEntity item) async {
+    return await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Confirmação"),
+          content: const Text("Deseja realmente excluir esta mensagem?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(false);
+              },
+              child: const Text("Cancelar"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).popUntil(
+                  (route) => route.settings.name == ConstRoutes().homeView,
+                );
+                widget.bloc.dispatchEvent(
+                  SchedulingMessageEventDelete(entity: item),
+                );
+              },
+              child: const Text("Apagar"),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -16,10 +16,11 @@ class ShowConfirmationPerfurationDialog extends StatelessWidget {
           child: const Text('Cancelar'),
         ),
         FilledButton(
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
-            child: const Text('Sim'))
+          onPressed: () {
+            Navigator.of(context).pop(true);
+          },
+          child: const Text('Sim'),
+        )
       ],
     );
   }

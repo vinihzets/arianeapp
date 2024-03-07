@@ -36,9 +36,9 @@ class SchedulingMessageRepositoryImpl implements SchedulingMessageRepository {
 
   @override
   Future<Either<Failure, List<SchedulingMessageEntity>>>
-      readSchedulingsMessages() async {
+      readSchedulingsMessages(ReadSchedulingMessagesParams params) async {
     try {
-      return Right(await dataSources.readSchedulingsMessages());
+      return Right(await dataSources.readSchedulingsMessages(params));
     } on Exception catch (e) {
       return Left(RemoteFailure(message: e.toString()));
     }

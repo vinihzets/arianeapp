@@ -6,7 +6,7 @@ import 'package:dartz/dartz.dart';
 
 abstract class SchedulingMessageRepository {
   Future<Either<Failure, List<SchedulingMessageEntity>>>
-      readSchedulingsMessages();
+      readSchedulingsMessages(ReadSchedulingMessagesParams params);
   Future<Either<Failure, SchedulingMessageEntity>> createSchedulingMessage(
       CreateSchedulingMessageParams params);
   Future<Either<Failure, SchedulingMessageEntity>> updateSchedulingMessage(
