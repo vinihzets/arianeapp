@@ -23,7 +23,7 @@ class PerfurationMapper implements EntityMapper<PerfurationEntity> {
     return {
       'clientName': entity.clientName,
       'clientId': entity.clientId,
-      'createdAt': DateTime.now().millisecondsSinceEpoch,
+      'createdAt': entity.createdAt,
       'type_perfuration': typePerfurationMapper.toMap(entity.typePerfuration),
       'id': entity.id,
     };
