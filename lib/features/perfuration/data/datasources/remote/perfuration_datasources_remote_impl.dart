@@ -17,10 +17,20 @@ class PerfurationDataSourcesRemoteImpl implements PerfurationDataSources {
   ) async {
     final doc = databaseService.perfurations.doc();
 
+    final localeDate = params.date.toLocal();
+
+    final date = DateTime(
+      localeDate.year,
+      localeDate.month,
+      localeDate.day,
+      12,
+      0,
+    );
+
     final entity = PerfurationEntity(
       clientName: params.clientName,
       clientId: params.clientId,
-      createdAt: params.date.toLocal().millisecondsSinceEpoch,
+      createdAt: date.millisecondsSinceEpoch,
       id: doc.id,
       typePerfuration: params.typePerfurationEntity,
     );
