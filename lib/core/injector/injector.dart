@@ -1,6 +1,14 @@
+import 'package:ariane_app/core/drawer/data/datasources/custom_drawer_datasources.dart';
+import 'package:ariane_app/core/drawer/data/datasources/custom_drawer_datasources_impl.dart';
+import 'package:ariane_app/core/drawer/data/repositories/custom_drawer_repository_impl.dart';
+import 'package:ariane_app/core/drawer/domain/repositories/custom_drawer_repository.dart';
+import 'package:ariane_app/core/drawer/domain/usecases/fetch_user_session_usecase_impl.dart';
+import 'package:ariane_app/core/drawer/presentation/bloc/custom_drawer_bloc.dart';
 import 'package:ariane_app/core/services/auth_service.dart';
 import 'package:ariane_app/core/services/database_service.dart';
 import 'package:ariane_app/core/routes/const_routes.dart';
+import 'package:ariane_app/core/services/session_storage.dart';
+import 'package:ariane_app/core/services/session_storage_impl.dart';
 import 'package:ariane_app/features/client_perfurations/data/datasources/client_perfurations_datasources.dart';
 import 'package:ariane_app/features/client_perfurations/data/datasources/remote/client_perfurations_datasources_remote_impl.dart';
 import 'package:ariane_app/features/client_perfurations/data/repositories/client_perfurations_repository_impl.dart';
@@ -57,6 +65,13 @@ import 'package:ariane_app/features/scheduling_message/presentation/bloc/schedul
 import 'package:ariane_app/features/splash/presentation/bloc/splash_bloc.dart';
 import 'package:ariane_app/features/type_perfurations/domain/usecases/read_periods_usecase_impl.dart';
 import 'package:ariane_app/features/type_perfurations/type_perfurations.dart';
+import 'package:ariane_app/features/users/data/datasources/users_datasources.dart';
+import 'package:ariane_app/features/users/data/datasources/users_datasources_impl.dart';
+import 'package:ariane_app/features/users/data/mappers/user_mapper.dart';
+import 'package:ariane_app/features/users/data/repositories/users_repository_impl.dart';
+import 'package:ariane_app/features/users/domain/repositories/users_repository.dart';
+import 'package:ariane_app/features/users/domain/usecases/fetch_users_usecase_impl.dart';
+import 'package:ariane_app/features/users/presentation/bloc/users_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 class Injector {
@@ -67,7 +82,7 @@ class Injector {
     getIt.registerLazySingleton(() => ConstRoutes());
     getIt.registerLazySingleton(() => AuthService());
     getIt.registerLazySingleton(() => DatabaseService());
-
+    getIt.registerLazySingleton<SessionStorage>(() => SessionStorageImpl());
     // Mappers
     getIt.registerLazySingleton(() => ClientMapper());
     getIt.registerLazySingleton(() => TypePerfurationMapper(getIt()));
@@ -75,11 +90,15 @@ class Injector {
     getIt.registerLazySingleton(() => PerfurationMapper(getIt()));
     getIt.registerLazySingleton(() => PendingMapper(getIt(), getIt()));
     getIt.registerLazySingleton(() => SchedulingMessageMapper(getIt()));
+    getIt.registerLazySingleton(() => UserMapper());
 
     // DATASOURCES
 
+    getIt.registerLazySingleton<CustomDrawerDataSources>(
+        () => CustomDrawerDataSourcesImpl(getIt()));
     getIt.registerLazySingleton<ClientPerfurationsDataSources>(
         () => ClientPerfurationsDataSourcesRemoteImpl(getIt()));
+
     getIt.registerLazySingleton<SchedulingMessageDataSources>(() =>
         SchedulingMessageDataSourcesRemoteImpl(getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<PerfurationDataSources>(
@@ -95,12 +114,17 @@ class Injector {
     getIt.registerLazySingleton<RegisterDataSources>(
         () => RegisterDataSourcesRemoteImpl(getIt(), getIt()));
     getIt.registerLazySingleton<LoginDataSources>(
-        () => LoginDataSourcesRemoteImpl(getIt(), getIt()));
+        () => LoginDataSourcesRemoteImpl(getIt(), getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<PendingDataSource>(
         () => PendingDataSourceRemoteImpl(getIt(), getIt(), getIt()));
+    getIt.registerLazySingleton<UsersDataSources>(() =>
+        UsersDataSourcesImpl(databaseService: getIt(), userMapper: getIt()));
 
     //REPOSITORIES
-
+    getIt.registerLazySingleton<CustomDrawerRepository>(
+        () => CustomDrawerRepositoryImpl(getIt()));
+    getIt.registerLazySingleton<UsersRepository>(
+        () => UsersRepositoryImpl(getIt()));
     getIt.registerLazySingleton<ClientPerfurationsRepository>(
         () => ClientPerfurationsRepositoryImpl(getIt()));
     getIt.registerLazySingleton<SchedulingMessageRepository>(
@@ -124,6 +148,8 @@ class Injector {
 
     // USECASES
 
+    getIt.registerLazySingleton(() => FetchUserSessionUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(() => FetchUsersUseCaseImpl(getIt()));
     getIt.registerLazySingleton(
         () => DeleteClientPerfurationUseCaseImpl(getIt()));
     getIt.registerLazySingleton(
@@ -169,6 +195,8 @@ class Injector {
 
     //BLOC
 
+    getIt.registerFactory(() => CustomDrawerBloc(getIt()));
+    getIt.registerFactory(() => UsersBloc(getIt()));
     getIt.registerFactory(() => ClientPerfurationsBloc(getIt(), getIt()));
     getIt.registerFactory(() => SchedulingMessageBloc(
         getIt(), getIt(), getIt(), getIt(), getIt(), getIt()));

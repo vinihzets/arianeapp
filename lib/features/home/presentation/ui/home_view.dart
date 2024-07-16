@@ -2,7 +2,7 @@ import 'package:ariane_app/features/pending/pending.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/ui/scheduling_message_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import '../../../../core/drawer/custom_drawer.dart';
+import '../../../../core/drawer/presentation/ui/custom_drawer.dart';
 import '../../../clients/clients.dart';
 import '../../home.dart';
 
@@ -41,9 +41,16 @@ class _HomeViewState extends State<HomeView> {
       ),
       body: IndexedStack(
         index: _page,
-        children: const [ClientView(), PendingView(), SchedulingMessageView()],
+        children: const [
+          ClientView(),
+          PendingView(),
+          SchedulingMessageView(),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        useLegacyColorScheme: false,
+        showUnselectedLabels: true,
+        showSelectedLabels: true,
         currentIndex: _page,
         onTap: (index) {
           setState(() {

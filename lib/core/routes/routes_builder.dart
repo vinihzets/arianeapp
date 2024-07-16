@@ -9,6 +9,7 @@ import 'package:ariane_app/features/scheduling_message/presentation/ui/schedulin
 import 'package:ariane_app/features/scheduling_message/presentation/widgets/custom_list_clients_view.dart';
 import 'package:ariane_app/features/splash/presentation/ui/splash_view.dart';
 import 'package:ariane_app/features/type_perfurations/type_perfurations.dart';
+import 'package:ariane_app/features/users/presentation/ui/users_view.dart';
 import 'package:flutter/material.dart';
 
 class RoutesBuilder {
@@ -25,6 +26,7 @@ class RoutesBuilder {
       routes.schedulingMessagesSearchClients: (_) =>
           const CustomListClientsView(),
       routes.clientPerfurations: (_) => const ClientPerfurationsView(),
+      routes.users: (_) => const UsersView(),
     };
   }
 }

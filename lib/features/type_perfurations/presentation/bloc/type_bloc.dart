@@ -57,8 +57,8 @@ class TypePerfurationsBloc extends Bloc {
       return r;
     });
 
-    // ignore: use_build_context_synchronously
     final TypePerfurationEntity? entity = await showCustomDialog(
+      // ignore: use_build_context_synchronously
       context,
       CreateUpdateTypePerfurationDialog(
         typePerfuration: null,
@@ -71,9 +71,10 @@ class TypePerfurationsBloc extends Bloc {
     }
 
     if (entity.listPeriods.isEmpty) {
-      // ignore: use_build_context_synchronously
       showFailure(
-          context, 'Não é possível criar um tipo de perfuração sem um periodo');
+          // ignore: use_build_context_synchronously
+          context,
+          'Não é possível criar um tipo de perfuração sem um periodo');
       return;
     }
     dispatchState(BlocLoadingState());
@@ -144,8 +145,8 @@ class TypePerfurationsBloc extends Bloc {
       return r;
     });
 
-    // ignore: use_build_context_synchronously
     final TypePerfurationEntity? entity = await showCustomDialog(
+      // ignore: use_build_context_synchronously
       context,
       CreateUpdateTypePerfurationDialog(
         typePerfuration: typeperf,
