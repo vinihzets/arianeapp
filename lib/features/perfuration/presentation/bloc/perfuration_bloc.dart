@@ -57,8 +57,8 @@ class PerfurationsBloc extends Bloc {
       return;
     }
 
-    // ignore: use_build_context_synchronously
     final result = await showCustomDialog(
+      // ignore: use_build_context_synchronously
       context,
       const ShowConfirmationPerfurationDialog(),
     ) as bool?;

@@ -16,7 +16,9 @@ void main() async {
   routes = GetIt.I.get();
 
   return runApp(MaterialApp(
-    theme: ThemeData(useMaterial3: true),
+    theme: ThemeData(
+      useMaterial3: true,
+    ),
     initialRoute: routes.splashView,
     routes: RoutesBuilder.build(routes),
     localizationsDelegates: const [

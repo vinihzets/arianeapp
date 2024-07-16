@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../../../../core/core.dart';
-import '../../../../core/drawer/custom_drawer.dart';
+import '../../../../core/drawer/presentation/ui/custom_drawer.dart';
 import '../../periods.dart';
 
 class PeriodView extends StatefulWidget {

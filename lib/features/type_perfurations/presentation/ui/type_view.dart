@@ -1,4 +1,4 @@
-import 'package:ariane_app/core/drawer/custom_drawer.dart';
+import 'package:ariane_app/core/drawer/presentation/ui/custom_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import '../../../../core/core.dart';
