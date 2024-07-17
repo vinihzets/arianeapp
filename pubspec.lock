@@ -189,10 +189,10 @@ packages:
     dependency: transitive
     description:
       name: firebase_core_web
-      sha256: "6643fe3dbd021e6ccfb751f7882b39df355708afbdeb4130fc50f9305a9d1a3d"
+      sha256: "23509cb3cddfb3c910c143279ac3f07f06d3120f7d835e4a5d4b42558e978712"
       url: "https://pub.dev"
     source: hosted
-    version: "2.17.2"
+    version: "2.17.3"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -245,14 +245,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.18.1"
-  leak_tracker:
-    dependency: transitive
-    description:
-      name: leak_tracker
-      sha256: "78eb209deea09858f5269f5a5b02be4049535f568c07b275096836f01ea323fa"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.6.7"
   leak_tracker:
     dependency: transitive
     description:
@@ -333,6 +325,38 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.0"
+  path_provider_linux:
+    dependency: transitive
+    description:
+      name: path_provider_linux
+      sha256: f7a1fe3a634fe7734c8d3f2766ad746ae2a2884abe22e241a8b301bf5cac3279
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.1"
+  path_provider_platform_interface:
+    dependency: transitive
+    description:
+      name: path_provider_platform_interface
+      sha256: "88f5779f72ba699763fa3a3b06aa4bf6de76c8e5de842cf6f29e2e06476c2334"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.2"
+  path_provider_windows:
+    dependency: transitive
+    description:
+      name: path_provider_windows
+      sha256: bd6f00dbd873bfb70d0761682da2b3a2c2fccc2b9e84c495821639601d81afe7
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.0"
+  platform:
+    dependency: transitive
+    description:
+      name: platform
+      sha256: "9b71283fc13df574056616011fb138fd3b793ea47cc509c189a6c3fa5f8a1a65"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.5"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -478,10 +502,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_ios
-      sha256: "7068716403343f6ba4969b4173cbf3b84fc768042124bc2c011e5d782b24fe89"
+      sha256: e43b677296fadce447e987a2f519dcf5f6d1e527dc35d01ffab4fff5b8a7063e
       url: "https://pub.dev"
     source: hosted
-    version: "6.3.0"
+    version: "6.3.1"
   url_launcher_linux:
     dependency: transitive
     description:
@@ -538,6 +562,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "13.0.0"
+  web:
+    dependency: transitive
+    description:
+      name: web
+      sha256: "97da13628db363c635202ad97068d47c5b8aa555808e7a9411963c533b449b27"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.1"
   whatsapp_unilink:
     dependency: "direct main"
     description:
@@ -555,5 +587,5 @@ packages:
     source: hosted
     version: "1.0.4"
 sdks:
-  dart: ">=3.2.0-0 <4.0.0"
-  flutter: ">=3.13.0"
+  dart: ">=3.3.0 <4.0.0"
+  flutter: ">=3.19.0"
