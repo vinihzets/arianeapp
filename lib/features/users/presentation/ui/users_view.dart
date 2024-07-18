@@ -28,6 +28,7 @@ class _UsersViewState extends State<UsersView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       drawer: const CustomDrawer(),
       body: BlocScreenBuilder(
           stream: bloc.state,
@@ -37,6 +38,11 @@ class _UsersViewState extends State<UsersView> {
           onError: (s) => Container(),
           onLoading: (s) => Container(),
           onEmpty: (s) => Container()),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => bloc.dispatchEvent(CreateUserEvent(context: context)),
+        label: const Text('Novo Usuário'),
+        icon: const Icon(Icons.person_add_alt_outlined),
+      ),
     );
   }
 }

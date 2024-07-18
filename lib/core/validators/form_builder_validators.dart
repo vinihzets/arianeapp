@@ -1,3 +1,5 @@
+import 'package:email_validator/email_validator.dart';
+
 class FormBuilderValidator {
   static String? customMinLengthValidator(String? value) {
     if (value == null || value.isEmpty) {
@@ -13,6 +15,29 @@ class FormBuilderValidator {
       return 'Por favor, insira o sobrenome.';
     }
     return null;
+  }
+
+  static emailValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return '  Insira um endereço de email.';
+    }
+    if (!EmailValidator.validate(value)) {
+      return '  Endereço de email inválido.';
+    }
+
+    return null;
+  }
+
+  static passwordValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return '  Insira uma senha.';
+    }
+
+    if (value.length < 5) {
+      return '   Insira uma senha com pelomenos 6 caracteres';
+    }
+
+    return;
   }
 
   static String? lastNameValidator(String? value) {
