@@ -18,6 +18,12 @@ class StringTranslator {
     } else if (value ==
         '[firebase_auth/weak-password] Password should be at least 6 characters') {
       return 'A senha deve conter pelo menos 6 caracteres.';
+    } else if (value ==
+        'Usuário inadimplente, entre em contato com a administradora do sistema!') {
+      return 'Usuário inadimplente, entre em contato com a administradora do sistema!';
+    } else if (value ==
+        'Esse Usuário não está registrado no nosso Banco de Dados') {
+      return 'Esse Usuário não foi encontrado no nosso Banco de Dados';
     }
     return '';
   }

@@ -14,7 +14,9 @@ class LoginRepositoryImpl implements LoginRepository {
   Future<Either<Failure, UserCredential>> signIn(SignInParams params) async {
     try {
       return Right(await dataSources.signIn(params));
-    } on Exception catch (e) {
+    } on RemoteFailure catch (e) {
+      return Left(RemoteFailure(message: e.message));
+    } catch (e) {
       return Left(RemoteFailure(message: e.toString()));
     }
   }

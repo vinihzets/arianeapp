@@ -18,7 +18,12 @@ class CreateUserParams {
   final String email;
   final String password;
   final int role;
+  final DateTime date;
 
-  CreateUserParams(
-      {required this.email, required this.password, required this.role});
+  CreateUserParams({
+    required this.email,
+    required this.password,
+    required this.role,
+    required this.date,
+  });
 }

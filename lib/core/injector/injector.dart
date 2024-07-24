@@ -70,7 +70,7 @@ import 'package:ariane_app/features/users/data/datasources/users_datasources_imp
 import 'package:ariane_app/features/users/data/mappers/user_mapper.dart';
 import 'package:ariane_app/features/users/data/repositories/users_repository_impl.dart';
 import 'package:ariane_app/features/users/domain/repositories/users_repository.dart';
-import 'package:ariane_app/features/users/domain/usecases/change_user_role_usecase_impl.dart';
+import 'package:ariane_app/features/users/domain/usecases/update_user_usecase_impl.dart';
 import 'package:ariane_app/features/users/domain/usecases/create_user_usecase_impl.dart';
 import 'package:ariane_app/features/users/domain/usecases/fetch_users_usecase_impl.dart';
 import 'package:ariane_app/features/users/presentation/bloc/users_bloc.dart';
@@ -115,12 +115,16 @@ class Injector {
         () => HomeDataSourcesRemoteImpl(getIt()));
     getIt.registerLazySingleton<RegisterDataSources>(
         () => RegisterDataSourcesRemoteImpl(getIt(), getIt()));
-    getIt.registerLazySingleton<LoginDataSources>(
-        () => LoginDataSourcesRemoteImpl(getIt(), getIt(), getIt(), getIt()));
+    getIt.registerLazySingleton<LoginDataSources>(() =>
+        LoginDataSourcesRemoteImpl(
+            getIt(), getIt(), getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<PendingDataSource>(
         () => PendingDataSourceRemoteImpl(getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<UsersDataSources>(() => UsersDataSourcesImpl(
-        databaseService: getIt(), userMapper: getIt(), authService: getIt()));
+        databaseService: getIt(),
+        userMapper: getIt(),
+        authService: getIt(),
+        storage: getIt()));
 
     //REPOSITORIES
     getIt.registerLazySingleton<CustomDrawerRepository>(
@@ -195,7 +199,7 @@ class Injector {
     getIt.registerLazySingleton(() => GetPendingUseCaseImpl(getIt()));
     getIt.registerLazySingleton(() => GetMessagesUseCaseImpl(getIt()));
     getIt.registerLazySingleton(() => CreateUserUseCaseImpl(getIt()));
-    getIt.registerLazySingleton(() => ChangeUserRoleUseCaseImpl(getIt()));
+    getIt.registerLazySingleton(() => UpdateUserUseCaseImpl(getIt()));
 
     //BLOC
 

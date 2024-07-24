@@ -34,6 +34,7 @@ class _UsersViewState extends State<UsersView> {
           stream: bloc.state,
           onStable: (s) => UsersViewStableState(
                 state: s,
+                bloc: bloc,
               ),
           onError: (s) => Container(),
           onLoading: (s) => Container(),

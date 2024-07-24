@@ -16,11 +16,11 @@ class CreateUserEvent implements UsersEvent {
   CreateUserEvent({required this.context});
 }
 
-class ChangeUserRoleEvent implements UsersEvent {
+class UpdateUserEvent implements UsersEvent {
   final BuildContext context;
   final UserEntity user;
 
-  ChangeUserRoleEvent({
+  UpdateUserEvent({
     required this.context,
     required this.user,
   });

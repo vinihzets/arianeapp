@@ -24,8 +24,33 @@ class HudMixins {
     ));
   }
 
-  showFailure(BuildContext context, String message) {
-    showSnack(context, message, Colors.red);
+  showFailure(BuildContext context, String message) async {
+    return showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const Center(child: Text('Falha')),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(
+                    Icons.warning,
+                    color: Colors.red,
+                    size: 90,
+                  ),
+                  Text(message),
+                ],
+              ),
+              actions: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Ok'))
+                  ],
+                )
+              ],
+            ));
   }
 
   showSuccess(BuildContext context, String message) {

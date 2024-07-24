@@ -16,6 +16,10 @@ class CustomDrawerDataSourcesImpl implements CustomDrawerDataSources {
       throw RemoteFailure(message: 'Nenhuma sessão encontrada!');
     }
 
-    return UserEntity(email: session[0], role: int.parse(session[1]));
+    return UserEntity(
+        email: session[0],
+        role: int.parse(session[1]),
+        date: DateTime.fromMillisecondsSinceEpoch(int.parse(session[2])),
+        id: session[3]);
   }
 }

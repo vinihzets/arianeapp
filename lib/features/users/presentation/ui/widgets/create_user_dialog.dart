@@ -1,3 +1,4 @@
+import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/core/utils/date_formatter.dart';
 import 'package:ariane_app/core/validators/form_builder_validators.dart';
 import 'package:ariane_app/features/users/domain/entities/user_entity.dart';
@@ -10,7 +11,7 @@ class CreateUserDialog extends StatefulWidget {
   State<CreateUserDialog> createState() => _CreateUserDialogState();
 }
 
-class _CreateUserDialogState extends State<CreateUserDialog> {
+class _CreateUserDialogState extends State<CreateUserDialog> with HudMixins {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   dynamic date;
@@ -36,7 +37,7 @@ class _CreateUserDialogState extends State<CreateUserDialog> {
                           firstDate: DateTime.now(),
                           lastDate: DateTime(2030));
                       if (pickedDate != null) {
-                        date = DateFormatter.ddMMyyyy(pickedDate);
+                        date = pickedDate;
                       }
 
                       setState(() {});
@@ -48,7 +49,9 @@ class _CreateUserDialogState extends State<CreateUserDialog> {
                 const SizedBox(
                   width: 4,
                 ),
-                date != null ? Text(date) : const SizedBox.shrink()
+                date != null
+                    ? Text(DateFormatter.ddMMyyyy(date))
+                    : const SizedBox.shrink()
               ],
             ),
             const SizedBox(
@@ -103,8 +106,7 @@ class _CreateUserDialogState extends State<CreateUserDialog> {
             ElevatedButton(
                 onPressed: () {
                   if (date == null) {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text('Selecione uma data para prosseguir')));
+                    showFailure(context, 'Selecione uma data para prosseguir');
                     return;
                   }
 
@@ -114,7 +116,9 @@ class _CreateUserDialogState extends State<CreateUserDialog> {
                     Navigator.of(context).pop(UserEntity(
                         email: emailController.text,
                         role: 1,
-                        password: passwordController.text));
+                        password: passwordController.text,
+                        id: '',
+                        date: date));
                   }
                 },
                 style: ElevatedButton.styleFrom(backgroundColor: Colors.green),

@@ -1,9 +1,4 @@
-import 'package:ariane_app/core/architecture/bloc.dart';
-import 'package:ariane_app/core/architecture/bloc_event.dart';
-import 'package:ariane_app/core/architecture/bloc_state.dart';
-import 'package:ariane_app/core/architecture/usecase.dart';
-import 'package:ariane_app/core/routes/const_routes.dart';
-import 'package:ariane_app/core/utils/string_translator.dart';
+import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/features/login/domain/usecases/sign_in_usecase_impl.dart';
 import 'package:ariane_app/features/login/presentation/bloc/login_event.dart';
 import 'package:flutter/material.dart';
@@ -24,12 +19,12 @@ class LoginBloc extends Bloc {
     }
   }
 
-  _handleSignIn(BuildContext context, String email, String password) {
-    signInUseCaseImpl(SignInParams(email, password)).then((value) => value.fold(
-            (l) => showSnack(
-                context, StringTranslator.build(l.message), Colors.red), (r) {
-          navigateRemoveUntil(context, routes.homeView);
-        }));
+  _handleSignIn(BuildContext context, String email, String password) async {
+    final request = await signInUseCaseImpl(SignInParams(email, password));
+
+    request.fold((l) {
+      showFailure(context, StringTranslator.build(l.message.toString()));
+    }, (r) => navigateRemoveUntil(context, routes.homeView));
   }
 
   _handleNavigateToRegister(BuildContext context) {
