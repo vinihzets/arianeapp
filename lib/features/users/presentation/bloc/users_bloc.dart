@@ -51,7 +51,7 @@ class UsersBloc extends Bloc {
     final request = await createUserUseCaseImpl.call(CreateUserParams(
         email: user.email,
         password: user.password ?? '',
-        role: user.role,
+        role: user.role.index,
         date: user.date));
 
     request.fold((l) => showFailure(event.context, l.message), (r) {
@@ -64,7 +64,7 @@ class UsersBloc extends Bloc {
     final index = users.indexWhere((user) => event.user.id == user.id);
 
     final request = await updateUserUseCaseImpl.call(UpdateUserParams(
-        id: event.user.id, role: event.user.role, date: event.user.date));
+        id: event.user.id, role: event.user.role.index, date: event.user.date));
 
     request.fold((l) => showFailure(event.context, l.message), (r) {
       users.removeAt(index);

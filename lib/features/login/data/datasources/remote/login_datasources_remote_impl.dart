@@ -2,6 +2,7 @@ import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/core/services/session_storage.dart';
 import 'package:ariane_app/features/login/data/datasources/login_datasources.dart';
 import 'package:ariane_app/features/users/data/mappers/user_mapper.dart';
+import 'package:ariane_app/features/users/domain/entities/user_entity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class LoginDataSourcesRemoteImpl implements LoginDataSources {
@@ -32,28 +33,14 @@ class LoginDataSourcesRemoteImpl implements LoginDataSources {
 
     final user = userMapper.fromMap(userDoc.data()!);
 
-    if (user.role == 2) {
-      sessionStorage.setSession('session', [
-        params.email,
-        user.role.toString(),
-        user.date.millisecondsSinceEpoch.toString(),
-        user.id
-      ]);
-
-      return credential;
-    }
-
-    if (user.date.isBefore(DateTime.now())) {
+    if (user.date.isBefore(DateTime.now()) && user.role == UserRole.normal) {
       throw RemoteFailure(
-          message:
-              'Usuário inadimplente, entre em contato com a administradora do sistema!');
+        message:
+            'Usuário inadimplente, entre em contato com a administradora do sistema!',
+      );
     }
 
-    sessionStorage.setSession('session', [
-      params.email,
-      user.role.toString(),
-      user.date.millisecondsSinceEpoch.toString()
-    ]);
+    sessionStorage.setSession('session', userMapper.toMap(user));
 
     return credential;
   }

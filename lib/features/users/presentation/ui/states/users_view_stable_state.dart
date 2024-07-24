@@ -1,4 +1,3 @@
-import 'package:ariane_app/core/components/custom_dropdown_button_widget.dart';
 import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/core/utils/date_formatter.dart';
 import 'package:ariane_app/features/users/domain/entities/user_entity.dart';
@@ -21,9 +20,9 @@ class _UsersViewStableStateState extends State<UsersViewStableState> {
   UsersBloc get bloc => widget.bloc;
 
   final List<DropdownMenuItem> items = const [
-    DropdownMenuItem(value: 1, child: Text('Usuário')),
+    DropdownMenuItem(value: UserRole.normal, child: Text('Usuário')),
     DropdownMenuItem(
-      value: 2,
+      value: UserRole.admin,
       child: Text('Admin'),
     ),
   ];
@@ -62,16 +61,6 @@ class _UsersViewStableStateState extends State<UsersViewStableState> {
                   child: const Text('Alterar data'))
             ],
           ),
-          trailing: CustomDropdownButtonWidget(
-              value: users[index].role,
-              items: items,
-              onChanged: (v) {
-                if (v is int) {
-                  user.role = v;
-                  bloc.dispatchEvent(
-                      UpdateUserEvent(context: context, user: user));
-                }
-              }),
         );
       },
     );

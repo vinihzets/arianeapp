@@ -43,7 +43,7 @@ class _CustomDrawerStableStateState extends State<CustomDrawerStableState> {
             leading: const Icon(Icons.pending_actions_rounded),
             route: routes.periodsView,
           ),
-          user.role == 2
+          user.role == UserRole.admin
               ? CustomDrawerTile(
                   title: 'Usuários',
                   trailing: const Icon(Icons.arrow_right),

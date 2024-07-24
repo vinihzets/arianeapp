@@ -80,11 +80,6 @@ class Injector {
   static build() {
     GetIt getIt = GetIt.instance;
 
-    //CORE
-    getIt.registerLazySingleton(() => ConstRoutes());
-    getIt.registerLazySingleton(() => AuthService());
-    getIt.registerLazySingleton(() => DatabaseService());
-    getIt.registerLazySingleton<SessionStorage>(() => SessionStorageImpl());
     // Mappers
     getIt.registerLazySingleton(() => ClientMapper());
     getIt.registerLazySingleton(() => TypePerfurationMapper(getIt()));
@@ -93,6 +88,13 @@ class Injector {
     getIt.registerLazySingleton(() => PendingMapper(getIt(), getIt()));
     getIt.registerLazySingleton(() => SchedulingMessageMapper(getIt()));
     getIt.registerLazySingleton(() => UserMapper());
+
+    //CORE
+    getIt.registerLazySingleton(() => ConstRoutes());
+    getIt.registerLazySingleton(() => AuthService());
+    getIt.registerLazySingleton(() => DatabaseService());
+    getIt.registerLazySingleton<SessionStorage>(
+        () => SessionStorageImpl(mapper: getIt()));
 
     // DATASOURCES
 

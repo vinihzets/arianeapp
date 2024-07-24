@@ -6,7 +6,7 @@ class UserMapper extends EntityMapper<UserEntity> {
   UserEntity fromMap(Map<String, dynamic> map) {
     return UserEntity(
         email: map['email'],
-        role: map['role'],
+        role: UserRole.values[map['role']],
         id: map['id'],
         date: DateTime.fromMillisecondsSinceEpoch(map['date']));
   }
@@ -15,8 +15,8 @@ class UserMapper extends EntityMapper<UserEntity> {
   Map<String, dynamic> toMap(UserEntity entity) {
     return {
       'email': entity.email,
-      'role': entity.role,
-      'date': entity.date,
+      'role': entity.role.index,
+      'date': entity.date.millisecondsSinceEpoch,
       'id': entity.id,
     };
   }

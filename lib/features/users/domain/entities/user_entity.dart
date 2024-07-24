@@ -1,6 +1,12 @@
+enum UserRole {
+  disabled,
+  normal,
+  admin;
+}
+
 class UserEntity {
   final String email;
-  int role;
+  UserRole role;
   final String id;
   final String? password;
   DateTime date;

@@ -115,7 +115,7 @@ class _CreateUserDialogState extends State<CreateUserDialog> with HudMixins {
 
                     Navigator.of(context).pop(UserEntity(
                         email: emailController.text,
-                        role: 1,
+                        role: UserRole.normal,
                         password: passwordController.text,
                         id: '',
                         date: date));
