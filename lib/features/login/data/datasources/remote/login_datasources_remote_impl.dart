@@ -40,7 +40,7 @@ class LoginDataSourcesRemoteImpl implements LoginDataSources {
       );
     }
 
-    sessionStorage.setSession('session', userMapper.toMap(user));
+    sessionStorage.setSession(userMapper.toMap(user));
 
     return credential;
   }

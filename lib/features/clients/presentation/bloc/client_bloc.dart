@@ -1,5 +1,6 @@
 import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/core/components/show_confirmation_dialog.dart';
+import 'package:ariane_app/core/services/session_storage.dart';
 import 'package:ariane_app/features/clients/domain/usecases/search_client_usecase_impl.dart';
 import 'package:flutter/material.dart';
 import '../../clients.dart';
@@ -19,6 +20,7 @@ class ClientBloc extends Bloc {
   final SearchClientUseCaseImpl searchClientUseCaseImpl;
   final ConstRoutes routes;
   late final List<ClientEntity> listClients;
+  final SessionStorage sessionStorage;
 
   ClientBloc(
     this.createClientUseCaseImpl,
@@ -26,6 +28,7 @@ class ClientBloc extends Bloc {
     this.deleteClientUseCaseImpl,
     this.updateClientUseCaseImpl,
     this.searchClientUseCaseImpl,
+    this.sessionStorage,
     this.routes,
   ) {
     listClients = [];
@@ -54,9 +57,19 @@ class ClientBloc extends Bloc {
   _handleCreateClient(
     BuildContext context,
   ) async {
+    final user = await sessionStorage.fetchSession();
+
+    if (user == null) {
+      return;
+    }
+
     final ClientEntity? entity = await showCustomDialog(
+      // ignore: use_build_context_synchronously
       context,
-      const CreateUpdateClientDialog(client: null),
+      CreateUpdateClientDialog(
+        user: user,
+        client: null,
+      ),
     );
 
     if (entity == null) {
@@ -70,6 +83,7 @@ class ClientBloc extends Bloc {
       lastName: entity.lastName,
       number: entity.number,
       birthday: entity.birthday,
+      userId: entity.userId,
     ));
 
     request.fold((f) => {showFailure(context, f.message)}, (c) {
@@ -104,17 +118,19 @@ class ClientBloc extends Bloc {
 
   _handleDeleteClient(BuildContext context, ClientEntity entity) async {
     final confirmation = await showCustomDialog(
-        context,
-        const ShowConfirmationDialog(
-          message: 'Você realmente deseja apagar esse cliente?',
-        ));
+      context,
+      const ShowConfirmationDialog(
+        message: 'Você realmente deseja apagar esse cliente?',
+      ),
+    );
 
     if (confirmation == null) {
       return;
     }
 
-    final request =
-        await deleteClientUseCaseImpl.call(DeleteClientParams(id: entity.id));
+    final request = await deleteClientUseCaseImpl.call(
+      DeleteClientParams(id: entity.id),
+    );
 
     // ignore: use_build_context_synchronously
 
@@ -122,8 +138,14 @@ class ClientBloc extends Bloc {
       listClients.remove(entity);
 
       if (listClients.isNotEmpty) {
-        dispatchState(BlocStableState(
-            data: ClientStableData(listClients: listClients, reachMax: false)));
+        dispatchState(
+          BlocStableState(
+            data: ClientStableData(
+              listClients: listClients,
+              reachMax: false,
+            ),
+          ),
+        );
       } else {
         dispatchState(BlocEmptyState());
       }
@@ -131,9 +153,19 @@ class ClientBloc extends Bloc {
   }
 
   _handleUpdateClient(BuildContext context, ClientEntity client) async {
+    final user = await sessionStorage.fetchSession();
+
+    if (user == null) {
+      return;
+    }
+
     final ClientEntity? entity = await showCustomDialog(
+      // ignore: use_build_context_synchronously
       context,
-      CreateUpdateClientDialog(client: client),
+      CreateUpdateClientDialog(
+        user: user,
+        client: client,
+      ),
     );
 
     if (entity == null) {
@@ -148,6 +180,7 @@ class ClientBloc extends Bloc {
       lastName: entity.lastName,
       number: entity.number,
       birthday: entity.birthday,
+      userId: entity.userId,
     ));
 
     request.fold((f) => {showFailure(context, f.message)}, (c) {

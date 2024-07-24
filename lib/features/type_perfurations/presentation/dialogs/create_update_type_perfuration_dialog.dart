@@ -1,11 +1,15 @@
 import 'package:ariane_app/core/validators/form_builder_validators.dart';
+import 'package:ariane_app/features/users/domain/entities/user_entity.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/core.dart';
 
 class CreateUpdateTypePerfurationDialog extends StatefulWidget {
+  final UserEntity user;
   final TypePerfurationEntity? typePerfuration;
   final List<PeriodEntity> listPeriods;
+
   const CreateUpdateTypePerfurationDialog({
+    required this.user,
     required this.typePerfuration,
     required this.listPeriods,
     Key? key,
@@ -111,6 +115,7 @@ class _CreateUpdateTypePerfurationDialogState
                               id: widget.typePerfuration?.id ?? '',
                               name: namePerfurationController.text,
                               listPeriods: selecteds,
+                              userId: widget.user.id,
                             ),
                           );
                         }

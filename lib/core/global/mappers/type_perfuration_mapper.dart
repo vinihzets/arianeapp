@@ -11,8 +11,9 @@ class TypePerfurationMapper implements EntityMapper<TypePerfurationEntity> {
   @override
   TypePerfurationEntity fromMap(Map<String, dynamic> map) {
     return TypePerfurationEntity(
-      name: map['name'] ?? '',
-      id: map['id'] ?? '',
+      name: map['name'],
+      id: map['id'],
+      userId: map['userId'],
       listPeriods:
           (map['periods'] as List).map((e) => periodMapper.fromMap(e)).toList(),
     );
@@ -20,16 +21,14 @@ class TypePerfurationMapper implements EntityMapper<TypePerfurationEntity> {
 
   @override
   Map<String, dynamic> toMap(TypePerfurationEntity entity) {
-
-      final List<Map<String, dynamic>> periodsMap = entity.listPeriods
-      .map((period) => periodMapper.toMap(period))
-      .toList();
+    final List<Map<String, dynamic>> periodsMap =
+        entity.listPeriods.map((period) => periodMapper.toMap(period)).toList();
 
     return {
       'name': entity.name,
       'periods': periodsMap,
       'id': entity.id,
-      
+      'userId': entity.userId,
     };
   }
 }

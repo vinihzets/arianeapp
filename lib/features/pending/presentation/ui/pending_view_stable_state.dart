@@ -142,7 +142,7 @@ class _PendingViewStableDataState extends State<PendingViewStableData> {
       subtitle: Text(item.typePerfuration.name),
       trailing: IconButton(
         onPressed: () => widget.bloc.dispatchEvent(
-          PendingEventSendMessage(item, data.date),
+          PendingEventSendMessage(context, item, data.date),
         ),
         icon: const Icon(Icons.send),
       ),

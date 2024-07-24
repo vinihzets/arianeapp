@@ -1,4 +1,5 @@
 import 'package:ariane_app/core/core.dart';
+import 'package:ariane_app/core/services/session_storage.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/components/show_confirmation_dialog.dart';
 import '../../periods.dart';
@@ -8,6 +9,7 @@ class PeriodsBloc extends Bloc {
   final ReadPeriodUseCaseImpl readPeriodUseCaseImpl;
   final DeletePeriodUseCaseImpl deletePeriodUseCaseImpl;
   final UpdatePeriodUseCaseImpl updatePeriodUseCaseImpl;
+  final SessionStorage sessionStorage;
 
   late final List<PeriodEntity> listPeriods;
 
@@ -16,6 +18,7 @@ class PeriodsBloc extends Bloc {
     this.readPeriodUseCaseImpl,
     this.deletePeriodUseCaseImpl,
     this.updatePeriodUseCaseImpl,
+    this.sessionStorage,
   ) {
     listPeriods = [];
   }
@@ -36,9 +39,19 @@ class PeriodsBloc extends Bloc {
   _handleCreatePeriod(
     BuildContext context,
   ) async {
+    final session = await sessionStorage.fetchSession();
+
+    if (session == null) {
+      return;
+    }
+
     final PeriodEntity? entity = await showCustomDialog(
+      // ignore: use_build_context_synchronously
       context,
-      const CreateUpdatePeriodDialog(period: null),
+      CreateUpdatePeriodDialog(
+        user: session,
+        period: null,
+      ),
     );
 
     if (entity == null) {
@@ -103,9 +116,19 @@ class PeriodsBloc extends Bloc {
   }
 
   _handleUpdatePeriod(BuildContext context, PeriodEntity period) async {
+    final session = await sessionStorage.fetchSession();
+
+    if (session == null) {
+      return;
+    }
+
     final PeriodEntity? entity = await showCustomDialog(
+      // ignore: use_build_context_synchronously
       context,
-      CreateUpdatePeriodDialog(period: period),
+      CreateUpdatePeriodDialog(
+        user: session,
+        period: period,
+      ),
     );
 
     if (entity == null) {

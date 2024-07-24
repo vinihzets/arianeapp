@@ -29,7 +29,7 @@ class UsersDataSourcesImpl implements UsersDataSources {
 
   @override
   Future<UserEntity> createUser(CreateUserParams params) async {
-    final UserEntity? user = await storage.fetchSession('session');
+    final UserEntity? user = await storage.fetchSession();
 
     if (user == null) {
       throw RemoteFailure(message: 'Nenhum Usuário em sessão');
@@ -59,16 +59,18 @@ class UsersDataSourcesImpl implements UsersDataSources {
 
   @override
   Future<void> updateUser(UpdateUserParams params) async {
-    final UserEntity? user = await storage.fetchSession('session');
+    final UserEntity? user = await storage.fetchSession();
 
     if (user == null) {
       throw RemoteFailure(message: 'Nenhum Usuário em sessão');
     }
 
-    if (user.role != 2) {
+    if (user.role != UserRole.admin) {
       throw RemoteFailure(message: 'Permissões insuficientes!');
     }
+
     return await databaseService.users.doc(params.id).update(
-        {'role': params.role, 'date': params.date.millisecondsSinceEpoch});
+      {'role': params.role, 'date': params.date.millisecondsSinceEpoch},
+    );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:ariane_app/core/core.dart';
+import 'package:ariane_app/core/services/session_storage.dart';
 import 'package:ariane_app/features/type_perfurations/domain/usecases/read_periods_usecase_impl.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/components/show_confirmation_dialog.dart';
@@ -19,6 +20,7 @@ class TypePerfurationsBloc extends Bloc {
   final DeleteTypePerfurationUseCaseImpl deleteTypePerfurationUseCaseImpl;
   final UpdateTypePerfurationsUseCaseImpl updateTypePerfurationsUseCaseImpl;
   final ReadPeriodsUseCaseImpl readPeriodsUseCaseImpl;
+  final SessionStorage sessionStorage;
 
   late final List<TypePerfurationEntity> listTypePerfurations;
 
@@ -28,6 +30,7 @@ class TypePerfurationsBloc extends Bloc {
     this.deleteTypePerfurationUseCaseImpl,
     this.updateTypePerfurationsUseCaseImpl,
     this.readPeriodsUseCaseImpl,
+    this.sessionStorage,
   ) {
     listTypePerfurations = [];
   }
@@ -57,10 +60,17 @@ class TypePerfurationsBloc extends Bloc {
       return r;
     });
 
+    final session = await sessionStorage.fetchSession();
+
+    if (session == null) {
+      return;
+    }
+
     final TypePerfurationEntity? entity = await showCustomDialog(
       // ignore: use_build_context_synchronously
       context,
       CreateUpdateTypePerfurationDialog(
+        user: session,
         typePerfuration: null,
         listPeriods: periods,
       ),
@@ -145,10 +155,17 @@ class TypePerfurationsBloc extends Bloc {
       return r;
     });
 
+    final session = await sessionStorage.fetchSession();
+
+    if (session == null) {
+      return;
+    }
+
     final TypePerfurationEntity? entity = await showCustomDialog(
       // ignore: use_build_context_synchronously
       context,
       CreateUpdateTypePerfurationDialog(
+        user: session,
         typePerfuration: typeperf,
         listPeriods: periods,
       ),

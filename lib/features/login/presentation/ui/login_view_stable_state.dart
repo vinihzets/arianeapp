@@ -74,12 +74,6 @@ class _LoginViewStableDataState extends State<LoginViewStableData> {
                   context, emailController.text, passwordController.text)),
               child: const Text('Fazer Login'),
             ),
-            TextButton(
-                onPressed: () => widget.bloc.dispatchEvent(
-                    LoginEventNavigateToRegisterThenUntil(context)),
-                child: const Text(
-                  'Registrar-se',
-                ))
           ]),
     );
   }

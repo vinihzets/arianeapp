@@ -14,5 +14,5 @@ export { onTypePerfurationUpdated } from './hooks/type_perfuration_hook';
 /**
  *  Schedulers
  */
-export { pendingCleanerScheduler } from './schedulers/pending_cleaner_scheduler';
+export { fixClientId } from './schedulers/pending_cleaner_scheduler';
 

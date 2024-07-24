@@ -13,6 +13,7 @@ export const onPerfurationCreated = functions.firestore.document('/perfurations/
 
         const clientId = perfurationData['clientId'];
         const clientName = perfurationData['clientName'];
+        const clientNumber = perfurationData['clientNumber'];
 
         const typePerfuration = perfurationData['type_perfuration'] as {
             id: string;
@@ -48,6 +49,7 @@ export const onPerfurationCreated = functions.firestore.document('/perfurations/
                 'id': doc.id,
                 'clientId': clientId,
                 'clientName': clientName,
+                'clientNumber': clientNumber,
                 'perfurationId': snap.id,
                 'typePerfuration': typePerfuration,
                 'period': element,
@@ -94,6 +96,7 @@ export const onPerfurationUpdated = functions.firestore.document('/perfurations/
 
         const clientId = perfurationData['clientId'];
         const clientName = perfurationData['clientName'];
+        const clientNumber = perfurationData['clientNumber'];
 
         const typePerfuration = perfurationData['type_perfuration'] as {
             id: string;
@@ -129,6 +132,7 @@ export const onPerfurationUpdated = functions.firestore.document('/perfurations/
                 'id': doc.id,
                 'clientId': clientId,
                 'clientName': clientName,
+                'clientNumber': clientNumber,
                 'perfurationId': snap.after.id,
                 'typePerfuration': typePerfuration,
                 'period': element,

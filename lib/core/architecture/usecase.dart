@@ -34,12 +34,14 @@ class CreateClientParams {
   final String lastName;
   final String number;
   final String birthday;
+  final String userId;
 
   CreateClientParams({
     required this.firstName,
     required this.lastName,
     required this.number,
     required this.birthday,
+    required this.userId,
   });
 }
 
@@ -56,12 +58,15 @@ class UpdateClientParams {
   final String number;
   final String birthday;
   final String id;
+  final String userId;
+
   UpdateClientParams({
     required this.firstName,
     required this.lastName,
     required this.number,
     required this.birthday,
     required this.id,
+    required this.userId,
   });
 }
 
@@ -139,12 +144,14 @@ class UpdatePeriodParams {
 class CreatePerfurationParams {
   final String clientName;
   final String clientId;
+  final String clientNumber;
   final TypePerfurationEntity typePerfurationEntity;
   final DateTime date;
 
   CreatePerfurationParams({
     required this.clientName,
     required this.clientId,
+    required this.clientNumber,
     required this.typePerfurationEntity,
     required this.date,
   });

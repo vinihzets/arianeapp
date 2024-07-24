@@ -8,9 +8,10 @@ class ClientMapper implements EntityMapper<ClientEntity> {
     return ClientEntity(
       firstName: map['firstName'] ?? '',
       lastName: map['lastName'] ?? '',
-      number: map['number'] ?? 0,
+      number: map['number'] ?? "0",
       birthday: map['birthday'] ?? '',
       id: map['id'] ?? '',
+      userId: map['userId'],
     );
   }
 
@@ -22,6 +23,7 @@ class ClientMapper implements EntityMapper<ClientEntity> {
       'lastName': entity.lastName,
       'number': entity.number,
       'birthday': entity.birthday,
+      'userId': entity.userId,
     };
   }
 }

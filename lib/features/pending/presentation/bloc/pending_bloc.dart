@@ -40,23 +40,22 @@ class PendingBloc extends Bloc {
     } else if (event is PendingEventLoadMore) {
       _handleLoadMore(event.cache, event.messages, event.date);
     } else if (event is PendingEventSendMessage) {
-      _handleSendMessage(event.entity, event.date);
+      _handleSendMessage(event.context, event.entity, event.date);
     } else if (event is PendingEventSendMessageToList) {
       _handleSendMessageToList(event.context, event.entity, event.date);
     }
   }
 
-  _handleSendMessage(PendingEntity entity, DateTime date) async {
-    final clientDoc = await DatabaseService()
-        .clients
-        .doc(
-          entity.clientId,
-        )
-        .get();
+  _handleSendMessage(
+    BuildContext context,
+    PendingEntity entity,
+    DateTime date,
+  ) async {
+    final result = await WhatsApp.sendMessage(
+      entity.clientNumber,
+      entity.message,
+    );
 
-    final client = ClientMapper().fromMap(clientDoc.data()!);
-
-    final result = await WhatsApp.sendMessage(client.number, entity.message);
     if (result) {
       DatabaseService().pendings.doc(entity.id).update({'sent': true});
       _handleReadyEvent(date);
@@ -93,7 +92,11 @@ class PendingBloc extends Bloc {
       return;
     }
 
-    final result = await WhatsApp.sendMessage(selected.number, entity.message);
+    final result = await WhatsApp.sendMessage(
+      selected.number,
+      entity.message,
+    );
+
     if (result) {
       DatabaseService().schedulingMessages.doc(entity.id).update(
         {'sent': true},

@@ -71,6 +71,7 @@ class PerfurationsBloc extends Bloc {
       CreatePerfurationParams(
         clientName: client.firstName,
         clientId: client.id,
+        clientNumber: client.number,
         typePerfurationEntity: entity,
         date: date,
       ),

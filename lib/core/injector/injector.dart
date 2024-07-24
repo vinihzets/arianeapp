@@ -104,13 +104,15 @@ class Injector {
         () => ClientPerfurationsDataSourcesRemoteImpl(getIt()));
 
     getIt.registerLazySingleton<SchedulingMessageDataSources>(() =>
-        SchedulingMessageDataSourcesRemoteImpl(getIt(), getIt(), getIt()));
-    getIt.registerLazySingleton<PerfurationDataSources>(
-        () => PerfurationDataSourcesRemoteImpl(getIt(), getIt(), getIt()));
+        SchedulingMessageDataSourcesRemoteImpl(
+            getIt(), getIt(), getIt(), getIt()));
+    getIt.registerLazySingleton<PerfurationDataSources>(() =>
+        PerfurationDataSourcesRemoteImpl(getIt(), getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<PeriodDataSources>(
-        () => PeriodDataSourcesRemoteImpl(getIt(), getIt()));
-    getIt.registerLazySingleton<TypePerfurationDataSources>(
-        () => TypePerfurationDataSourcesRemoteImpl(getIt(), getIt(), getIt()));
+        () => PeriodDataSourcesRemoteImpl(getIt(), getIt(), getIt()));
+    getIt.registerLazySingleton<TypePerfurationDataSources>(() =>
+        TypePerfurationDataSourcesRemoteImpl(
+            getIt(), getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<ClientDataSources>(
         () => ClientDataSourcesRemoteImpl(getIt(), getIt()));
     getIt.registerLazySingleton<HomeDataSources>(
@@ -209,15 +211,15 @@ class Injector {
     getIt.registerFactory(() => UsersBloc(getIt(), getIt(), getIt()));
     getIt.registerFactory(() => ClientPerfurationsBloc(getIt(), getIt()));
     getIt.registerFactory(() => SchedulingMessageBloc(
-        getIt(), getIt(), getIt(), getIt(), getIt(), getIt()));
+        getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt()));
     getIt.registerFactory(
         () => PerfurationsBloc(getIt(), getIt(), getIt(), getIt()));
-    getIt
-        .registerFactory(() => PeriodsBloc(getIt(), getIt(), getIt(), getIt()));
-    getIt.registerFactory(() =>
-        TypePerfurationsBloc(getIt(), getIt(), getIt(), getIt(), getIt()));
     getIt.registerFactory(
-        () => ClientBloc(getIt(), getIt(), getIt(), getIt(), getIt(), getIt()));
+        () => PeriodsBloc(getIt(), getIt(), getIt(), getIt(), getIt()));
+    getIt.registerFactory(() => TypePerfurationsBloc(
+        getIt(), getIt(), getIt(), getIt(), getIt(), getIt()));
+    getIt.registerFactory(() => ClientBloc(
+        getIt(), getIt(), getIt(), getIt(), getIt(), getIt(), getIt()));
     getIt.registerFactory(() => HomeBloc(getIt(), getIt()));
     getIt.registerFactory(() => RegisterBloc(getIt()));
     getIt.registerFactory(() => LoginBloc(getIt(), getIt()));

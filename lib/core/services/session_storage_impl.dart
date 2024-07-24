@@ -13,10 +13,10 @@ class SessionStorageImpl implements SessionStorage {
   });
 
   @override
-  Future<UserEntity>? fetchSession(String key) async {
+  Future<UserEntity>? fetchSession() async {
     final instance = await SharedPreferences.getInstance();
 
-    final session = instance.getString(key);
+    final session = instance.getString('session');
 
     if (session == null) {
       throw RemoteFailure(message: 'Nenhuma sessão existente');
@@ -28,10 +28,10 @@ class SessionStorageImpl implements SessionStorage {
   }
 
   @override
-  Future<void> removeSession(String key) async {
+  Future<void> removeSession() async {
     final instance = await SharedPreferences.getInstance();
 
-    final removed = await instance.remove(key);
+    final removed = await instance.remove('session');
 
     if (removed) {
       return;
@@ -41,11 +41,14 @@ class SessionStorageImpl implements SessionStorage {
   }
 
   @override
-  Future<void> setSession(String key, Map<String, dynamic> session) async {
+  Future<void> setSession(Map<String, dynamic> session) async {
     final instance = await SharedPreferences.getInstance();
     await instance.clear();
 
-    final setedSession = await instance.setString(key, jsonEncode(session));
+    final setedSession = await instance.setString(
+      'session',
+      jsonEncode(session),
+    );
 
     if (setedSession) {
       return;

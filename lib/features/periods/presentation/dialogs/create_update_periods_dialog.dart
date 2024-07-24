@@ -1,11 +1,18 @@
 import 'package:ariane_app/core/validators/form_builder_validators.dart';
+import 'package:ariane_app/features/users/domain/entities/user_entity.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/global/entities/period_entity.dart';
 import '../../../../core/components/counter_widget.dart';
 
 class CreateUpdatePeriodDialog extends StatefulWidget {
+  final UserEntity user;
   final PeriodEntity? period;
-  const CreateUpdatePeriodDialog({required this.period, super.key});
+
+  const CreateUpdatePeriodDialog({
+    required this.user,
+    required this.period,
+    super.key,
+  });
 
   @override
   State<CreateUpdatePeriodDialog> createState() =>
@@ -140,6 +147,7 @@ class _CreateUpdatePeriodDialogState extends State<CreateUpdatePeriodDialog> {
                   dayCounter: dayCounter,
                   monthCounter: monthCounter,
                   yearCounter: yearCounter,
+                  userId: widget.user.id,
                 ));
               }
             },

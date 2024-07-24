@@ -1,5 +1,6 @@
 import 'package:ariane_app/core/architecture/usecase.dart';
 import 'package:ariane_app/core/services/database_service.dart';
+import 'package:ariane_app/core/services/session_storage.dart';
 import 'package:ariane_app/features/type_perfurations/type_perfurations.dart';
 import '../../../perfurations.dart';
 
@@ -7,9 +8,14 @@ class PerfurationDataSourcesRemoteImpl implements PerfurationDataSources {
   DatabaseService databaseService;
   PerfurationMapper mapper;
   TypePerfurationMapper typePerfurationMapper;
+  SessionStorage sessionStorage;
 
   PerfurationDataSourcesRemoteImpl(
-      this.databaseService, this.mapper, this.typePerfurationMapper);
+    this.databaseService,
+    this.mapper,
+    this.typePerfurationMapper,
+    this.sessionStorage,
+  );
 
   @override
   Future<PerfurationEntity> createPerfuration(
@@ -27,12 +33,20 @@ class PerfurationDataSourcesRemoteImpl implements PerfurationDataSources {
       0,
     );
 
+    final session = await sessionStorage.fetchSession();
+
+    if (session == null) {
+      throw Exception('Usuário não está logado');
+    }
+
     final entity = PerfurationEntity(
       clientName: params.clientName,
       clientId: params.clientId,
+      clientNumber: params.clientNumber,
       createdAt: date.millisecondsSinceEpoch,
       id: doc.id,
       typePerfuration: params.typePerfurationEntity,
+      userId: session.id,
     );
 
     await doc.set(mapper.toMap(entity));

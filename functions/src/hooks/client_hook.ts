@@ -38,7 +38,10 @@ export const onClientUpdated = functions.firestore.document('/clients/{clientId}
         const pendings = await admin.firestore().collection('pendings').where('clientId', '==', snap.after.id).get();
 
         pendings.forEach((element) => {
-            cJobs.push(element.ref.set({ 'clientName': afterData['firstName'] }, { merge: true }));
+            cJobs.push(element.ref.set({
+                'clientName': afterData['firstName'],
+                'clientNumber': afterData['number'],
+            }, { merge: true }));
         })
 
         return Promise.all(cJobs);

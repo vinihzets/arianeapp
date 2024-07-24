@@ -17,6 +17,7 @@ class PendingMapper implements EntityMapper<PendingEntity> {
     return PendingEntity(
       id: map['id'],
       clientName: map['clientName'],
+      clientNumber: map['clientNumber'],
       clientId: map['clientId'],
       message: map['message'],
       date: DateTime.fromMillisecondsSinceEpoch(map['date']),
@@ -32,6 +33,7 @@ class PendingMapper implements EntityMapper<PendingEntity> {
       'id': entity.id,
       'clientName': entity.clientName,
       'clientId': entity.clientId,
+      'clientNumber': entity.clientNumber,
       'message': entity.message,
       'date': entity.date.millisecondsSinceEpoch,
       'sent': entity.sent,

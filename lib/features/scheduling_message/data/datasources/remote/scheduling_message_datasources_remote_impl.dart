@@ -1,5 +1,6 @@
 import 'package:ariane_app/core/architecture/usecase.dart';
 import 'package:ariane_app/core/services/database_service.dart';
+import 'package:ariane_app/core/services/session_storage.dart';
 import 'package:ariane_app/features/clients/clients.dart';
 import 'package:ariane_app/features/scheduling_message/data/datasources/scheduling_message_datasources.dart';
 import 'package:ariane_app/features/scheduling_message/data/mappers/scheduling_message_mapper.dart';
@@ -11,14 +12,25 @@ class SchedulingMessageDataSourcesRemoteImpl
   SchedulingMessageMapper mapper;
   ClientMapper clientMapper;
   DatabaseService databaseService;
+  SessionStorage sessionStorage;
 
   SchedulingMessageDataSourcesRemoteImpl(
-      this.mapper, this.clientMapper, this.databaseService);
+    this.mapper,
+    this.clientMapper,
+    this.databaseService,
+    this.sessionStorage,
+  );
 
   @override
   Future<SchedulingMessageEntity> createSchedulingMessage(
-      CreateSchedulingMessageParams params) async {
+    CreateSchedulingMessageParams params,
+  ) async {
     final doc = databaseService.schedulingMessages.doc();
+    final session = await sessionStorage.fetchSession();
+
+    if (session == null) {
+      throw Exception();
+    }
 
     final entity = SchedulingMessageEntity(
       message: params.message,
@@ -27,6 +39,7 @@ class SchedulingMessageDataSourcesRemoteImpl
       date: params.date,
       createdAt: params.createdAt,
       sent: false,
+      userId: session.id,
     );
 
     await doc.set(mapper.toMap(entity));
@@ -51,7 +64,14 @@ class SchedulingMessageDataSourcesRemoteImpl
 
   @override
   Future<SchedulingMessageEntity> updateSchedulingMessage(
-      UpdateSchedulingMessageParams params) async {
+    UpdateSchedulingMessageParams params,
+  ) async {
+    final session = await sessionStorage.fetchSession();
+
+    if (session == null) {
+      throw Exception();
+    }
+
     final entity = SchedulingMessageEntity(
       message: params.message,
       listClients: params.listClients,
@@ -59,6 +79,7 @@ class SchedulingMessageDataSourcesRemoteImpl
       date: params.date,
       createdAt: params.createdAt,
       sent: params.sent,
+      userId: session.id,
     );
 
     await databaseService.schedulingMessages

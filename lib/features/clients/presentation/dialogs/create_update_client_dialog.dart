@@ -1,12 +1,18 @@
 import 'package:ariane_app/core/validators/form_builder_validators.dart';
+import 'package:ariane_app/features/users/domain/entities/user_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../domain/entities/client_entity.dart';
 
 class CreateUpdateClientDialog extends StatefulWidget {
+  final UserEntity user;
   final ClientEntity? client;
-  const CreateUpdateClientDialog({required this.client, super.key});
+  const CreateUpdateClientDialog({
+    required this.user,
+    required this.client,
+    super.key,
+  });
 
   @override
   State<CreateUpdateClientDialog> createState() =>
@@ -105,6 +111,7 @@ class _CreateUpdateClientDialogState extends State<CreateUpdateClientDialog> {
                 lastName: lastNameController.text,
                 number: numberController.text,
                 birthday: birthdayController.text,
+                userId: widget.user.id,
               ));
             }
           },

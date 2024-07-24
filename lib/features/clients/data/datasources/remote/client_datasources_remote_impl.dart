@@ -21,6 +21,7 @@ class ClientDataSourcesRemoteImpl implements ClientDataSources {
       number: params.number,
       birthday: params.birthday,
       id: doc.id,
+      userId: params.userId,
     );
 
     await doc.set(mapper.toMap(entity));
@@ -56,11 +57,13 @@ class ClientDataSourcesRemoteImpl implements ClientDataSources {
   @override
   Future<ClientEntity> updateClient(UpdateClientParams params) async {
     final entity = ClientEntity(
-        firstName: params.firstName,
-        lastName: params.lastName,
-        number: params.number,
-        birthday: params.birthday,
-        id: params.id);
+      firstName: params.firstName,
+      lastName: params.lastName,
+      number: params.number,
+      birthday: params.birthday,
+      id: params.id,
+      userId: params.userId,
+    );
 
     await databaseService.clients.doc(params.id).update(mapper.toMap(entity));
 

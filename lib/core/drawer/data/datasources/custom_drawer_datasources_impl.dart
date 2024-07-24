@@ -10,7 +10,7 @@ class CustomDrawerDataSourcesImpl implements CustomDrawerDataSources {
   CustomDrawerDataSourcesImpl(this.sessionStorage);
   @override
   Future<UserEntity> fetchUserSession(FetchUserSessionParams params) async {
-    final UserEntity? session = await sessionStorage.fetchSession('session');
+    final UserEntity? session = await sessionStorage.fetchSession();
 
     if (session == null) {
       throw RemoteFailure(message: 'Nenhuma sessão encontrada!');

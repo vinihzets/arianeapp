@@ -7,10 +7,13 @@ class TypePerfurationEntity extends Equatable {
   final String id;
   final List<PeriodEntity> listPeriods;
 
+  final String userId;
+
   const TypePerfurationEntity({
     required this.name,
     required this.id,
     required this.listPeriods,
+    required this.userId,
   });
 
   @override

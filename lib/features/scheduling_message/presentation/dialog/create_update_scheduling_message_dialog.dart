@@ -5,13 +5,19 @@ import 'package:ariane_app/features/clients/clients.dart';
 import 'package:ariane_app/features/scheduling_message/data/datasources/scheduling_message_datasources.dart';
 import 'package:ariane_app/features/scheduling_message/domain/entities/scheduling_message_entity.dart';
 import 'package:ariane_app/features/scheduling_message/presentation/bloc/scheduling_message_bloc.dart';
+import 'package:ariane_app/features/users/domain/entities/user_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
 class CreateUpdateSchedulingMessageDialog extends StatefulWidget {
+  final UserEntity user;
   final SchedulingMessageEntity? schedulingMessageEntity;
-  const CreateUpdateSchedulingMessageDialog(
-      {required this.schedulingMessageEntity, super.key});
+
+  const CreateUpdateSchedulingMessageDialog({
+    required this.user,
+    required this.schedulingMessageEntity,
+    super.key,
+  });
 
   @override
   State<CreateUpdateSchedulingMessageDialog> createState() =>
@@ -128,6 +134,7 @@ class _CreateUpdateSchedulingMessageDialogState
                 listClients: selectedsClients,
                 date: date,
                 sent: widget.schedulingMessageEntity?.sent ?? false,
+                userId: '',
               ));
             }
           },

@@ -7,6 +7,6 @@ class WhatsApp {
       phoneNumber: '+55$number',
       text: text,
     );
-    return launchUrlString('$link');
+    return launchUrlString(link.toString());
   }
 }

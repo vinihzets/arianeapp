@@ -28,10 +28,11 @@ class PendingEventShowSearchDialog implements PendingEvent {
 }
 
 class PendingEventSendMessage implements PendingEvent {
+  final BuildContext context;
   final PendingEntity entity;
   final DateTime date;
 
-  PendingEventSendMessage(this.entity, this.date);
+  PendingEventSendMessage(this.context, this.entity, this.date);
 }
 
 class PendingEventSendMessageToList implements PendingEvent {

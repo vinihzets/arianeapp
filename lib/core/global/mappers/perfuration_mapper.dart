@@ -10,12 +10,14 @@ class PerfurationMapper implements EntityMapper<PerfurationEntity> {
   @override
   PerfurationEntity fromMap(Map<String, dynamic> map) {
     return PerfurationEntity(
-        clientId: map['clientId'],
-        clientName: map['clientName'],
-        createdAt: map['createdAt'],
-        id: map['id'],
-        typePerfuration:
-            typePerfurationMapper.fromMap(map['type_perfuration']));
+      clientId: map['clientId'],
+      clientName: map['clientName'],
+      clientNumber: map['clientNumber'],
+      createdAt: map['createdAt'],
+      id: map['id'],
+      typePerfuration: typePerfurationMapper.fromMap(map['type_perfuration']),
+      userId: map['userId'],
+    );
   }
 
   @override
@@ -23,8 +25,10 @@ class PerfurationMapper implements EntityMapper<PerfurationEntity> {
     return {
       'clientName': entity.clientName,
       'clientId': entity.clientId,
+      'clientNumber': entity.clientNumber,
       'createdAt': entity.createdAt,
       'type_perfuration': typePerfurationMapper.toMap(entity.typePerfuration),
+      'userId': entity.userId,
       'id': entity.id,
     };
   }

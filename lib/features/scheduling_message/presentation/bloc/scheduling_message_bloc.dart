@@ -1,4 +1,5 @@
 import 'package:ariane_app/core/core.dart';
+import 'package:ariane_app/core/services/session_storage.dart';
 import 'package:ariane_app/features/clients/clients.dart';
 import 'package:ariane_app/features/scheduling_message/domain/entities/scheduling_message_entity.dart';
 import 'package:ariane_app/features/scheduling_message/domain/usecases/create_scheduling_message_usecase_impl.dart';
@@ -39,14 +40,17 @@ class SchedulingMessageBloc extends Bloc {
 
   List<SchedulingMessageEntity> cache = [];
   List<ClientEntity> listClients = [];
+  SessionStorage sessionStorage;
 
   SchedulingMessageBloc(
-      this.createSchedulingMessageUseCaseImpl,
-      this.deleteSchedulingMessageUseCaseImpl,
-      this.readSchedulingMessagesUseCaseImpl,
-      this.updateSchedulingMessageUseCaseImpl,
-      this.schedulingMessageReadClientsUseCaseImpl,
-      this.schedulingMessageSearchClientsUseCaseImpl);
+    this.createSchedulingMessageUseCaseImpl,
+    this.deleteSchedulingMessageUseCaseImpl,
+    this.readSchedulingMessagesUseCaseImpl,
+    this.updateSchedulingMessageUseCaseImpl,
+    this.schedulingMessageReadClientsUseCaseImpl,
+    this.schedulingMessageSearchClientsUseCaseImpl,
+    this.sessionStorage,
+  );
 
   @override
   mapListenEvent(BlocEvent event) {
@@ -72,10 +76,20 @@ class SchedulingMessageBloc extends Bloc {
   _handleCreate(
     BuildContext context,
   ) async {
+    final session = await sessionStorage.fetchSession();
+
+    if (session == null) {
+      return;
+    }
+
     final SchedulingMessageEntity? entity = await showCustomDialog(
-        context,
-        const CreateUpdateSchedulingMessageDialog(
-            schedulingMessageEntity: null));
+      // ignore: use_build_context_synchronously
+      context,
+      CreateUpdateSchedulingMessageDialog(
+        user: session,
+        schedulingMessageEntity: null,
+      ),
+    );
 
     if (entity == null) {
       return;
@@ -115,11 +129,21 @@ class SchedulingMessageBloc extends Bloc {
     });
   }
 
-  _handleUpdate(SchedulingMessageEntity schedulingMessageEntity,
-      BuildContext context) async {
+  _handleUpdate(
+    SchedulingMessageEntity schedulingMessageEntity,
+    BuildContext context,
+  ) async {
+    final session = await sessionStorage.fetchSession();
+
+    if (session == null) {
+      return;
+    }
+
     final SchedulingMessageEntity entity = await showCustomDialog(
+      // ignore: use_build_context_synchronously
       context,
       CreateUpdateSchedulingMessageDialog(
+        user: session,
         schedulingMessageEntity: schedulingMessageEntity,
       ),
     );

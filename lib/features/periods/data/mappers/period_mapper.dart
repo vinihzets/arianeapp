@@ -12,6 +12,7 @@ class PeriodMapper implements EntityMapper<PeriodEntity> {
       name: map['name'],
       message: map['message'],
       id: map['id'],
+      userId: map['userId'],
     );
   }
 
@@ -24,6 +25,7 @@ class PeriodMapper implements EntityMapper<PeriodEntity> {
       'day': entity.dayCounter,
       'month': entity.monthCounter,
       'year': entity.yearCounter,
+      'userId': entity.userId,
     };
   }
 }

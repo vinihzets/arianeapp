@@ -7,6 +7,7 @@ class SchedulingMessageEntity {
   final DateTime date;
   final String createdAt;
   final bool sent;
+  final String userId;
 
   SchedulingMessageEntity({
     required this.message,
@@ -15,5 +16,6 @@ class SchedulingMessageEntity {
     required this.date,
     required this.createdAt,
     required this.sent,
+    required this.userId,
   });
 }

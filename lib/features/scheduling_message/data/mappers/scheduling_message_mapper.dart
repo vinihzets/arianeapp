@@ -17,6 +17,7 @@ class SchedulingMessageMapper extends EntityMapper<SchedulingMessageEntity> {
       id: map["id"] ?? '',
       createdAt: map["createdAt"],
       sent: map['sent'] ?? false,
+      userId: map['userId'],
     );
   }
 
@@ -29,6 +30,7 @@ class SchedulingMessageMapper extends EntityMapper<SchedulingMessageEntity> {
       "createdAt": entity.createdAt,
       'id': entity.id,
       'sent': entity.sent,
+      'userId': entity.userId,
     };
   }
 }
