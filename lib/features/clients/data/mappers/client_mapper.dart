@@ -11,7 +11,7 @@ class ClientMapper implements EntityMapper<ClientEntity> {
       number: map['number'] ?? "0",
       birthday: map['birthday'] ?? '',
       id: map['id'] ?? '',
-      userId: map['userId'],
+      userId: map['userId'] ?? '',
     );
   }
 

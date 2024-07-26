@@ -56,7 +56,14 @@ class PerfurationDataSourcesRemoteImpl implements PerfurationDataSources {
 
   @override
   Future<List<PerfurationEntity>> readPerfuration() async {
-    final perfurations = await databaseService.perfurations.get();
+    final user = await sessionStorage.fetchSession();
+
+    if (user == null) {
+      throw Exception('Usuário não está logado');
+    }
+    final perfurations = await databaseService.perfurations
+        .where('userId', isEqualTo: user.id)
+        .get();
 
     return perfurations.docs
         .map(
@@ -72,7 +79,14 @@ class PerfurationDataSourcesRemoteImpl implements PerfurationDataSources {
 
   @override
   Future<List<TypePerfurationEntity>> readTypePerfurations() async {
-    final typesPerfurations = await databaseService.typePerfurations.get();
+    final user = await sessionStorage.fetchSession();
+
+    if (user == null) {
+      throw Exception('Usuário não está logado');
+    }
+    final typesPerfurations = await databaseService.typePerfurations
+        .where('userId', isEqualTo: user.id)
+        .get();
 
     return typesPerfurations.docs
         .map((e) => typePerfurationMapper.fromMap(e.data()))

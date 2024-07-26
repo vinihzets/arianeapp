@@ -12,7 +12,7 @@ class PeriodMapper implements EntityMapper<PeriodEntity> {
       name: map['name'],
       message: map['message'],
       id: map['id'],
-      userId: map['userId'],
+      userId: map['userId'] ?? '',
     );
   }
 

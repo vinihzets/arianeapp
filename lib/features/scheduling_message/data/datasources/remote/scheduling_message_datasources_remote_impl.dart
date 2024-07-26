@@ -1,5 +1,4 @@
-import 'package:ariane_app/core/architecture/usecase.dart';
-import 'package:ariane_app/core/services/database_service.dart';
+import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/core/services/session_storage.dart';
 import 'package:ariane_app/features/clients/clients.dart';
 import 'package:ariane_app/features/scheduling_message/data/datasources/scheduling_message_datasources.dart';
@@ -50,16 +49,22 @@ class SchedulingMessageDataSourcesRemoteImpl
   @override
   Future<List<SchedulingMessageEntity>> readSchedulingsMessages(
       ReadSchedulingMessagesParams params) async {
+    final user = await sessionStorage.fetchSession();
+
+    if (user == null) {
+      throw RemoteFailure(message: 'Nenhum usuário logado');
+    }
+
     var query = databaseService.schedulingMessages
+        .where('userId', isEqualTo: user.id)
         .orderBy('createdAt', descending: true);
 
     if (params.last != null) {
       query = query.startAfter([params.last!.createdAt]);
     }
 
-    final messages = await query.get();
-
-    return messages.docs.map((e) => mapper.fromMap(e.data())).toList();
+    final querySnapshot = await query.get();
+    return querySnapshot.docs.map((e) => mapper.fromMap(e.data())).toList();
   }
 
   @override
@@ -90,13 +95,21 @@ class SchedulingMessageDataSourcesRemoteImpl
   }
 
   @override
-  Future<void> deleteSchedulingMessage(DeleteSchedulingMessageParams params) {
+  Future<void> deleteSchedulingMessage(
+      DeleteSchedulingMessageParams params) async {
     return databaseService.schedulingMessages.doc(params.id).delete();
   }
 
   @override
   Future<List<ClientEntity>> getClients(GetClientsParams params) async {
-    final clients = databaseService.clients.limit(params.ammount);
+    final session = await sessionStorage.fetchSession();
+
+    if (session == null) {
+      throw Exception();
+    }
+    final clients = databaseService.clients
+        .where('userId', isEqualTo: session.id)
+        .limit(params.ammount);
 
     Query query = clients;
 

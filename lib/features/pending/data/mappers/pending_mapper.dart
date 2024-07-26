@@ -22,6 +22,7 @@ class PendingMapper implements EntityMapper<PendingEntity> {
       message: map['message'],
       date: DateTime.fromMillisecondsSinceEpoch(map['date']),
       sent: map['sent'],
+      userId: map['userId'] ?? '',
       typePerfuration: typePerfurationMapper.fromMap(map['typePerfuration']),
       period: periodMapper.fromMap(map['period']),
     );

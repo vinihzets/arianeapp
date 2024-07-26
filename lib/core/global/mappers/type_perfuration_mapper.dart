@@ -13,7 +13,7 @@ class TypePerfurationMapper implements EntityMapper<TypePerfurationEntity> {
     return TypePerfurationEntity(
       name: map['name'],
       id: map['id'],
-      userId: map['userId'],
+      userId: map['userId'] ?? '',
       listPeriods:
           (map['periods'] as List).map((e) => periodMapper.fromMap(e)).toList(),
     );

@@ -114,7 +114,7 @@ class Injector {
         TypePerfurationDataSourcesRemoteImpl(
             getIt(), getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<ClientDataSources>(
-        () => ClientDataSourcesRemoteImpl(getIt(), getIt()));
+        () => ClientDataSourcesRemoteImpl(getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<HomeDataSources>(
         () => HomeDataSourcesRemoteImpl(getIt()));
     getIt.registerLazySingleton<RegisterDataSources>(
@@ -123,7 +123,7 @@ class Injector {
         LoginDataSourcesRemoteImpl(
             getIt(), getIt(), getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<PendingDataSource>(
-        () => PendingDataSourceRemoteImpl(getIt(), getIt(), getIt()));
+        () => PendingDataSourceRemoteImpl(getIt(), getIt(), getIt(), getIt()));
     getIt.registerLazySingleton<UsersDataSources>(() => UsersDataSourcesImpl(
         databaseService: getIt(),
         userMapper: getIt(),

@@ -6,11 +6,10 @@ class PendingEntity extends Equatable {
   final String clientName;
   final String clientId;
   final String clientNumber;
-
   final DateTime date;
   final String message;
   final bool sent;
-
+  final String userId;
   final TypePerfurationEntity typePerfuration;
   final PeriodEntity period;
 
@@ -23,6 +22,7 @@ class PendingEntity extends Equatable {
     required this.message,
     required this.sent,
     required this.period,
+    required this.userId,
     required this.typePerfuration,
   });
 

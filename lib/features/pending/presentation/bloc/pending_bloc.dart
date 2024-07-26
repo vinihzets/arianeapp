@@ -116,7 +116,9 @@ class PendingBloc extends Bloc {
       ),
     );
 
-    final pendings = pendingRequest.fold((l) => <PendingEntity>[], (r) => r);
+    final pendings = pendingRequest.fold((l) {
+      return <PendingEntity>[];
+    }, (r) => r);
 
     final messagesRequest = await getMessagesUseCaseImpl(
       GetMessagesParams(date: date),

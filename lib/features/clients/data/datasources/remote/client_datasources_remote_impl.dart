@@ -1,5 +1,5 @@
-import 'package:ariane_app/core/architecture/usecase.dart';
-import 'package:ariane_app/core/services/database_service.dart';
+import 'package:ariane_app/core/core.dart';
+import 'package:ariane_app/core/services/session_storage.dart';
 import 'package:ariane_app/features/clients/data/datasources/client_datasources.dart';
 import 'package:ariane_app/features/clients/data/mappers/client_mapper.dart';
 import 'package:ariane_app/features/clients/domain/entities/client_entity.dart';
@@ -8,8 +8,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class ClientDataSourcesRemoteImpl implements ClientDataSources {
   DatabaseService databaseService;
   ClientMapper mapper;
+  SessionStorage storage;
 
-  ClientDataSourcesRemoteImpl(this.databaseService, this.mapper);
+  ClientDataSourcesRemoteImpl(
+    this.databaseService,
+    this.mapper,
+    this.storage,
+  );
 
   @override
   Future<ClientEntity> createClient(CreateClientParams params) async {
@@ -31,7 +36,15 @@ class ClientDataSourcesRemoteImpl implements ClientDataSources {
 
   @override
   Future<List<ClientEntity>> readClient(GetClientsParams params) async {
-    final clients = databaseService.clients.limit(params.ammount);
+    final user = await storage.fetchSession();
+
+    if (user == null) {
+      throw RemoteFailure(message: 'Nenhum usuário logado');
+    }
+
+    final clients = databaseService.clients
+        .where('userId', isEqualTo: user.id)
+        .limit(params.ammount);
 
     Query query = clients;
 
@@ -72,7 +85,13 @@ class ClientDataSourcesRemoteImpl implements ClientDataSources {
 
   @override
   Future<List<ClientEntity>> searchClient(SearchClientParams params) async {
+    final user = await storage.fetchSession();
+
+    if (user == null) {
+      throw RemoteFailure(message: 'Nenhum usuário logado');
+    }
     final query = await databaseService.clients
+        .where('userId', isEqualTo: user.id)
         .orderBy('completeSearchName')
         .startAt([params.query]).endAt(["${params.query}\uf8ff"]).get();
 

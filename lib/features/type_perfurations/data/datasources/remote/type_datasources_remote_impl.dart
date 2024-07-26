@@ -34,6 +34,7 @@ class TypePerfurationDataSourcesRemoteImpl
       'id': doc.id,
       'name': params.name,
       'periods': params.periods.map((e) => periodMapper.toMap(e)).toList(),
+      'userId': session.id,
     });
 
     return TypePerfurationEntity(
@@ -46,15 +47,21 @@ class TypePerfurationDataSourcesRemoteImpl
 
   @override
   Future<List<TypePerfurationEntity>> readTypesPerfuration() async {
-    final perfurations = await databaseService.typePerfurations.get();
+    final session = await sessionStorage.fetchSession();
 
-    final List<TypePerfurationEntity> listPerfurations = perfurations.docs
+    if (session == null) {
+      throw Exception('Sem usuário logado');
+    }
+
+    final perfurations = await databaseService.typePerfurations
+        .where('userId', isEqualTo: session.id)
+        .get();
+
+    return perfurations.docs
         .map(
           (e) => mapper.fromMap(e.data()),
         )
         .toList();
-
-    return listPerfurations;
   }
 
   @override
@@ -87,7 +94,15 @@ class TypePerfurationDataSourcesRemoteImpl
 
   @override
   Future<List<PeriodEntity>> readPeriods() async {
-    final periods = await databaseService.periods.get();
+    final session = await sessionStorage.fetchSession();
+
+    if (session == null) {
+      throw Exception('Sem usuário logado');
+    }
+
+    final periods = await databaseService.periods
+        .where('userId', isEqualTo: session.id)
+        .get();
 
     return periods.docs.map((e) => periodMapper.fromMap(e.data())).toList();
   }

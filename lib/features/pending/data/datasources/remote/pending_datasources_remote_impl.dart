@@ -1,4 +1,5 @@
 import 'package:ariane_app/core/core.dart';
+import 'package:ariane_app/core/services/session_storage.dart';
 
 import 'package:ariane_app/features/pending/data/data.dart';
 import 'package:ariane_app/features/scheduling_message/data/mappers/scheduling_message_mapper.dart';
@@ -10,10 +11,12 @@ class PendingDataSourceRemoteImpl implements PendingDataSource {
   DatabaseService databaseService;
   PendingMapper mapper;
   SchedulingMessageMapper messageMapper;
+  SessionStorage session;
 
   PendingDataSourceRemoteImpl(
     this.databaseService,
     this.mapper,
+    this.session,
     this.messageMapper,
   );
 
@@ -23,10 +26,19 @@ class PendingDataSourceRemoteImpl implements PendingDataSource {
     required PendingEntity? startAfter,
     required int ammount,
   }) async {
+    final user = await session.fetchSession();
+
+    if (user == null) {
+      throw RemoteFailure(message: 'Nenhum usuário logado');
+    }
+
     final startOfDay = DateTime(date.year, date.month, date.day, 0, 0);
     final endOfDay = DateTime(date.year, date.month, date.day, 24, 0);
 
-    final query = databaseService.pendings.orderBy('date').where(
+    final query = databaseService.pendings
+        .orderBy('date')
+        .where('userId', isEqualTo: user.id)
+        .where(
           'date',
           isGreaterThanOrEqualTo: startOfDay.millisecondsSinceEpoch,
           isLessThanOrEqualTo: endOfDay.millisecondsSinceEpoch,
@@ -45,10 +57,17 @@ class PendingDataSourceRemoteImpl implements PendingDataSource {
   Future<List<SchedulingMessageEntity>> getMessages({
     required DateTime date,
   }) async {
+    final user = await session.fetchSession();
+
+    if (user == null) {
+      throw RemoteFailure(message: 'Usuário não está logado');
+    }
+
     final startOfDay = DateTime(date.year, date.month, date.day, 0, 0);
     final endOfDay = DateTime(date.year, date.month, date.day, 23, 59);
 
     final messages = await databaseService.schedulingMessages
+        .where('userId', isEqualTo: user.id)
         .where(
           'date',
           isGreaterThanOrEqualTo: startOfDay.millisecondsSinceEpoch,

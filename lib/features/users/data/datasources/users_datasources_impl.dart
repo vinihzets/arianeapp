@@ -68,9 +68,7 @@ class UsersDataSourcesImpl implements UsersDataSources {
     if (user.role != UserRole.admin) {
       throw RemoteFailure(message: 'Permissões insuficientes!');
     }
-
     return await databaseService.users.doc(params.id).update(
-      {'role': params.role, 'date': params.date.millisecondsSinceEpoch},
-    );
+        {'role': params.role, 'date': params.date.millisecondsSinceEpoch});
   }
 }

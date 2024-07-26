@@ -1,7 +1,6 @@
+import 'package:ariane_app/core/core.dart';
 import 'package:ariane_app/core/services/session_storage.dart';
 
-import '../../../../../core/architecture/usecase.dart';
-import '../../../../../core/services/database_service.dart';
 import '../../../periods.dart';
 
 class PeriodDataSourcesRemoteImpl implements PeriodDataSources {
@@ -41,7 +40,15 @@ class PeriodDataSourcesRemoteImpl implements PeriodDataSources {
 
   @override
   Future<List<PeriodEntity>> readPeriod() async {
-    final periods = await databaseService.periods.get();
+    final session = await sessionStorage.fetchSession();
+
+    if (session == null) {
+      throw RemoteFailure(message: 'Nenhum usuário autenticado');
+    }
+
+    final periods = await databaseService.periods
+        .where('userId', isEqualTo: session.id)
+        .get();
 
     final List<PeriodEntity> listPeriods = periods.docs
         .map(
