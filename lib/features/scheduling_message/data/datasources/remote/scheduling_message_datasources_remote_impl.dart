@@ -127,8 +127,15 @@ class SchedulingMessageDataSourcesRemoteImpl
 
   @override
   Future<List<ClientEntity>> searchClient(SearchClientParams params) async {
+    final session = await sessionStorage.fetchSession();
+
+    if (session == null) {
+      throw Exception();
+    }
+
     final query = await databaseService.clients
         .orderBy('completeSearchName')
+        .where('userId', isEqualTo: session.id)
         .startAt([params.query]).endAt(["${params.query}\uf8ff"]).get();
 
     final clients =
